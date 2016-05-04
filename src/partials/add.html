@@ -1,0 +1,141 @@
+<div class="card-container" style="padding:20px;">
+	<md-whiteframe class="md-whiteframe-2dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center" style="margin:0 auto;max-width:750px">
+		<md-content style="width:100%">
+			<form name="editForm" ng-submit="submit()">
+                <div>
+                    <div layout-gt-sm="row" style="background:lightgray; height: 40px; padding-top: 10px">
+                        <label style="font-size: 20px;padding-left: 40px; height: 30px">Customer</label>
+                    </div>
+                    <div class="section_padding">
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Customer</label>
+                                <md-select ng-required="true" name="supplier" ng-model="content.supplier">
+                                    <md-divider></md-divider>
+                                    <md-option ng-repeat="profile in profilelist" ng-value="profile">{{profile.profilename}}</md-option>
+                                </md-select>
+                                <!--<input ng-required="true" minlength="null" md-maxlength="null" type="" name="supplier" ng-pattern="" style="width: 550px;" ng-model="content.supplier">-->
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Payment No</label>
+                                <input ng-required="true" minlength="null" md-maxlength="null" type="" name="paymentno" ng-pattern="" ng-model="content.paymentno">
+                            </md-input-container>
+                            <div class="md-block" flex="5">
+                                <!--space keeper-->
+                            </div>
+                            <div class="md-block" flex-gt-sm>
+                                <md-date-picker model="content.PaymentDate" label="Payment Date"/>
+                            </div>
+                        </div>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Payment Method</label>
+                                <md-select ng-required="false" name="paymethod" ng-model="content.paymethod" style="width: 300px;">
+                                    <md-divider></md-divider>
+                                    <md-option ng-value="Cash">Cash</md-option>
+                                    <md-option ng-value="Cheque">Cheque</md-option>
+                                    <!--<md-option ng-repeat="profile in profilelist" ng-value="profile">{{profile.profilename}}</md-option>-->
+                                </md-select>
+                                <!--<input ng-required="true" minlength="null" md-maxlength="null" type="" name="supplier" ng-pattern="" style="width: 550px;" ng-model="content.supplier">-->
+                            </md-input-container>
+                        </div>
+                    </div>
+                </div>
+
+                <div layout-gt-sm="row" style="background:lightgray; height: 40px;padding-top: 10px">
+                    <label style="font-size: 20px;padding-left: 40px; height: 30px">Invoice Details</label>
+                </div>
+                <div layout="row" layout-align="center start"  style="background:#286090; height: 40px; padding-left: 50px; width:100%">
+                    <div flex="25">
+                        <h4 class="collapse-card__title">
+                            Invoice No:
+                        </h4>
+
+                    </div>
+
+                    <div flex="25">
+                        <h4 class="collapse-card__title">
+                            Invoice Amount
+                        </h4>
+                    </div>
+
+                    <div flex="25">
+                        <h4 class="collapse-card__title">
+                            Paid Amount
+                        </h4>
+                    </div>
+
+                    <div flex="25">
+                        <h4 class="collapse-card__title">
+                            Balance Payment
+                        </h4>
+                    </div>
+
+                </div>
+                <div>
+                    <md-list style="height:250px;overflow-y: scroll;">
+                        <md-list-item  ng-repeat="item in items"  style="outline:none;">
+                            <md-card layout="row" layout-align="space-between center" style="width:100%;padding:0;margin: 3px;height: 40px;">
+                                <!--<div flex="30"><img src="{{item.business_contact_no}}" style="width:80px;margin-left: 10px;"/></div>-->
+                                <div flex="25" layout="column">
+                                    <label style="font-size: 14px;font-weight: 500;padding-left: 50px;">{{item.grnNo}}</label>
+                                </div>
+                                <div flex="25" layout="column">
+                                    <label style="font-size: 14px;font-weight: 500;padding-left: 50px;">{{item.inventory_type}}</label>
+                                </div>
+                                <div flex="25" layout="column">
+                                    <label style="font-size: 14px;font-weight: 500;padding-left: 30px;">{{item.createdDate}}</label>
+                                </div>
+                                <div flex="25" layout="column">
+                                    <label style="font-size: 14px;font-weight: 500;padding-left: 65px;">{{item.status}}</label>
+                                </div>
+
+                            </md-card>
+                        </md-list-item >
+                    </md-list>
+                </div>
+                <div layout-gt-sm="row" style="background:#bedaea; height: 60px;padding-top: 20px">
+                    <label style="font-size: 20px;font-weight: 600;padding-left: 240px; height: 30px">Total Balance Payments $2130</label>
+                </div>
+                <div class="section_padding">
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Payment Amount</label>
+                            <input ng-required="true" minlength="null" md-maxlength="null" type="" name="payamount" ng-pattern="" ng-model="content.payamount">
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div layout-gt-sm="row" style="background:lightgray; height: 40px;padding-top: 10px">
+                    <label style="font-size: 20px;padding-left: 40px; height: 30px">Other</label>
+                </div>
+                <div class="section_padding">
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Bank Charges</label>
+                            <input ng-required="true" minlength="null" md-maxlength="null" style="width: 180px;" type="" name="bankcharges" ng-pattern="" ng-model="content.bankcharges">
+                        </md-input-container>
+                        <div class="md-block" flex="5">
+                            <!--space keeper-->
+                        </div>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Notes</label>
+                            <input ng-required="false" minlength="null" md-maxlength="null" style="width: 450px;" type="" name="notes" ng-pattern="" ng-model="content.notes">
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div layout-gt-sm="row" ng-init="submitted=false">
+                    <div class="md-block" flex-gt-sm style="background:#484848;height:66px">
+                        <md-button style="width:100%;line-height: 66px;color: white;font-size: 20px" ng-click="returntolist();" type="button">CANCEL</md-button>
+                    </div>
+                    <div class="md-block" flex-gt-sm style="background:#f4511e;height:66px">
+                        <md-button style="width:100%; line-height: 66px;color: white;font-size: 20px" ng-disabled="submitted" type="submit">SUBMIT</md-button>
+                    </div>
+                </div>
+			</form>
+		</md-content>
+	</md-whiteframe>
+</div>

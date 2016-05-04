@@ -1,0 +1,68 @@
+<!--START OF HEADER CONTAINER-->
+<div style="width:98.5%;position:fixed;z-index:2;background:#004682;right:19px;">
+	<div style="max-width: 928px;right: 0;left: 0;margin:auto;margin-top:10px">
+		
+	<md-autocomplete style="border-radius:2px 2px 0px 0px"
+		  ng-keypress="enter($event)"
+		  ng-disabled="isDisabled"
+		  md-no-cache="noCache"
+		  md-selected-item="selectedItem"
+		  md-search-text-change="searchTextChange(searchText)"
+		  md-search-text="searchText"
+		  md-selected-item-change="selectedItemChange(item)"
+		  md-items="item in querySearch(searchText)"
+		  md-item-text="item.display"
+		  md-min-length="0"
+		  placeholder="Action Search">
+	</md-autocomplete>
+
+	
+	<!--START OF FILTER SECTION-->
+	<md-whiteframe class="md-whiteframe-z1" layout="row" layout-sm="column" style="background:rgb(250,250,250); z-index:2;border-radius:0px 0px 2px 2px">
+			
+		<div class="header_container_filter" style="margin:0;height:48px;" layout="row" layout-align="center center" layout-margin>
+			<div style="padding-left:16px;">
+				<img src="/img/material_alperbert/avatar_tile_f_28.png" style="border-radius:20px;height:28px;width:28px;"/>
+			</div>
+			<div style="padding-left:20px;">
+				<label style="font-weight:700">Filter</label>
+			</div>
+		</div>
+		<div class="header_container_filter" layout="row" flex layout-align="center center" layout-sm="column" style="height:48px;">
+			<div layout="row" layout-align="center center" layout-margin>
+				<md-checkbox ng-click="includeType('Card')">Card </md-checkbox>
+				<md-checkbox ng-click="includeType('Account')">Account</md-checkbox>
+			</div>
+			<div style="border: 1px solid #ccc;margin:0;border-radius:4px;background:rgb(219, 240, 240);height:35px;padding-left:5px;padding-right:5px" layout="row" layout-align="center center">
+				<md-checkbox ng-click="includeStatus('Pending')" style="margin-bottom: 0px;">Pending </md-checkbox>
+				<md-checkbox ng-click="includeStatus('Confirmed')" style="margin-bottom: 0px;">Confirmed</md-checkbox>
+				<md-checkbox ng-click="includeStatus('Rejected')" style="margin-bottom: 0px;">Rejected</md-checkbox>
+			</div>	
+		</div>						
+	</md-whiteframe>
+	<!--END OF FILTER SECTION-->
+	</div>
+</div>
+<!--END OF HEADER CONTAINER-->
+
+
+<!--START OF BODY CONTAINER-->
+<div class="span12 ui-view-container">
+	<div class="container" ui-view  viewcss></div>   
+	
+</div>
+<!--END OF BODY CONTAINER-->
+
+<div  class="lock-size" layout="row">
+	<md-fab-speed-dial md-open="demo.isOpen" md-direction="up"
+	ng-class="demo.selectedMode" style="position:fixed;bottom:20px;right:20px;">
+		<md-fab-trigger>
+			<md-button aria-label="menu" class="md-fab " style="background-color:#db4437;" href="#/add">
+				<md-icon md-svg-src="/img/ic_add_24px.svg" style="width:30px;" ></md-icon>
+				<md-tooltip md-direction="left">Add</md-tooltip>
+			</md-button>
+		</md-fab-trigger>
+	<md-fab-actions>
+        </md-fab-actions>
+    </md-fab-speed-dial>
+</div> 

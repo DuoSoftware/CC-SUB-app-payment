@@ -1,0 +1,161 @@
+<style>
+    .editInputs
+    {
+        border: 1px solid #C1C1C1;
+        background-image: none !important;
+    }
+</style>
+<div class="card-container" style="padding:20px;" layout="row" layout-align="start start">
+	<md-whiteframe id="viewAllWhiteframe" class="md-whiteframe-2dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center" style="margin:0 auto;max-width:750px">
+		<md-content style="width:100%">
+
+                <div layout-gt-sm="row" style="background:#f6f6f6; height: 120px; padding-top: 10px;">
+                    <div class="section_padding">
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm style="margin:0;margin-top:20px;">
+                            <label style="font-size:20px;color:#0072a5">Search</label>
+                            <input id="search" style="width: 670px;" ng-model="searchText">
+                        </md-input-container>
+                    </div>
+                    </div>
+                </div>
+                <div layout="row" layout-align="center start"  style="background:#286090; height: 40px; padding-left: 50px; width:100%">
+                    <div flex="20">
+                        <h4 class="collapse-card__title">
+                            Customer
+                        </h4>
+
+                    </div>
+
+                    <div flex="20">
+                        <h4 class="collapse-card__title">
+                            Payment No
+                        </h4>
+                    </div>
+
+                    <div flex="20">
+                        <h4 class="collapse-card__title">
+                            Payment Date
+                        </h4>
+                    </div>
+
+                    <div flex="20">
+                        <h4 class="collapse-card__title" style="padding-left: 25px;">
+                            Amount
+                        </h4>
+                    </div>
+
+                    <div flex="20">
+                        <h4 class="collapse-card__title">
+                            Payment Method
+                        </h4>
+                    </div>
+
+                </div>
+
+            <div>
+                <md-list when-scrolled="more()" style="height:600px;overflow-y: scroll;">
+                    <md-list-item  ng-repeat="item in items | filter:searchText" ng-click="editlistitem(item);"  style="outline:none;">
+                        <md-card layout="row" layout-align="space-between center" style="width:100%;padding:0;margin: 3px;height: 60px;">
+                            <!--<div flex="30"><img src="{{item.business_contact_no}}" style="width:80px;margin-left: 10px;"/></div>-->
+                            <div flex layout="column" style="padding-left: 15px;">
+                                <img src="../img/payment2.png" style="width:25px;margin-top: 5px;"/>
+                            </div>
+                            <div flex="20" layout="column">
+                                <label style="font-size: 14px;font-weight: 500;padding-left: 40px;">{{item.grnNo}}</label>
+                            </div>
+                            <div flex="20" layout="column">
+                                <label style="font-size: 14px;font-weight: 500;padding-left: 20px;">{{item.inventory_type}}</label>
+                            </div>
+                            <div flex="20" layout="column">
+                                <label style="font-size: 14px;font-weight: 500;padding-left: 35px;">{{item.createdDate.split(' ')[0]}}</label>
+                            </div>
+                            <div flex="20" layout="column">
+                                <label style="font-size: 14px;font-weight: 500;padding-left: 55px;color:#002a80;">{{item.inventory_type}}</label>
+                            </div>
+                            <div flex="20" layout="column">
+                                <label style="font-size: 14px;font-weight: 500;padding-left: 40px;">{{item.status}}</label>
+                            </div>
+
+                        </md-card>
+                    </md-list-item >
+                </md-list>
+            </div>
+
+		</md-content>
+	</md-whiteframe>
+    <md-whiteframe class="md-whiteframe-2dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center" style="margin:0 auto;max-width:550px;position: fixed;right: 20px;" ng-show="selectedprofile.grnNo">
+        <md-content style="width:100%;">
+            <!--margin:0 auto;max-width:750px;-->
+
+
+            <div class="section_padding" style="height:600px;width:500px;overflow-y: scroll;">
+
+                <md-content layout="row" layout-align="space-between center" style="padding-bottom:30px;padding-top: 50px;">
+
+                    <div flex="70" layout="column">
+                        <div>
+                            <label layout="row" style="font-size: 30px;font-weight: 500;">{{selectedprofile.customer}}</label>
+                            <label layout="row" style="font-size: 14px;color:grey;margin-top:5px">Payment No: {{selectedprofile.aodNo}}</label>
+                            <!--<md-button class="md-icon-button" aria-label="More" ng-hide="selectedprofile.status=='Canceled'" ng-click="cancelorder(selectedprofile);">-->
+                                <!--<ng-md-icon icon="delete" style="margin-top: 18px;margin-right: 18px;fill:#B4B4B4" size="20px"></ng-md-icon>-->
+                                <!--<md-tooltip md-direction="right">Cancel Order</md-tooltip>-->
+                            <!--</md-button>-->
+                        </div>
+                    </div>
+                    <div flex="30" layout="column" layout-align="end end">
+                        <label layout="row" style="font-size: 14px;color:grey;margin-top:5px">Payment Amount</label>
+                        <label layout="row" style="font-size: 30px;font-weight: 700;color:#0072a5">{{selectedprofile.grnNo| currency}}</label>
+                        <!--<label style="font-size: 10px;">(Without Tax)</label>-->
+                    </div>
+                </md-content>
+
+                <md-divider></md-divider>
+
+                <div style="padding-top: 30px;">
+                <md-content layout="row" layout-align="space-between center" style="background:#f1f1f1;padding:10px;">
+                    <div><text style="color:#929292">Payment No</text></div>
+                    <div><text style="font-weight:700">{{selectedprofile.grnNo}}</text> <!--input class="editInputs" ng-model="selectedprofile.Type" ng-hide="editOff"--></div>
+                </md-content>
+                <md-content layout="row" layout-align="space-between center" style="padding:10px;">
+                    <div><text style="color:#929292">Payment Date</text></div>
+                    <div><text style="font-weight:700">{{selectedprofile.createdDate.split(' ')[0]}}</text></div>
+                </md-content>
+                <md-content layout="row" layout-align="space-between center" style="background:#f1f1f1;padding:10px;">
+                    <div><text style="color:#929292">Payment Method</text></div>
+                    <div><text style="font-weight:700">{{selectedprofile.inventory_type}}</text> <!--input class="editInputs" ng-model="selectedprofile.Type" ng-hide="editOff"--></div>
+                </md-content>
+                <md-content layout="row" layout-align="space-between center" style="padding:10px;">
+                    <div><text style="color:#929292">Bank Charges</text></div>
+                    <div><text style="font-weight:700">{{selectedprofile.aodNo}}</text></div>
+                </md-content>
+
+                <md-content layout="row" layout-align="space-between center" style="padding:10px;padding-top: 30px;">
+                    <div><text style="color:#929292">Note</text></div>
+                </md-content>
+                <md-content layout="row" layout-align="space-between center" style="padding:10px;">
+                    <div style="border: solid; border-color: #a9a9a9; width: 465px;height: 100px;"><text style="font-weight:500; font-size: 15px;">{{selectedprofile.inventory_type}}</text></div>
+                    <!--<div><textarea disabled style="width: 460px;height: 100px;">{{selectedprofile.inventory_type}}</textarea></div>-->
+                </md-content>
+                </div>
+
+
+            </div>
+
+
+        </md-content>
+    </md-whiteframe>
+</div>
+<div  class="lock-size" layout="row">
+    <md-fab-speed-dial md-open="demo.isOpen" md-direction="up"
+                       ng-class="demo.selectedMode" style="position:fixed;bottom:20px;right:20px;">
+        <md-fab-trigger>
+            <md-button aria-label="menu" class="md-fab " style="background-color:#e64a19;" href="#/add">
+                <md-icon md-svg-src="../img/ic_add_24px.svg" style="width:30px;" ></md-icon>
+                <md-tooltip md-direction="left">Add Profile</md-tooltip>
+            </md-button>
+        </md-fab-trigger>
+        <md-fab-actions>
+        </md-fab-actions>
+    </md-fab-speed-dial>
+</div>
