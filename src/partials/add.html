@@ -76,20 +76,20 @@
                 </div>
                 <div>
                     <md-list style="height:250px;overflow-y: scroll;">
-                        <md-list-item  ng-repeat="item in items"  style="outline:none;">
+                        <md-list-item  ng-repeat="item in invoicelist"  style="outline:none;">
                             <md-card layout="row" layout-align="space-between center" style="width:100%;padding:0;margin: 3px;height: 40px;">
                                 <!--<div flex="30"><img src="{{item.business_contact_no}}" style="width:80px;margin-left: 10px;"/></div>-->
                                 <div flex="25" layout="column">
-                                    <label style="font-size: 14px;font-weight: 500;padding-left: 50px;">{{item.grnNo}}</label>
+                                    <label style="font-size: 14px;font-weight: 500;padding-left: 1px;">{{item.invoiceNo}}</label>
                                 </div>
                                 <div flex="25" layout="column">
-                                    <label style="font-size: 14px;font-weight: 500;padding-left: 50px;">{{item.inventory_type}}</label>
+                                    <label style="font-size: 14px;font-weight: 500;padding-left: 90px;">{{item.invoiceAmount}}</label>
                                 </div>
                                 <div flex="25" layout="column">
-                                    <label style="font-size: 14px;font-weight: 500;padding-left: 30px;">{{item.createdDate}}</label>
+                                    <label style="font-size: 14px;font-weight: 500;padding-left: 30px;">{{item.paidAmount}}</label>
                                 </div>
                                 <div flex="25" layout="column">
-                                    <label style="font-size: 14px;font-weight: 500;padding-left: 65px;">{{item.status}}</label>
+                                    <label style="font-size: 14px;font-weight: 500;padding-left: 65px;">{{item.subTotal}}</label>
                                 </div>
 
                             </md-card>

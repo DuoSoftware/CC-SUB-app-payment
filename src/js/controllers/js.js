@@ -59,8 +59,22 @@
             $scope.profilelist = [];
             $scope.productlist = [];
             $scope.storeslist = [];
+            $scope.invoicelist = [];
             //$scope.productlist1=[];
             //$scope.productlist2=[];
+
+            $charge.invoice().all(0,20,'asc').success(function(data)
+            {
+                console.log(data);
+                for (i = 0; i < data.length; i++) {
+                    $scope.invoicelist.push(data[i]);
+
+                }
+
+            }).error(function(data)
+            {
+                console.log(data);
+            })
 
             $charge.profile().all(0,20,'asc').success(function(data)
             {

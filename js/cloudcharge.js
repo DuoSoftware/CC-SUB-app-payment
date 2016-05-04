@@ -93,6 +93,7 @@
 		return {
             profile: function(){ return new ProfileProxy();},
             payment: function(){ return new PaymentProxy();},
+            invoice: function(){ return new InvoiceProxy();},
             commondata: function(){ return new CommonDataProxy();},
 		}	
 	});
@@ -116,6 +117,16 @@
         p.store = function(i){p.p(handler + "/profile/insert",service).b(i); return p;}
         p.getByID=function(s){p.p(handler + "/profile/getById/",service).qp({"skip":s}); return p;}
         p.update = function(i){p.p(handler + "/profile/update",service).b(i); return p;}
+        return p;
+    }
+
+    function InvoiceProxy(){
+        var p = BP();
+        var service="invoice";
+        var handler = "/duosoftware.invoice.service";
+        p.all = function(s,t,o){p.p(handler + "/invoice/getAll/",service).qp({"skip":s,"take":t,"order":o}); return p;}
+        p.store = function(i){p.p(handler + "/invoice/insert",service).b(i); return p;}
+        p.getByID=function(s){p.p(handler + "/invoice/getById/",service).qp({"id":s}); return p;}
         return p;
     }
 
