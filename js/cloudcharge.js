@@ -91,50 +91,20 @@
 	cc.factory('$charge', function($http){
 		$h = $http;
 		return {
-			product: function(){ return new ProductProxy();},
-            inventory: function(){ return new InventoryProxy();},
-            aod: function(){ return new aodProxy();},
             profile: function(){ return new ProfileProxy();},
+            payment: function(){ return new PaymentProxy();},
             commondata: function(){ return new CommonDataProxy();},
 		}	
 	});
 
-	function ProductProxy(){
-        //debugger;
+    function PaymentProxy(){
         var p = BP();
-        var service="product";
-		var handler = "/duosoftware.product.service";
-		p.all = function(s,t,o){p.p(handler + "/products/getAll/",service).qp({"skip":s,"take":t,"order":o}); return p;}
-		p.store = function(i){p.p(handler + "/products/insert",service).b(i); return p;}
-        p.getByID=function(s){p.p(handler + "/products/getById/",service).qp({"skip":s}); return p;}
-		p.update=function(i){p.p(handler + "/products/update",service).b(i); return p;}
-		return p;
-	}
-
-    function InventoryProxy(){
-        var p = BP();
-        var service="inventory";
-        var handler = "/duosoftware.grn.service";
-        p.all = function(s,t,o){p.p(handler + "/grn/getAllDetails/",service).qp({"skip":s,"take":t,"order":o}); return p;}
-        p.allheaders = function(s,t,o){p.p(handler + "/grn/getAllHeader/",service).qp({"skip":s,"take":t,"order":o}); return p;}
-        p.getHeaderByID=function(s){p.p(handler + "/grn/GetDetailsForHeader/",service).qp({"gUGRNID":s}); return p;}
-        p.store = function(i){p.p(handler + "/grn/insert",service).b(i); return p;}
-        p.getByID=function(s){p.p(handler + "/grn/searchGRNbyID/",service).qp({"skip":s}); return p;}
-        p.cancel=function(s){p.p(handler + "/grn/cancelGRN/",service).qp({"gUGRNID":s}); return p;}
-        return p;
-    }
-
-    function aodProxy(){
-        var p = BP();
-        var service="inventory";
-        var handler = "/duosoftware.aod.service";
-        p.all = function(s,t,o){p.p(handler + "/aod/getAllDetails/",service).qp({"skip":s,"take":t,"order":o}); return p;}
-        p.allheaders = function(s,t,o){p.p(handler + "/aod/getAllHeader/",service).qp({"skip":s,"take":t,"order":o}); return p;}
-        p.getHeaderByID=function(s){p.p(handler + "/aod/GetDetailsForHeader/",service).qp({"gUAODID":s}); return p;}
-        p.store = function(i){p.p(handler + "/aod/insert",service).b(i); return p;}
-        p.getByID=function(s){p.p(handler + "/aod/searchAODbyID/",service).qp({"skip":s}); return p;}
-        p.update = function(i){p.p(handler + "/aod/update",service).b(i); return p;}
-        p.cancel=function(s){p.p(handler + "/aod/cancelAOD/",service).qp({"gUAODID":s}); return p;}
+        var service="payment";
+        var handler = "/duosoftware.payment.service";
+        p.all = function(s,t,o){p.p(handler + "/payment/getAllPayments/",service).qp({"skip":s,"take":t,"order":o}); return p;}
+        p.getHeaderByID=function(s){p.p(handler + "/payment/GetPaymentDetails/",service).qp({"guPaymentID":s}); return p;}
+        p.store = function(i){p.p(handler + "/payment/makePayment",service).b(i); return p;}
+        p.getByID=function(s){p.p(handler + "/payment/searchPaymentbyID/",service).qp({"guPaymentID":s}); return p;}
         return p;
     }
 

@@ -1,13 +1,9 @@
 {
-  "inventory":{
+  "payment":{
     "domain":"cloudcharge.com/services",
     "url":"d"
   },
   "profile":{
-    "domain":"cloudcharge.com/services",
-    "url":"d"
-  },
-  "product":{
     "domain":"cloudcharge.com/services",
     "url":"d"
   },
