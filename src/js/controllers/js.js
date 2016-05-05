@@ -63,18 +63,18 @@
             //$scope.productlist1=[];
             //$scope.productlist2=[];
 
-            $charge.invoice().all(0,20,'asc').success(function(data)
-            {
-                console.log(data);
-                for (i = 0; i < data.length; i++) {
-                    $scope.invoicelist.push(data[i]);
-
-                }
-
-            }).error(function(data)
-            {
-                console.log(data);
-            })
+            //$charge.invoice().all(0,20,'asc').success(function(data)
+            //{
+            //    console.log(data);
+            //    for (i = 0; i < data.length; i++) {
+            //        $scope.invoicelist.push(data[i]);
+            //
+            //    }
+            //
+            //}).error(function(data)
+            //{
+            //    console.log(data);
+            //})
 
             $charge.profile().all(0,20,'asc').success(function(data)
             {
@@ -106,22 +106,6 @@
 
             }).error(function(data)
             {
-                console.log(data);
-            })
-
-            $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_InventoryAttributes","Store").success(function(data)
-            {
-                console.log(data);
-
-                for(i=0;i<data.length;i++) {
-                    var obj = data[i];
-
-                    $scope.storeslist.push({
-                        storename: obj.RecordFieldData,
-                        storeId: obj.GuRecID
-                    });
-                }
-            }).error(function(data) {
                 console.log(data);
             })
 
@@ -222,6 +206,30 @@
             $scope.returntolist = function ()
             {
                 $window.location.href='#/paymentlist';
+            }
+
+            $scope.loadInvoice = function (customerId)
+            {
+                //debugger;
+                $charge.invoice().getByAccountID(customerId).success(function(data)
+                {
+                    console.log(data);
+
+                    var totbalance=0;
+                    for (i = 0; i < data.length; i++) {
+                        var obj=data[i];
+                        var balance= parseInt(obj.invoiceAmount)-parseInt(obj.paidAmount);
+                        totbalance+=balance;
+                        data[i].balancepayment=balance;
+                    }
+                    data[0].totalbalance=totbalance;
+
+                    $scope.invoicelist=data;
+
+                }).error(function(data)
+                {
+                    console.log(data);
+                })
             }
 
             $scope.receiptcount = 1;

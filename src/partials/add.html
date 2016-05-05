@@ -10,7 +10,7 @@
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Customer</label>
-                                <md-select ng-required="true" name="customer" ng-model="customer_supplier.customer">
+                                <md-select ng-required="true" name="customer" ng-change="loadInvoice(profile.profileId);" ng-model="customer_supplier.customer">
                                     <md-divider></md-divider>
                                     <md-option ng-repeat="profile in profilelist" ng-value="profile">{{profile.profilename}}</md-option>
                                 </md-select>
@@ -80,16 +80,16 @@
                             <md-card layout="row" layout-align="space-between center" style="width:100%;padding:0;margin: 3px;height: 40px;">
                                 <!--<div flex="30"><img src="{{item.business_contact_no}}" style="width:80px;margin-left: 10px;"/></div>-->
                                 <div flex="25" layout="column">
-                                    <label style="font-size: 14px;font-weight: 500;padding-left: 1px;">{{item.invoiceNo}}</label>
+                                    <label style="font-size: 14px;font-weight: 500;padding-left: 50px;">{{item.invoiceNo}}</label>
                                 </div>
                                 <div flex="25" layout="column">
-                                    <label style="font-size: 14px;font-weight: 500;padding-left: 90px;">{{item.invoiceAmount}}</label>
+                                    <label style="font-size: 14px;font-weight: 500;padding-left: 90px;">{{item.invoiceAmount| currency}}</label>
                                 </div>
                                 <div flex="25" layout="column">
-                                    <label style="font-size: 14px;font-weight: 500;padding-left: 30px;">{{item.paidAmount}}</label>
+                                    <label style="font-size: 14px;font-weight: 500;padding-left: 60px;">{{item.paidAmount| currency}}</label>
                                 </div>
                                 <div flex="25" layout="column">
-                                    <label style="font-size: 14px;font-weight: 500;padding-left: 65px;">{{item.subTotal}}</label>
+                                    <label style="font-size: 14px;font-weight: 500;padding-left: 65px;">{{item.balancepayment| currency}}</label>
                                 </div>
 
                             </md-card>
@@ -97,7 +97,9 @@
                     </md-list>
                 </div>
                 <div layout-gt-sm="row" style="background:#bedaea; height: 60px;padding-top: 20px">
-                    <label style="font-size: 20px;font-weight: 600;padding-left: 240px; height: 30px">Total Balance Payments $2130</label>
+                    <label style="font-size: 20px;font-weight: 600;padding-left: 240px; height: 30px">Total Balance Payments</label>
+                    <label style="font-size: 20px;font-weight: 600;padding-left: 100px; height: 30px">{{invoicelist[0].totalbalance| currency}}</label>
+                    <!--<label style="font-size: 20px;font-weight: 600;padding-left: 100px; height: 30px">{{items[0].amount| currency}}</label>-->
                 </div>
                 <div class="section_padding">
                     <div layout-gt-sm="row">

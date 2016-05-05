@@ -126,7 +126,7 @@
         var handler = "/duosoftware.invoice.service";
         p.all = function(s,t,o){p.p(handler + "/invoice/getAll/",service).qp({"skip":s,"take":t,"order":o}); return p;}
         p.store = function(i){p.p(handler + "/invoice/insert",service).b(i); return p;}
-        p.getByID=function(s){p.p(handler + "/invoice/getById/",service).qp({"id":s}); return p;}
+        p.getByAccountID=function(s){p.p(handler + "/invoice/getbyAccountId/",service).qp({"accountid":s}); return p;}
         return p;
     }
 
