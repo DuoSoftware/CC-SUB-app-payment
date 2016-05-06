@@ -10,7 +10,7 @@
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Customer</label>
-                                <md-select ng-required="true" name="customer" ng-change="loadInvoice(profile.profileId);" ng-model="customer_supplier.customer">
+                                <md-select ng-required="true" name="customer" ng-change="loadInvoice(customer_supplier.customer)" ng-model="customer_supplier.customer">
                                     <md-divider></md-divider>
                                     <md-option ng-repeat="profile in profilelist" ng-value="profile">{{profile.profilename}}</md-option>
                                 </md-select>

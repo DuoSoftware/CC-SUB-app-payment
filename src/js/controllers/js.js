@@ -166,7 +166,7 @@
                     console.log(paymentobject);
                     $charge.payment().store(paymentobject).success(function(data){
                         console.log(data);
-                        notifications.toast("Successfully created the Payment Invoice!","success");
+                        notifications.toast("Successfully created the Payment Invoice with : "+data.Data[1],"success");
                         //$mdToast.show({
                         //	template: '<md-toast class="md-toast-success" >Successfully added to Inventory!</md-toast>',
                         //	hideDelay: 2000,
@@ -208,10 +208,12 @@
                 $window.location.href='#/paymentlist';
             }
 
-            $scope.loadInvoice = function (customerId)
+            $scope.loadInvoice = function (customer)
             {
                 //debugger;
-                $charge.invoice().getByAccountID(customerId).success(function(data)
+                var cusId=customer.profileId;
+                //console.log(cusId);
+                $charge.invoice().getByAccountID(cusId).success(function(data)
                 {
                     console.log(data);
 
@@ -229,6 +231,7 @@
                 }).error(function(data)
                 {
                     console.log(data);
+                    $scope.invoicelist=[];
                 })
             }
 
@@ -264,12 +267,16 @@
                 $charge.payment().all(skip,take,'asc').success(function(data)
                 {
                     console.log(data);
-                    skip += take;
-                    for (i = 0; i < data.length; i++) {
-                        $scope.items.push(data[i]);
 
+                    if($scope.loading)
+                    {
+                        skip += take;
+                        for (i = 0; i < data.length; i++) {
+                            $scope.items.push(data[i]);
+
+                        }
+                        $scope.loading = false;
                     }
-                    $scope.loading = false;
 
                 }).error(function(data)
                 {
