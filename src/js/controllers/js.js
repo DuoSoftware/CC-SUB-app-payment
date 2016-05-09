@@ -23,7 +23,7 @@
 				.state('add', {
 					url: '/add',
 					templateUrl: 'partials/add.html',
-					controller: 'AddCtrl'
+					controller: 'AddCtrl as ctrl'
 				})
 
 				.state('paymentlist', {
@@ -76,38 +76,68 @@
             //    console.log(data);
             //})
 
-            $charge.profile().all(0,20,'asc').success(function(data)
-            {
-                console.log(data);
+            //$charge.profile().all(0,100,'asc').success(function(data){
+            //
+            //    for (var i = 0; i < data.length; i++) {
+            //        var obj=data[i];
+            //
+            //        if(obj.profile_type=='Business')
+            //        {
+            //            $scope.profilelist.push({
+            //                display : obj.business_name,
+            //                value : {profilename : obj.business_name.toLowerCase(), profileId : obj.profileId, othername : obj.business_contact_name, profile_type : obj.profile_type}
+            //            });
+            //        }
+            //        else if(obj.profile_type=='Individual')
+            //        {
+            //            $scope.profilelist.push({
+            //                display : obj.first_name,
+            //                value : {profilename : obj.first_name.toLowerCase(), profileId : obj.profileId, othername : obj.last_name, profile_type : obj.profile_type}
+            //            });
+            //        }
+            //
+            //    }
+            //
+            //    //for (i = 0, len = data.length; i<len; ++i){
+            //    //    $scope.allBanks.push ({display: data[i].BankName, value:{TenantID:data[i].TenantID, value:data[i].BankName.toLowerCase()}});
+            //    //}
+            //
+            //}).error(function(data){
+            //    alert ("Error getting all banks");
+            //});
 
-                for (var i = 0; i < data.length; i++) {
-                    var obj=data[i];
-
-                    if(obj.profile_type=='Business')
-                    {
-                        $scope.profilelist.push({
-                            profilename : obj.business_name,
-                            profileId : obj.profileId,
-                            othername : obj.business_contact_name,
-                            profile_type : obj.profile_type
-                        });
-                    }
-                    else if(obj.profile_type=='Individual')
-                    {
-                        $scope.profilelist.push({
-                            profilename : obj.first_name,
-                            profileId : obj.profileId,
-                            othername : obj.last_name,
-                            profile_type : obj.profile_type
-                        });
-                    }
-
-                }
-
-            }).error(function(data)
-            {
-                console.log(data);
-            })
+            //$charge.profile().all(0,20,'asc').success(function(data)
+            //{
+            //    console.log(data);
+            //
+            //    for (var i = 0; i < data.length; i++) {
+            //        var obj=data[i];
+            //
+            //        if(obj.profile_type=='Business')
+            //        {
+            //            $scope.profilelist.push({
+            //                profilename : obj.business_name,
+            //                profileId : obj.profileId,
+            //                othername : obj.business_contact_name,
+            //                profile_type : obj.profile_type
+            //            });
+            //        }
+            //        else if(obj.profile_type=='Individual')
+            //        {
+            //            $scope.profilelist.push({
+            //                profilename : obj.first_name,
+            //                profileId : obj.profileId,
+            //                othername : obj.last_name,
+            //                profile_type : obj.profile_type
+            //            });
+            //        }
+            //
+            //    }
+            //
+            //}).error(function(data)
+            //{
+            //    console.log(data);
+            //})
 
 			//$scope.items = uiInitilize.insertIndex(this.items);
 
@@ -143,6 +173,76 @@
 
 		app.controller('AddCtrl', function ($scope, $mdDialog, $window, $mdToast, $charge, notifications) {
 
+            var self = this;
+            // list of `state` value/display objects
+            //self.tenants        = loadAll();
+            self.selectedItem  = null;
+            self.searchText    = null;
+            self.querySearch   = querySearch;
+            // ******************************
+            // Internal methods
+            // ******************************
+            /**
+             * Search for tenants... use $timeout to simulate
+             * remote dataservice call.
+             */
+
+            function querySearch (query) {
+
+                //Custom Filter
+                var results=[];
+                for (i = 0, len = $scope.profilelist.length; i<len; ++i){
+                    //console.log($scope.allBanks[i].value.value);
+
+                    if($scope.profilelist[i].value.profilename.indexOf(query.toLowerCase()) !=-1)
+                    {
+                        results.push($scope.profilelist[i]);
+                    }
+                }
+                return results;
+            }
+            $scope.profilelist = [];
+
+            var skipprofiles=0;
+            var takeprofiles=100;
+
+            function loadAll() {
+
+                $charge.profile().all(skipprofiles,takeprofiles,'asc').success(function(data){
+                    console.log(data);
+                    skipprofiles+=takeprofiles;
+                    for (var i = 0; i < data.length; i++) {
+                        var obj=data[i];
+
+                        if(obj.profile_type=='Business')
+                        {
+                            $scope.profilelist.push({
+                                display : obj.business_name,
+                                value : {profilename : obj.business_name.toLowerCase(), profileId : obj.profileId, othername : obj.business_contact_name, profile_type : obj.profile_type}
+                            });
+                        }
+                        else if(obj.profile_type=='Individual')
+                        {
+                            $scope.profilelist.push({
+                                display : obj.first_name,
+                                value : {profilename : obj.first_name.toLowerCase(), profileId : obj.profileId, othername : obj.last_name, profile_type : obj.profile_type}
+                            });
+                        }
+
+                    }
+                    loadAll();
+
+                    //for (i = 0, len = data.length; i<len; ++i){
+                    //    $scope.allBanks.push ({display: data[i].BankName, value:{TenantID:data[i].TenantID, value:data[i].BankName.toLowerCase()}});
+                    //}
+
+                }).error(function(data){
+                    //alert ("Error getting all banks");
+                });
+
+            }
+            loadAll();
+
 
 			$scope.submit = function () {
 				if ($scope.editForm.$valid == true) {
@@ -155,12 +255,12 @@
 
                     var selecteduser=$scope.customer_supplier.customer;
 
-                    $scope.content.customer=selecteduser.profilename;
-                    $scope.content.guCustomerID=selecteduser.profileId;
+                    $scope.content.customer=selecteduser.value.profilename;
+                    $scope.content.guCustomerID=selecteduser.value.profileId;
                     $scope.content.guTranID="11";
                     $scope.content.createdUser="admin";
                     $scope.content.createdDate = currentdate;
-                    $scope.content.guAccountID = selecteduser.profileId;
+                    $scope.content.guAccountID = selecteduser.value.profileId;
 
                     var paymentobject = $scope.content;
                     console.log(paymentobject);
@@ -211,7 +311,7 @@
             $scope.loadInvoice = function (customer)
             {
                 //debugger;
-                var cusId=customer.profileId;
+                var cusId=customer.value.profileId;
                 //console.log(cusId);
                 $charge.invoice().getByAccountID(cusId).success(function(data)
                 {
