@@ -358,6 +358,7 @@
             var editfalse = true;
             $scope.editOff = editfalse;
 
+            $scope.items=[];
             var skip=0;
             var take=10;
             $scope.loading = true;
