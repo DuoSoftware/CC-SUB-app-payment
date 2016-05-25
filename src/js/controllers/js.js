@@ -266,16 +266,23 @@
                     console.log(paymentobject);
                     $charge.payment().store(paymentobject).success(function(data){
                         console.log(data);
-                        notifications.toast("Successfully created the Payment Invoice with : "+data.Data[1],"success");
+                        if(data.id!="")
+                        {
+                            notifications.toast("Successfully created the Payment Invoice with : "+data.id,"success");
+                        }
                         //$mdToast.show({
                         //	template: '<md-toast class="md-toast-success" >Successfully added to Inventory!</md-toast>',
                         //	hideDelay: 2000,
                         //	position: 'bottom right'
                         //});
-
-                        $window.location.href='#/paymentlist';
+                        var millisecondsToWait = 500;
+                        setTimeout(function() {
+                            $window.location.reload();
+                        }, millisecondsToWait);
+                        //$window.location.href='#/paymentlist';
 
                     }).error(function(data){
+                        //debugger;
                         console.log(data);
                     })
 
@@ -311,9 +318,9 @@
             $scope.loadInvoice = function (customer)
             {
                 //debugger;
-                var cusId=customer.value.profileId;
+                var cusId=customer.value.profileId;//"2293";
                 //console.log(cusId);
-                $charge.invoice().getByAccountID(cusId).success(function(data)
+                $charge.invoice().getByAccountID(cusId).success(function(data) //all(0,10,'asc').success(function(data)
                 {
                     console.log(data);
 
