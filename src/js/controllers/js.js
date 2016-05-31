@@ -243,6 +243,10 @@
             }
             loadAll();
 
+            $scope.today=new Date().toDateString();
+            $scope.content={};
+            $scope.content.paymentDate=moment(new Date().toISOString()).format('LL');
+
 
 			$scope.submit = function () {
 				if ($scope.editForm.$valid == true) {
@@ -421,50 +425,24 @@
             }
 
             $scope.cancelorder = function (editedprofile) {
-                $scope.editOff = true;
 
-                if(editedprofile.inventory_type == "Receipt")
-                {
-                    //var updatedinventoryobject = editedprofile;
-                    $charge.inventory().cancel(editedprofile.gUGRNID).success(function(data){
-                        console.log(data);
+                $charge.payment().cancel(editedprofile.paymentNo).success(function(data){
+                    console.log(data);
 
-                        $mdToast.show({
-                            template: '<md-toast class="md-toast-success" >Order has been cancelled!</md-toast>',
-                            hideDelay: 2000,
-                            position: 'bottom right'
-                        });
+                    $mdToast.show({
+                        template: '<md-toast class="md-toast-success" >Payment has been cancelled!</md-toast>',
+                        hideDelay: 2000,
+                        position: 'bottom right'
+                    });
 
-                    }).error(function(data){
-                        console.log(data);
-                        $mdToast.show({
-                            template: '<md-toast class="md-toast-success" >Order cancel failed!</md-toast>',
-                            hideDelay: 2000,
-                            position: 'bottom right'
-                        });
-                    })
-                }
-                else if(editedprofile.inventory_type == "Issue")
-                {
-                    //var updatedaodobject = editedprofile;
-                    $charge.aod().cancel(editedprofile.gUAODID).success(function(data){
-                        console.log(data);
-
-                        $mdToast.show({
-                            template: '<md-toast class="md-toast-success" >Order has been cancelled!</md-toast>',
-                            hideDelay: 2000,
-                            position: 'bottom right'
-                        });
-
-                    }).error(function(data){
-                        console.log(data);
-                        $mdToast.show({
-                            template: '<md-toast class="md-toast-success" >Order cancel failed!</md-toast>',
-                            hideDelay: 2000,
-                            position: 'bottom right'
-                        });
-                    })
-                }
+                }).error(function(data){
+                    console.log(data);
+                    $mdToast.show({
+                        template: '<md-toast class="md-toast-success" >Payment cancel failed!</md-toast>',
+                        hideDelay: 2000,
+                        position: 'bottom right'
+                    });
+                })
 
             }
 

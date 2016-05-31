@@ -35,15 +35,15 @@
                             <!--</md-input-container>-->
                         </div>
                         <div layout-gt-sm="row">
-                            <md-input-container class="md-block" flex-gt-sm>
-                                <label>Payment No</label>
-                                <input ng-required="true" minlength="null" md-maxlength="null" type="" name="paymentNo" ng-pattern="" ng-model="content.paymentNo">
-                            </md-input-container>
-                            <div class="md-block" flex="5">
-                                <!--space keeper-->
-                            </div>
+                            <!--<md-input-container class="md-block" flex-gt-sm>-->
+                                <!--<label>Payment No</label>-->
+                                <!--<input ng-required="true" minlength="null" md-maxlength="null" type="" name="paymentNo" ng-pattern="" ng-model="content.paymentNo">-->
+                            <!--</md-input-container>-->
+                            <!--<div class="md-block" flex="5">-->
+                                <!--&lt;!&ndash;space keeper&ndash;&gt;-->
+                            <!--</div>-->
                             <div class="md-block" flex-gt-sm>
-                                <md-date-picker model="content.paymentDate" label="Payment Date"/>
+                                <md-date-picker model="content.paymentDate" ng-init="content.paymentDate=today;" style="width: 300px;" label="Payment Date"/>
                             </div>
                         </div>
                         <div layout-gt-sm="row">
@@ -56,6 +56,13 @@
                                     <!--<md-option ng-repeat="profile in profilelist" ng-value="profile">{{profile.profilename}}</md-option>-->
                                 </md-select>
                                 <!--<input ng-required="true" minlength="null" md-maxlength="null" type="" name="supplier" ng-pattern="" style="width: 550px;" ng-model="content.supplier">-->
+                            </md-input-container>
+                            <div class="md-block" flex="5">
+                            <!--space keeper-->
+                            </div>
+                            <md-input-container ng-show="content.paymentMethod=='Cheque'" class="md-block" flex-gt-sm>
+                                <label>Cheque No</label>
+                                <input ng-required="false" minlength="null" md-maxlength="null" type="" name="chequeNo" ng-pattern="" ng-model="content.chequeNo">
                             </md-input-container>
                         </div>
                     </div>
@@ -134,7 +141,7 @@
                     <div layout-gt-sm="row">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Bank Charges</label>
-                            <input ng-required="true" minlength="null" md-maxlength="null" style="width: 180px;" type="number" name="bankCharges" ng-pattern="" ng-model="content.bankCharges">
+                            <input ng-required="false" minlength="null" md-maxlength="null" style="width: 180px;" type="number" name="bankCharges" ng-pattern="" ng-model="content.bankCharges">
                         </md-input-container>
                         <div class="md-block" flex="5">
                             <!--space keeper-->

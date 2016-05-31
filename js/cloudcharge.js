@@ -106,6 +106,7 @@
         p.getHeaderByID=function(s){p.p(handler + "/payment/GetPaymentDetails/",service).qp({"guPaymentID":s}); return p;}
         p.store = function(i){p.p(handler + "/payment/makePayment",service).b(i); return p;}
         p.getByID=function(s){p.p(handler + "/payment/searchPaymentbyID/",service).qp({"guPaymentID":s}); return p;}
+        p.cancel=function(s){p.p(handler + "/payment/cancelPayment/",service).qp({"paymentNo":s}); return p;}
         return p;
     }
 
