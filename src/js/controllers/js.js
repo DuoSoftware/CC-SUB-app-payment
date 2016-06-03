@@ -22,13 +22,13 @@
 
 				.state('add', {
 					url: '/add',
-					templateUrl: 'partials/add.html',
+					templateUrl: 'partials/add1.html',
 					controller: 'AddCtrl as ctrl'
 				})
 
 				.state('paymentlist', {
 					url: '/paymentlist',
-					templateUrl: 'partials/paymentlist.html',
+					templateUrl: 'partials/paymentlist1.html',
 					controller: 'PaymentListCtrl'
 				})
 
@@ -366,6 +366,13 @@
 
 		app.controller('PaymentListCtrl', function ($scope, $mdDialog, $window, $mdToast, $charge) {
 
+            $scope.isLoading = true;
+            $scope.viewCount = 0;
+
+            $scope.options = {
+                scrollbar: false
+            };
+
             var editfalse = true;
             $scope.editOff = editfalse;
 
@@ -388,6 +395,7 @@
 
                         }
                         $scope.loading = false;
+                        $scope.isLoading = false;
                     }
 
                 }).error(function(data)
@@ -404,11 +412,25 @@
 
                 $scope.editOff = true;
                 //debugger;
+                for (var i = 0; i < $scope.items.length; i++) {
+                    $scope.items[i].select = false;
+                }
+
+                $scope.viewCount = 1;
+                item.select = true;
+                //$scope.items[i].select = true;
+
+                if ($scope.viewCount == 0) {
+                    $("#ajdDetails").removeClass('selected-row');
+
+                } else {
+                    document.getElementById("ajdDetails").classList.add("selected-row");
+                }
 
                 $scope.selectedprofile = item;
 
-                angular.element('#viewAllWhiteframe').css('margin', '0');
-                angular.element('#viewAllWhiteframe').css('max-width', '750px');
+                //angular.element('#viewAllWhiteframe').css('margin', '0');
+                //angular.element('#viewAllWhiteframe').css('max-width', '750px');
 
             }
 

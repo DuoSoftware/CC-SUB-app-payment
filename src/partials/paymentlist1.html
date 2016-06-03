@@ -1,0 +1,215 @@
+<div ng-controller="PaymentListCtrl">
+    <div class="main-wrap animated ">
+        <div class="header-layout heder-layout-abj001  animated fadeIn" ng-if="viewCount!=0">
+            <div layout="row" layout-align="center center" layout-wrap>
+                <div flex="85" class="header-bg-blue header-cloudC-000 test">
+                    <div class="md-toolbar-tools header-bg-blue p-0">
+                        <div class="header-content">
+                            <div class="logo-left">
+                                <img src="../asset/images/adjustments_add_118x99.png">
+                            </div>
+                            <div class="text-wrap">
+                                <h1 class="font-Lato text-white-color">Payment
+                                    <i class="ti-close last">
+                                        <md-tooltip md-direction="bottom">
+                                            close
+                                        </md-tooltip>
+                                    </i>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div layout="row" layout-align="center center" layout-wrap>
+
+
+            <!-- left layout -->
+            <div flex="40" id="adjContent">
+
+
+                <div layout="column" class="sd">
+                    <div class="header-layout" ng-show="viewCount==0">
+                        <div layout-align="center center" layout-wrap>
+                            <div class="header-bg-blue header-cloudC-000">
+                                <div class="md-toolbar-tools header-bg-blue p-0">
+                                    <div class="header-content">
+                                        <div class="logo-left">
+                                            <img src="../asset/images/adjustments_add_118x99.png">
+                                        </div>
+                                        <div class="text-wrap">
+                                            <h1 class="font-Lato text-white-color">Payment
+                                                <i class="ti-close last">
+                                                    <md-tooltip md-direction="bottom">
+                                                        close
+                                                    </md-tooltip>
+                                                </i>
+                                            </h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="search-wrap">
+                        <md-input-container class="md-block p-l-50 validation-in" flex-gt-sm>
+                            <label>Search</label>
+                            <input ng-model="searchText" class="adjus-form">
+                        </md-input-container>
+                        <div class="search-in">
+                            <i class="ti-search"></i>
+                        </div>
+                    </div>
+                    <md-content flex layout-padding class="overflow-hidden p-0">
+                        <div class="body-content-wrap p-0" id="ajdDetails">
+                            <div class="table-view table-header" layout="row" layout-wrap>
+                                <div flex="25">
+                                    Customer
+                                </div>
+                                <div flex="20" class="text-left ">
+                                    Payment No
+                                </div>
+                                <div flex="20" class="text-left">
+                                    Payment Date
+                                </div>
+                                <div flex="20" class="text-right">
+                                    Amount
+                                </div>
+                                <div flex="15" class="text-right">
+                                    Payment Method
+                                </div>
+                            </div>
+                            <div class="table-data-load" ng-show="isLoading">
+                                <svg class="spinner-container" width="50px" height="50px" viewBox="0 0 52 52">
+                                    <circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>
+                                </svg>
+                            </div>
+                            <div class="table-content mac-style" slim-scroll data-options="{'keepFocus': true}">
+                                <md-card layout="row" class="table-card animated " layout-wrap
+                                         ng-class="row.select==true?'selectedThis':'unSelect'"
+                                         ng-click="editlistitem(row)"
+                                         ng-repeat="row in items | filter:searchText">
+                                    <div flex="25">
+                                        {{row.customer}}
+                                    </div>
+                                    <div flex="20" class="text-left">
+                                        {{row.paymentNo}}
+                                    </div>
+                                    <div flex="20" class="text-left">
+                                        {{row.paymentDate.split('T')[0].split(' ')[0]}}
+                                    </div>
+                                    <div flex="20" class="text-right">
+                                        {{row.amount| currency}}
+                                    </div>
+                                    <div flex="15" class="text-right" >
+                                        {{row.paymentMethod}}
+                                    </div>
+                                </md-card>
+                            </div>
+                            <div class="add-new hvr-pop">
+                                <i class="ti-plus"></i>
+                            </div>
+                        </div>
+                    </md-content>
+                </div>
+            </div><!-- end -->
+            <!-- right wrap-->
+            <div flex="45" class="animated fadeIn" id="adjDetails" ng-if="selectedprofile.paymentNo">
+                <div class="right-layout ">
+                    <div layout="row">
+                        <div layout="row" class="top-header">
+                            <div flex="50">
+                                <div class="adj-left-text">
+                                    <h1>{{selectedprofile.customer}}</h1>
+                                    <small>Payment No : {{selectedprofile.paymentNo}}</small>
+                                </div>
+                            </div>
+                            <div flex="50">
+                                <div class="adj-right-text">
+                                    <small>Payment Amount</small>
+                                    <h1>{{selectedprofile.amount| currency}}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div layout="column" flex="100">
+                        <div class="item-details p-t-30" layout="row">
+                            <div class="item row-gray" layout="row">
+                                <div flex class="text-left">
+                                    <h5 class="text-gray-color font-300">Payment No</h5>
+                                </div>
+                                <div flex class="text-right">
+                                    <h5>{{selectedprofile.paymentNo}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-details" layout="column">
+                            <div class="item" layout="row">
+                                <div flex class="text-left">
+                                    <h5 class="text-gray-color font-300">Payment Date</h5>
+                                </div>
+                                <div flex class="text-right">
+                                    <h5>{{selectedprofile.paymentDate.split('T')[0].split(' ')[0]}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-details " layout="row">
+                            <div class="item row-gray" layout="row">
+                                <div flex class="text-left">
+                                    <h5 class="text-gray-color font-300">Payment Method</h5>
+                                </div>
+                                <div flex class="text-right">
+                                    <h5>{{selectedprofile.paymentMethod}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-details " layout="row">
+                            <div class="item" layout="row">
+                                <div flex class="text-left">
+                                    <h5 class="text-gray-color font-300">Bank Charges</h5>
+                                </div>
+                                <div flex class="text-right">
+                                    <h5>{{selectedprofile.bankCharges| currency}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="item-details " layout="row">-->
+                            <!--<div class="item row-gray" layout="row">-->
+                                <!--<div flex class="text-left">-->
+                                    <!--<h5 class="text-gray-color font-300">Adjustment Reason</h5>-->
+                                <!--</div>-->
+                                <!--<div flex class="text-right">-->
+                                    <!--<h5>Lorem ipsum</h5>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="item-details " layout="row">-->
+                            <!--<div class="item" layout="row">-->
+                                <!--<div flex class="text-left">-->
+                                    <!--<h5 class="text-gray-color font-300">Invoice Ref NO</h5>-->
+                                <!--</div>-->
+                                <!--<div flex class="text-right">-->
+                                    <!--<h5>3223</h5>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                    <div layout="column">
+                        <h5 class="text-gray-color font-300 m-0 note-text">Note</h5>
+                        <div class="note-wrap">
+                            <p>{{selectedprofile.note}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div><!-- end -->
+        </div>
+    </div>
+
+</div>
+
+</div>
