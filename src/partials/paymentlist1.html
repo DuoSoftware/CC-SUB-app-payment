@@ -124,7 +124,15 @@
                                 <div class="adj-left-text">
                                     <h1>{{selectedprofile.customer}}</h1>
                                     <small>Payment No : {{selectedprofile.paymentNo}}</small>
+                                    <div>
+                                        <md-button class="md-icon-button" aria-label="More" ng-hide="selectedprofile.status=='Cancelled'" ng-click="cancelorder(selectedprofile);">
+                                            <ng-md-icon icon="delete" class="tooltip-detail" size="20px"></ng-md-icon>
+                                            <md-tooltip md-direction="right">Cancel Payment</md-tooltip>
+                                        </md-button>
+                                        <label layout="row" class="label-wrap-001" ng-show="selectedprofile.status=='Cancelled'">Status: {{selectedprofile.status}}</label>
+                                    </div>
                                 </div>
+
                             </div>
                             <div flex="50">
                                 <div class="adj-right-text">

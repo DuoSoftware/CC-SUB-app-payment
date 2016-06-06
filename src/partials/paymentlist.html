@@ -101,11 +101,11 @@
                                 <!--<ng-md-icon icon="delete" style="margin-top: 18px;margin-right: 18px;fill:#B4B4B4" size="20px"></ng-md-icon>-->
                                 <!--<md-tooltip md-direction="right">Cancel Order</md-tooltip>-->
                             <!--</md-button>-->
-                            <md-button class="md-icon-button" aria-label="More" ng-hide="selectedprofile.status=='Canceled'" ng-click="cancelorder(selectedprofile);">
+                            <md-button class="md-icon-button" aria-label="More" ng-hide="selectedprofile.status=='Cancelled'" ng-click="cancelorder(selectedprofile);">
                                 <ng-md-icon icon="delete" style="margin-top: 18px;margin-right: 18px;fill:#B4B4B4" size="20px"></ng-md-icon>
                                 <md-tooltip md-direction="right">Cancel Payment</md-tooltip>
                             </md-button>
-                            <label layout="row" ng-show="selectedprofile.status=='Canceled'" style="font-size: 14px;color:red;margin-top:5px">Status: {{selectedprofile.status}}</label>
+                            <label layout="row" ng-show="selectedprofile.status=='Cancelled'" style="font-size: 14px;color:red;margin-top:5px">Status: {{selectedprofile.status}}</label>
                         </div>
                     </div>
                     <div flex="30" layout="column" layout-align="end end">

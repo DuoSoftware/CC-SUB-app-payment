@@ -545,3 +545,15 @@ md-input-container > label {
     font-weight: 600;
     height: 30px;
 }
+
+.label-wrap-001 {
+    font-size: 14px;
+    color: red;
+    margin-top: 5px;
+}
+
+.tooltip-detail {
+    margin-top: 18px;
+    margin-right: 18px;
+    fill:#B4B4B4;
+}
