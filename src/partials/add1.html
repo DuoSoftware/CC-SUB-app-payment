@@ -80,44 +80,44 @@
                         <label>Invoice Details</label>
                     </div>
                     <div class="sub-header-table-wrap" layout="row" layout-wrap>
-                        <div flex="25">
+                        <div flex="35" class="p-l-15">
                             Invoice No:
                         </div>
-                        <div flex="25" class="text-left ">
+                        <div flex="25" class="text-left">
                             Invoice Amount
                         </div>
-                        <div flex="25" class="text-left">
+                        <div flex="20" class="text-left">
                             Paid Amount
                         </div>
-                        <div flex="25" class="text-right">
+                        <div flex="20" class="text-right">
                             Balance Payment
                         </div>
                     </div>
                     <div>
                         <md-list style="height:250px;overflow-y: scroll;">
                             <md-list-item  ng-repeat="item in invoicelist"  style="outline:none;">
-                                <md-card layout="row" layout-align="space-between center" style="width:100%;padding:0;margin: 3px;height: 40px;">
+                                <md-card layout="row" class="md-card-wrap" layout-align="space-between center">
                                     <!--<div flex="30"><img src="{{item.business_contact_no}}" style="width:80px;margin-left: 10px;"/></div>-->
                                     <div flex="25" layout="column">
-                                        <label style="font-size: 14px;font-weight: 500;padding-left: 50px;">{{item.invoiceNo}}</label>
+                                        <label class="md-card-label-wrap">{{item.invoiceNo}}</label>
                                     </div>
                                     <div flex="25" layout="column">
-                                        <label style="font-size: 14px;font-weight: 500;padding-left: 90px;">{{item.invoiceAmount| currency}}</label>
+                                        <label class="md-card-label-wrap">{{item.invoiceAmount| currency}}</label>
                                     </div>
                                     <div flex="25" layout="column">
-                                        <label style="font-size: 14px;font-weight: 500;padding-left: 60px;">{{item.paidAmount| currency}}</label>
+                                        <label class="md-card-label-wrap">{{item.paidAmount| currency}}</label>
                                     </div>
                                     <div flex="25" layout="column">
-                                        <label style="font-size: 14px;font-weight: 500;padding-left: 65px;">{{item.balancepayment| currency}}</label>
+                                        <label class="md-card-label-wrap">{{item.balancepayment| currency}}</label>
                                     </div>
 
                                 </md-card>
                             </md-list-item >
                         </md-list>
                     </div>
-                    <div layout-gt-sm="row" style="background:#bedaea; height: 60px;padding-top: 20px">
-                        <label style="font-size: 20px;font-weight: 600;padding-left: 200px; height: 30px">Total Balance Payments</label>
-                        <label style="font-size: 20px;font-weight: 600;padding-left: 100px; height: 30px">{{invoicelist[0].totalbalance| currency}}</label>
+                    <div layout-gt-sm="row" class="calc-detail-wrap">
+                        <label class="calc-detail-label p-l-100">Total Balance Payments</label>
+                        <label class="calc-detail-label p-l-100">{{invoicelist[0].totalbalance| currency}}</label>
                         <!--<label style="font-size: 20px;font-weight: 600;padding-left: 100px; height: 30px">{{items[0].amount| currency}}</label>-->
                     </div>
 
@@ -155,10 +155,12 @@
 
             <div class="form-footer-btn-wrap">
                 <div layout-gt-sm="row" class="p-0">
-                    <a flex="50" class="md-raise btn btn-cancel" ng-click="returntolist()">cancel
-                    </a>
-                    <a flex="50" class="md-raise btn btn-submit" type="submit" ng-click="showListBottomSheet()">submit
-                    </a>
+                    <!--<a flex="50" class="md-raise btn btn-cancel" ng-click="returntolist()">cancel-->
+                    <!--</a>-->
+                    <!--<a flex="50" class="md-raise btn btn-submit" type="submit" ng-click="showListBottomSheet()">submit-->
+                    <!--</a>-->
+                    <md-button flex="50" class="md-raise btn btn-cancel" ng-click="returntolist();" type="button">CANCEL</md-button>
+                    <md-button flex="50" class="md-raise btn btn-submit" ng-disabled="submitted" type="submit">SUBMIT</md-button>
                 </div>
             </div>
             </form>
