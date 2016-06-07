@@ -86,11 +86,12 @@
                                     <circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>
                                 </svg>
                             </div>
-                            <div class="table-content mac-style" slim-scroll data-options="{'keepFocus': true}">
+                            <!--class="table-content mac-style" slim-scroll data-options="{'keepFocus': true}"-->
+                            <div class="table-content mac-style" when-scrolled="more()" style="height:500px;overflow-y: scroll;" slim-scroll data-options="{'keepFocus': true}">
                                 <md-card layout="row" class="table-card animated " layout-wrap
                                          ng-class="row.select==true?'selectedThis':'unSelect'"
                                          ng-click="editlistitem(row)"
-                                         ng-repeat="row in items | filter:searchText">
+                                         ng-repeat="row in items | filter:searchText | orderBy:'-paymentNo'">
                                     <div flex="25">
                                         {{row.customer}}
                                     </div>
@@ -228,7 +229,7 @@
         <md-fab-trigger>
             <md-button aria-label="menu" class="md-fab " style="background-color:#e64a19;" href="#/add">
                 <md-icon md-svg-src="../img/ic_add_24px.svg" style="width:30px;" ></md-icon>
-                <md-tooltip md-direction="left">Add Profile</md-tooltip>
+                <md-tooltip md-direction="bottom">Add Profile</md-tooltip>
             </md-button>
         </md-fab-trigger>
         <md-fab-actions>
