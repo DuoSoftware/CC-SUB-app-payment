@@ -468,6 +468,14 @@
 
             }
 
+            $scope.printDiv = function(divName) {
+                var printContents = document.getElementById(divName).innerHTML;
+                var popupWin = window.open('', '_blank', 'width=1800,height=700');
+                popupWin.document.open();
+                popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</body></html>');
+                popupWin.document.close();
+            }
+
 
 		})//END OF ProfListCtrl
 
