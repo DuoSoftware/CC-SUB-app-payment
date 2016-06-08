@@ -222,7 +222,7 @@
                 <div style="display: none">
                     <div style="background-color: white" id="paymentDiv">
 
-                        <h2> <u>Invoice Details </u></h2>
+                        <h2> <u>Payment Details </u></h2>
 
                         <table id="paymentDetails" style="border: #080808">
                             <tr>
@@ -273,38 +273,95 @@
 
                         <br/>
 
-                        <table id="invoiceDetails" style="border: #080808;width: 60%">
-                            <!--<tr >-->
-                                <th style="border-bottom: solid">
-                                    Payment Date
-                                </th>
-                                <th style="border-bottom: solid">
-                                    Payment Method
-                                </th>
-                                <th style="border-bottom: solid">
-                                    Bank Charges
-                                </th>
-                                <th style="border-bottom: solid">
-                                    Note
-                                </th>
+                        <!--<table id="invoiceDetails" style="border: #080808;width: 60%">-->
+                            <!--&lt;!&ndash;<tr >&ndash;&gt;-->
+                                <!--<th style="border-bottom: solid">-->
+                                    <!--Payment Date-->
+                                <!--</th>-->
+                                <!--<th style="border-bottom: solid">-->
+                                    <!--Payment Method-->
+                                <!--</th>-->
+                                <!--<th style="border-bottom: solid">-->
+                                    <!--Bank Charges-->
+                                <!--</th>-->
+                                <!--<th style="border-bottom: solid">-->
+                                    <!--Note-->
+                                <!--</th>-->
+                            <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+
+                            <!--<tr>-->
+                                <!--<td align="center">-->
+                                    <!--{{selectedprofile.paymentDate.split('T')[0].split(' ')[0]}}-->
+                                <!--</td>-->
+                                <!--<td align="center">-->
+                                    <!--{{selectedprofile.paymentMethod}}-->
+                                <!--</td>-->
+                                <!--<td align="center">-->
+                                    <!--{{selectedprofile.bankCharges| currency}}-->
+                                <!--</td>-->
+                                <!--<td align="center">-->
+                                    <!--{{selectedprofile.note}}-->
+                                <!--</td>-->
+
                             <!--</tr>-->
+                        <!--</table>-->
 
-                            <tr>
-                                <td align="center">
-                                    {{selectedprofile.paymentDate.split('T')[0].split(' ')[0]}}
-                                </td>
-                                <td align="center">
-                                    {{selectedprofile.paymentMethod}}
-                                </td>
-                                <td align="center">
-                                    {{selectedprofile.bankCharges| currency}}
-                                </td>
-                                <td align="center">
-                                    {{selectedprofile.note}}
-                                </td>
+                        <div layout="row">
+                            <div layout="row" class="top-header">
+                                <!--<div flex="50">-->
+                                    <!--<div class="adj-left-text">-->
+                                        <!--<h1>{{selectedprofile.customer}}</h1>-->
+                                        <!--<small>Payment No : {{selectedprofile.paymentNo}}</small>-->
+                                    <!--</div>-->
 
-                            </tr>
-                        </table>
+                                <!--</div>-->
+                                <div flex="50">
+                                    <div class="adj-right-text">
+                                        <small>Payment Amount</small>
+                                        <h1>{{selectedprofile.amount| currency}}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="column" flex="100">
+                            <div class="item-details" layout="column">
+                                <div class="item" layout="row">
+                                    <div flex class="text-left">
+                                        <h5 class="text-gray-color font-300">Payment Date</h5>
+                                    </div>
+                                    <div flex class="text-right p-l-50">
+                                        <h5>{{selectedprofile.paymentDate.split('T')[0].split(' ')[0]}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-details " layout="row">
+                                <div class="item row-gray" layout="row">
+                                    <div flex class="text-left">
+                                        <h5 class="text-gray-color font-300">Payment Method</h5>
+                                    </div>
+                                    <div flex class="text-right p-l-50">
+                                        <h5>{{selectedprofile.paymentMethod}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-details " layout="row">
+                                <div class="item" layout="row">
+                                    <div flex class="text-left">
+                                        <h5 class="text-gray-color font-300">Bank Charges</h5>
+                                    </div>
+                                    <div flex class="text-right p-l-50">
+                                        <h5>{{selectedprofile.bankCharges| currency}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="column">
+                            <h5 class="text-gray-color font-300 m-0 note-text">Note</h5>
+                            <div class="note-wrap">
+                                <p>{{selectedprofile.note}}
+                                </p>
+                            </div>
+                        </div>
 
                     </div>
 
