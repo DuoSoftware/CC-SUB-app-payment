@@ -86,8 +86,8 @@
                                     <circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>
                                 </svg>
                             </div>
-                            <!--class="table-content mac-style" slim-scroll data-options="{'keepFocus': true}"-->
-                            <div class="table-content mac-style" when-scrolled="more()" style="height:500px;overflow-y: scroll;" slim-scroll data-options="{'keepFocus': true}">
+                            <div ng-slimscroll height="500" when-scrolled="more()" always-visible="false" border-radius="5px" opacity="0.2" position="right" enabled="ctrl.enabled">
+                            <!--<div class="table-content mac-style" when-scrolled="more()" style="height:500px;overflow-y: scroll;" slim-scroll data-options="{'keepFocus': true}">-->
                                 <md-card layout="row" class="table-card animated " layout-wrap
                                          ng-class="row.select==true?'selectedThis':'unSelect'"
                                          ng-click="editlistitem(row)"

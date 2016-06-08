@@ -1,5 +1,5 @@
 (function (angular) {
-	var app =angular.module('mainApp', ['ngMaterial', 'ngAnimate', 'ui.router', 'directivelibrary', 'ngMessages', 'ui.ace', 'cloudcharge', 'ngMdIcons']);
+	var app =angular.module('mainApp', ['ngMaterial', 'ngAnimate', 'ui.router', 'directivelibrary', 'ngMessages', 'ui.ace', 'cloudcharge', 'ngMdIcons', 'jkuri.slimscroll']);
 
 		app.config(function ($stateProvider, $urlRouterProvider) {
 
