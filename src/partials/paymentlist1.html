@@ -87,7 +87,7 @@
                                 </svg>
                             </div>
                             <!--<div ng-slimscroll height="500" when-scrolled="more()" always-visible="false" border-radius="5px" opacity="0.2" position="right" enabled="ctrl.enabled">-->
-                            <div class="table-content mac-style" when-scrolled="more()" style="height:500px;overflow-y: scroll;" slim-scroll data-options="{'keepFocus': true}">
+                            <div class="table-content mac-style" style="height:470px;overflow-y: scroll;" slim-scroll data-options="{'keepFocus': true}">
                                 <md-card layout="row" class="table-card animated " layout-wrap
                                          ng-class="row.select==true?'selectedThis':'unSelect'"
                                          ng-click="editlistitem(row)"
@@ -108,6 +108,11 @@
                                         {{row.paymentMethod}}
                                     </div>
                                 </md-card>
+                            </div>
+                            <div layout="row" ng-show="isdataavailable">
+                                <div layout-gt-sm="row" class="serach-more" ng-click="searchmorebuttonclick()">
+                                    <label class="p-l-200">Search More</label>
+                                </div>
                             </div>
                             <!--<div class="add-new hvr-pop">-->
                                 <!--<i class="ti-plus"></i>-->

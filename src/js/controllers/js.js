@@ -373,6 +373,7 @@
                 scrollbar: false
             };
 
+            $scope.isdataavailable=true;
             var editfalse = true;
             $scope.editOff = editfalse;
 
@@ -402,11 +403,17 @@
                 {
                     console.log(data);
                     $scope.isSpinnerShown=false;
+                    $scope.isdataavailable=false;
                 })
 
             };
             // we call the function twice to populate the list
             $scope.more();
+
+            $scope.searchmorebuttonclick = function (){
+                $scope.loading = true;
+                $scope.more();
+            }
 
 			$scope.editlistitem = function (item) {
 
