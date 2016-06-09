@@ -59,16 +59,18 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="paymentlist1.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="paymentlist1.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/partials/paymentlist1.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.1538463">
-              <caret line="235" column="37" selection-start-line="235" selection-start-column="37" selection-end-line="235" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.63799286">
+              <caret line="248" column="60" selection-start-line="248" selection-start-column="60" selection-end-line="248" selection-end-column="60" />
               <folding>
                 <element signature="n#style#0;n#div#2;n#div#0;n#md-content#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#table#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#5;n#tr#0;n#table#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#table#1;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#th#0;n#tr#0;n#table#1;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#th#1;n#tr#0;n#table#1;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -101,10 +103,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="js.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="js.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/js/controllers/js.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.38869864">
+            <state vertical-scroll-proportion="0.0">
               <caret line="375" column="40" selection-start-line="375" selection-start-column="40" selection-end-line="375" selection-end-column="40" />
               <folding>
                 <element signature="e#2914#2974#0" expanded="false" />
@@ -172,8 +174,8 @@
       <file leaf-file-name="config.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/config.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.153846">
-              <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
+            <state vertical-scroll-proportion="-1.3076923">
+              <caret line="2" column="40" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -196,10 +198,10 @@
         <option value="$PROJECT_DIR$/src/partials/paymentlist.html" />
         <option value="$PROJECT_DIR$/src/index.html" />
         <option value="$PROJECT_DIR$/src/partials/add1.html" />
-        <option value="$PROJECT_DIR$/src/partials/paymentlist1.html" />
         <option value="$PROJECT_DIR$/js/cloudcharge.js" />
         <option value="$PROJECT_DIR$/src/js/controllers/js.js" />
         <option value="$PROJECT_DIR$/asset/css/customer.css" />
+        <option value="$PROJECT_DIR$/src/partials/paymentlist1.html" />
         <option value="$PROJECT_DIR$/js/config.json" />
       </list>
     </option>
@@ -1169,15 +1171,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/asset/css/customer.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="573" column="1" selection-start-line="573" selection-start-column="1" selection-end-line="573" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/controllers/js.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="375" column="40" selection-start-line="375" selection-start-column="40" selection-end-line="375" selection-end-column="40" />
+          <folding>
+            <element signature="e#2914#2974#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/config.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.3076923">
+          <caret line="2" column="40" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/partials/paymentlist1.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.1538463">
-          <caret line="235" column="37" selection-start-line="235" selection-start-column="37" selection-end-line="235" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.63799286">
+          <caret line="248" column="60" selection-start-line="248" selection-start-column="60" selection-end-line="248" selection-end-column="60" />
           <folding>
             <element signature="n#style#0;n#div#2;n#div#0;n#md-content#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#table#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#5;n#tr#0;n#table#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#table#1;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#th#0;n#tr#0;n#table#1;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#th#1;n#tr#0;n#table#1;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -1187,32 +1217,6 @@
             <element signature="n#style#0;n#md-fab-speed-dial#0;n#div#1;n#!!top" expanded="true" />
             <element signature="n#style#0;n#md-button#0;n#md-fab-trigger#0;n#md-fab-speed-dial#0;n#div#1;n#!!top" expanded="true" />
             <element signature="n#style#0;n#md-icon#0;n#md-button#0;n#md-fab-trigger#0;n#md-fab-speed-dial#0;n#div#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/asset/css/customer.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="573" column="1" selection-start-line="573" selection-start-column="1" selection-end-line="573" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/config.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.153846">
-          <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/controllers/js.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38869864">
-          <caret line="375" column="40" selection-start-line="375" selection-start-column="40" selection-end-line="375" selection-end-column="40" />
-          <folding>
-            <element signature="e#2914#2974#0" expanded="false" />
           </folding>
         </state>
       </provider>
