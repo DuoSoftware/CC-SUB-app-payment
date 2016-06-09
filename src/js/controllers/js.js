@@ -429,9 +429,40 @@
 
                 $scope.selectedprofile = item;
 
+                $scope.loadInvoiceByCustomerId(item.guCustomerID);
+
                 //angular.element('#viewAllWhiteframe').css('margin', '0');
                 //angular.element('#viewAllWhiteframe').css('max-width', '750px');
 
+            }
+
+            $scope.loadInvoiceByCustomerId = function (customerId)
+            {
+                //debugger;
+                $scope.invoicePrintlist=[];
+
+                var cusId=customerId;
+                //console.log(cusId);
+                $charge.invoice().getByAccountID(cusId).success(function(data) //all(0,10,'asc').success(function(data)
+                {
+                    console.log(data);
+
+                    var totbalance=0;
+                    for (i = 0; i < data.length; i++) {
+                        var obj=data[i];
+                        var balance= parseInt(obj.invoiceAmount)-parseInt(obj.paidAmount);
+                        totbalance+=balance;
+                        data[i].balancepayment=balance;
+                    }
+                    data[0].totalbalance=totbalance;
+
+                    $scope.invoicePrintlist=data;
+
+                }).error(function(data)
+                {
+                    console.log(data);
+                    $scope.invoicePrintlist=[];
+                })
             }
 
             $scope.toggleEdit = function () {

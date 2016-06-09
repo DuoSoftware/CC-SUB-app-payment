@@ -86,8 +86,8 @@
                                     <circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="4px"/>
                                 </svg>
                             </div>
-                            <div ng-slimscroll height="500" when-scrolled="more()" always-visible="false" border-radius="5px" opacity="0.2" position="right" enabled="ctrl.enabled">
-                            <!--<div class="table-content mac-style" when-scrolled="more()" style="height:500px;overflow-y: scroll;" slim-scroll data-options="{'keepFocus': true}">-->
+                            <!--<div ng-slimscroll height="500" when-scrolled="more()" always-visible="false" border-radius="5px" opacity="0.2" position="right" enabled="ctrl.enabled">-->
+                            <div class="table-content mac-style" when-scrolled="more()" style="height:500px;overflow-y: scroll;" slim-scroll data-options="{'keepFocus': true}">
                                 <md-card layout="row" class="table-card animated " layout-wrap
                                          ng-class="row.select==true?'selectedThis':'unSelect'"
                                          ng-click="editlistitem(row)"
@@ -273,38 +273,43 @@
 
                         <br/>
 
-                        <!--<table id="invoiceDetails" style="border: #080808;width: 60%">-->
-                            <!--&lt;!&ndash;<tr >&ndash;&gt;-->
-                                <!--<th style="border-bottom: solid">-->
-                                    <!--Payment Date-->
-                                <!--</th>-->
-                                <!--<th style="border-bottom: solid">-->
-                                    <!--Payment Method-->
-                                <!--</th>-->
-                                <!--<th style="border-bottom: solid">-->
-                                    <!--Bank Charges-->
-                                <!--</th>-->
-                                <!--<th style="border-bottom: solid">-->
-                                    <!--Note-->
-                                <!--</th>-->
-                            <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+                        <h3> <u>Invoice Details </u></h3>
 
-                            <!--<tr>-->
-                                <!--<td align="center">-->
-                                    <!--{{selectedprofile.paymentDate.split('T')[0].split(' ')[0]}}-->
-                                <!--</td>-->
-                                <!--<td align="center">-->
-                                    <!--{{selectedprofile.paymentMethod}}-->
-                                <!--</td>-->
-                                <!--<td align="center">-->
-                                    <!--{{selectedprofile.bankCharges| currency}}-->
-                                <!--</td>-->
-                                <!--<td align="center">-->
-                                    <!--{{selectedprofile.note}}-->
-                                <!--</td>-->
+                        <table id="invoiceDetails" style="border: #080808;width: 60%">
+                            <tr >
+                                <th style="border-bottom: solid">
+                                    Invoice No
+                                </th>
+                                <th style="border-bottom: solid">
+                                    Invoice Amount
+                                </th>
+                                <th style="border-bottom: solid">
+                                    Paid Amount
+                                </th>
+                                <th style="border-bottom: solid">
+                                    Balance Payment
+                                </th>
+                            </tr>
 
-                            <!--</tr>-->
-                        <!--</table>-->
+                            <tr ng-repeat="item in invoicePrintlist">
+                                <td align="center">
+                                    {{item.invoiceNo}}
+                                </td>
+                                <td align="center">
+                                    {{item.invoiceAmount| currency}}
+                                </td>
+                                <td align="center">
+                                    {{item.paidAmount| currency}}
+                                </td>
+                                <td align="center">
+                                    {{item.balancepayment| currency}}
+                                </td>
+
+                            </tr>
+                        </table>
+
+                        <br/>
+                        <br/>
 
                         <div layout="row">
                             <div layout="row" class="top-header">
@@ -361,6 +366,14 @@
                                 <p>{{selectedprofile.note}}
                                 </p>
                             </div>
+                        </div>
+
+                        <br/>
+                        <br/>
+
+                        <div layout-gt-sm="row" class="calc-detail-wrap">
+                            <label class="calc-detail-label p-l-100" style="font-size: 30px;">Total Balance Payment</label>
+                            <label class="calc-detail-label p-l-100" style="font-size: 30px; font-weight: 700; color: #005580">{{invoicePrintlist[0].totalbalance| currency}}</label>
                         </div>
 
                     </div>
