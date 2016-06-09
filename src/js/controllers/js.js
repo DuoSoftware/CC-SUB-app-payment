@@ -397,6 +397,7 @@
                         }
                         $scope.loading = false;
                         $scope.isLoading = false;
+                        $scope.isdataavailable=true;
                     }
 
                 }).error(function(data)
@@ -404,6 +405,7 @@
                     console.log(data);
                     $scope.isSpinnerShown=false;
                     $scope.isdataavailable=false;
+                    $scope.isLoading = false;
                 })
 
             };
