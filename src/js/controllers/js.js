@@ -398,6 +398,9 @@
                         $scope.loading = false;
                         $scope.isLoading = false;
                         $scope.isdataavailable=true;
+                        if(data.length<take){
+                            $scope.isdataavailable=false;
+                        }
                     }
 
                 }).error(function(data)

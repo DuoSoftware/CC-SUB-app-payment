@@ -13,7 +13,7 @@
     }
     function getSecurityToken() {
         var _st = gst("securityToken");
-        return (_st != null) ? _st : "N/A";
+        return (_st != null) ? _st : "333e20a6276e16ffd66be8af0c5077cf";
     }
 	function BP(){
 		var sfn,ffn, u,endpoint,domain, b, p,host;
