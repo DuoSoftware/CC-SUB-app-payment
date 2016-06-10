@@ -247,6 +247,20 @@
             $scope.content={};
             $scope.content.paymentDate=moment(new Date().toISOString()).format('LL');
 
+            $scope.clearform = function (){
+                $scope.editForm.$setPristine();
+                $scope.editForm.$setUntouched();
+                $scope.customer_supplier.customer="";
+                $scope.content.paymentDate=moment(new Date().toISOString()).format('LL');
+                $scope.content.paymentMethod="";
+                $scope.content.chequeNo="";
+                $scope.content.amount="";
+                $scope.content.bankCharges="";
+                $scope.content.note="";
+                self.searchText    = null;
+                $scope.invoicelist=[];
+            }
+
 
 			$scope.submit = function () {
 				if ($scope.editForm.$valid == true) {
@@ -279,10 +293,11 @@
                         //	hideDelay: 2000,
                         //	position: 'bottom right'
                         //});
-                        var millisecondsToWait = 500;
-                        setTimeout(function() {
-                            $window.location.reload();
-                        }, millisecondsToWait);
+                        //var millisecondsToWait = 500;
+                        //setTimeout(function() {
+                        //    $window.location.reload();
+                        //}, millisecondsToWait);
+                        $scope.clearform();
                         //$window.location.href='#/paymentlist';
 
                     }).error(function(data){
