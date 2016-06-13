@@ -307,11 +307,11 @@
 
 				} else//This is done because the HTML simple validation might work and enter the submit, however the form can still be invalid
 				{
-					//$mdToast.show({
-					//	template: '<md-toast class="md-toast-error" >Please fill all the details</md-toast>',
-					//	hideDelay: 2000,
-					//	position: 'bottom right'
-					//});
+					$mdToast.show({
+						template: '<md-toast class="md-toast-error" >Please fill all the details- Payment method is empty!</md-toast>',
+						hideDelay: 2000,
+						position: 'bottom right'
+					});
 				}
 
 				//$scope.submitted = true; // Disable the submit button until the form is submitted successfully to the database (ng-disabled)
