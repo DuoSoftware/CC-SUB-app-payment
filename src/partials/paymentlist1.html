@@ -78,7 +78,7 @@
                                     Amount
                                 </div>
                                 <div flex="15" class="text-right">
-                                    Payment Method
+                                    Method
                                 </div>
                             </div>
                             <div class="table-data-load" ng-show="isLoading">
@@ -99,7 +99,7 @@
                                         {{row.paymentNo}}
                                     </div>
                                     <div flex="20" class="text-left">
-                                        {{row.paymentDate.split('T')[0]}}
+                                        {{row.paymentDate}}
                                     </div>
                                     <div flex="20" class="text-right">
                                         {{row.amount| currency}}
@@ -111,7 +111,7 @@
                                 <md-card>
                                     <div layout="row" ng-show="isdataavailable">
                                         <div layout-gt-sm="row" class="serach-more" ng-click="searchmorebuttonclick()">
-                                            <label class="p-l-200">Search More</label>
+                                            <label class="p-l-200">SEARCH MORE</label>
                                         </div>
                                     </div>
                                 </md-card>
@@ -175,7 +175,7 @@
                                     <h5 class="text-gray-color font-300">Payment Date</h5>
                                 </div>
                                 <div flex class="text-right">
-                                    <h5>{{selectedprofile.paymentDate.split('T')[0]}}</h5>
+                                    <h5>{{selectedprofile.paymentDate}}</h5>
                                 </div>
                             </div>
                         </div>
@@ -276,7 +276,7 @@
                                     :
                                 </td>
                                 <td>
-                                    {{selectedprofile.paymentDate.split('T')[0]}}
+                                    {{selectedprofile.paymentDate}}
                                 </td>
                             </tr>
                             <!--<tr>-->
@@ -413,7 +413,7 @@
         <md-fab-trigger>
             <md-button aria-label="menu" class="md-fab " style="background-color:#e64a19;" href="#/add">
                 <md-icon md-svg-src="../img/ic_add_24px.svg" style="width:30px;" ></md-icon>
-                <md-tooltip md-direction="bottom">Add Payment</md-tooltip>
+                <md-tooltip md-direction="top">Add New Payment</md-tooltip>
             </md-button>
         </md-fab-trigger>
         <md-fab-actions>
