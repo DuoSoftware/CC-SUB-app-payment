@@ -457,6 +457,7 @@
                 $scope.selectedprofile = item;
 
                 $scope.loadInvoiceByCustomerId(item.guCustomerID);
+                $scope.getcompanylogo();
 
                 //angular.element('#viewAllWhiteframe').css('margin', '0');
                 //angular.element('#viewAllWhiteframe').css('max-width', '750px');
@@ -489,6 +490,19 @@
                 {
                     console.log(data);
                     $scope.invoicePrintlist=[];
+                })
+            }
+
+            $scope.getcompanylogo = function ()
+            {
+                $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_CompanyAttributes","CompanyLogo").success(function(data)
+                {
+                    //debugger;
+                    console.log(data);
+                    $scope.logourl=data[0].RecordFieldData;
+
+                }).error(function(data) {
+                    console.log(data);
                 })
             }
 
