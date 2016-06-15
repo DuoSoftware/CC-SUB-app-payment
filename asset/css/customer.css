@@ -93,7 +93,15 @@ body, html {
 }
 
 .p-l-15 {
-    padding-left: 15px;
+     padding-left: 15px;
+ }
+
+.p-l-20 {
+    padding-left: 20px;
+}
+
+.p-l-25 {
+    padding-left: 25px;
 }
 
 .p-l-100 {

@@ -394,7 +394,7 @@
 
             $scope.items=[];
             var skip=0;
-            var take=10;
+            var take=100;
             $scope.loading = true;
             // this function fetches a random text and adds it to array
             $scope.more = function(){
@@ -430,6 +430,16 @@
             // we call the function twice to populate the list
             $scope.more();
 
+            $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_CompanyAttributes","CompanyLogo").success(function(data)
+            {
+                //debugger;
+                console.log(data);
+                $scope.logourl=data[0].RecordFieldData;
+
+            }).error(function(data) {
+                console.log(data);
+            })
+
             $scope.searchmorebuttonclick = function (){
                 $scope.loading = true;
                 $scope.more();
@@ -445,6 +455,7 @@
 
                 $scope.viewCount = 1;
                 item.select = true;
+                item.companylogo=$scope.logourl;
                 //$scope.items[i].select = true;
 
                 if ($scope.viewCount == 0) {
@@ -457,7 +468,7 @@
                 $scope.selectedprofile = item;
 
                 $scope.loadInvoiceByCustomerId(item.guCustomerID);
-                $scope.getcompanylogo();
+                //$scope.getcompanylogo();
 
                 //angular.element('#viewAllWhiteframe').css('margin', '0');
                 //angular.element('#viewAllWhiteframe').css('max-width', '750px');

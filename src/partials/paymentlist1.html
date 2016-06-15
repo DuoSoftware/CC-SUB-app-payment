@@ -74,7 +74,7 @@
                                 <div flex="20" class="text-left">
                                     Payment Date
                                 </div>
-                                <div flex="20" class="text-right">
+                                <div flex="20" class="text-left p-l-20">
                                     Amount
                                 </div>
                                 <div flex="15" class="text-right">
@@ -101,10 +101,10 @@
                                     <div flex="20" class="text-left">
                                         {{row.paymentDate}}
                                     </div>
-                                    <div flex="20" class="text-right">
+                                    <div flex="20" class="text-left p-l-20">
                                         {{row.amount| currency}}
                                     </div>
-                                    <div flex="15" class="text-right" >
+                                    <div flex="15" class="text-left p-l-25" >
                                         {{row.paymentMethod}}
                                     </div>
                                 </md-card>
@@ -229,12 +229,13 @@
                     </div>
                 </div>
 
-                <!-- Template divs -->
+                <!-- Template divs http://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg-->
 
                 <div style="display: none">
                     <div style="background-color: white" class="right-layout" id="paymentDiv">
 
-                        <img src="{{logourl}}" height="100" width="200">
+                        <img src="{{selectedprofile.companylogo}}" height="100" width="200">
+
                         <h2 align="center"> <u>Payment Details </u></h2>
 
                         <table id="paymentDetails" style="border: #080808;width: 100%">
