@@ -398,6 +398,7 @@
             $scope.loading = true;
             // this function fetches a random text and adds it to array
             $scope.more = function(){
+
                 $scope.isLoading = true;
                 $charge.payment().all(skip,take,'desc').success(function(data)
                 {
