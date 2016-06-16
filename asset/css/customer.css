@@ -126,7 +126,7 @@ body, html {
 }
 
 .body-content-wrap {
-    height: 550px;
+    /*height: 550px;*/
     width: auto;
     padding: 30px 36px 3px 34px;
     display: block;
