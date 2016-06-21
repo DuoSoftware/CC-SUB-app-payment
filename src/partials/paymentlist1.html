@@ -99,7 +99,7 @@
                                         {{row.paymentNo}}
                                     </div>
                                     <div flex="20" class="text-left">
-                                        {{row.paymentDate}}
+                                        {{row.paymentDate.split('T')[0]}}
                                     </div>
                                     <div flex="20" class="text-left p-l-20">
                                         {{row.amount| currency}}
