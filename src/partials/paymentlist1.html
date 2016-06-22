@@ -99,7 +99,7 @@
                                         {{row.paymentNo}}
                                     </div>
                                     <div flex="20" class="text-left">
-                                        {{row.paymentDate.split('T')[0]}}
+                                        {{row.paymentDate}}
                                     </div>
                                     <div flex="20" class="text-left p-l-20">
                                         {{row.amount| currency}}
@@ -236,7 +236,7 @@
 
                         <img src="{{selectedprofile.companylogo}}" height="100" width="100">
 
-                        <h2 align="center"> <u>Payment Details </u></h2>
+                        <h1 align="center"> <u>Receipt </u></h1>
 
                         <table id="paymentDetails" style="border: #080808;width: 100%">
                             <tr>
@@ -343,14 +343,28 @@
                             <div layout="row" class="top-header">
                                 <!--<div flex="50">-->
                                     <!--<div class="adj-left-text">-->
-                                        <!--<h1>{{selectedprofile.customer}}</h1>-->
-                                        <!--<small>Payment No : {{selectedprofile.paymentNo}}</small>-->
+                                        <!--&lt;!&ndash;<h1>{{selectedprofile.customer}}</h1>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<small>Payment No : {{selectedprofile.paymentNo}}</small>&ndash;&gt;-->
                                     <!--</div>-->
-
                                 <!--</div>-->
-                                <div flex="50">
-                                    <div class="adj-right-text">
-                                        <small>Payment Amount</small>
+                                <!--<div flex="50">-->
+                                    <!--<div class="adj-left-text">-->
+                                        <!--<h5 class="text-gray-color font-300">Payment Amount</h5>-->
+                                    <!--</div>-->
+                                    <!--<div class="adj-right-text">-->
+                                        <!--&lt;!&ndash;<small>Payment Amount</small>&ndash;&gt;-->
+                                        <!--<h1>{{selectedprofile.amount| currency}}</h1>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                        </div>
+                        <div layout="column">
+                            <div class="item-details " layout="row">
+                                <div class="item" layout="row">
+                                    <div flex class="text-left">
+                                        <h5 class="text-gray-color font-300">Payment Amount</h5>
+                                    </div>
+                                    <div flex class="text-right price-text p-l-50">
                                         <h1>{{selectedprofile.amount| currency}}</h1>
                                     </div>
                                 </div>

@@ -112,6 +112,10 @@ body, html {
     padding-left: 200px;
 }
 
+.p-l-500 {
+    padding-left: 500px;
+}
+
 .p-l-50 {
     padding-right: 30px;
 }
@@ -579,4 +583,17 @@ md-input-container > label {
 
 .serach-more:hover {
     background: #595959;
+}
+
+.price-text {
+    /*text-align: right;*/
+    /*margin: 0px;*/
+}
+
+.price-text > h1 {
+    color: #026b9a;
+    font-family: 'lato', sans-serif;
+    font-weight: 600;
+    font-size: 25px;
+    margin: 0px;
 }

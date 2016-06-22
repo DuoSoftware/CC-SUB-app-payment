@@ -408,7 +408,8 @@
                     {
                         skip += take;
                         for (i = 0; i < data.length; i++) {
-                            //data[i].paymentDate=moment(data[i].paymentDate.toISOString()).format('LL');
+                            //console.log(moment(data[i].paymentDate).format('LL'));
+                            data[i].paymentDate=moment(data[i].paymentDate).format('L');
                             $scope.items.push(data[i]);
 
                         }
