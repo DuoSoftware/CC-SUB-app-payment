@@ -194,7 +194,11 @@
                 for (i = 0, len = $scope.profilelist.length; i<len; ++i){
                     //console.log($scope.allBanks[i].value.value);
 
-                    if($scope.profilelist[i].value.profilename.indexOf(query.toLowerCase()) !=-1)
+                    if($scope.profilelist[i].value.profilename.toLowerCase().indexOf(query.toLowerCase()) !=-1)
+                    {
+                        results.push($scope.profilelist[i]);
+                    }
+                    else if($scope.profilelist[i].value.othername.toLowerCase().indexOf(query.toLowerCase()) !=-1)
                     {
                         results.push($scope.profilelist[i]);
                     }
@@ -259,6 +263,7 @@
                 $scope.content.note="";
                 self.searchText    = null;
                 $scope.invoicelist=[];
+                document.body.scrollTop = document.documentElement.scrollTop = 0;
             }
 
 
@@ -287,6 +292,11 @@
                         if(data.id!="")
                         {
                             notifications.toast("Successfully created the Payment Invoice with : "+data.id,"success");
+                            //$mdToast.show({
+                            //	template: '<md-toast class="md-toast-success" >Successfully created the Payment Invoice with : '+data.id+'</md-toast>',
+                            //	hideDelay: 2000,
+                            //	position: 'bottom right'
+                            //});
                         }
                         //$mdToast.show({
                         //	template: '<md-toast class="md-toast-success" >Successfully added to Inventory!</md-toast>',
