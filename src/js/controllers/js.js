@@ -386,8 +386,58 @@
                 }
             ];
 
+            $scope.addCardPayment = function(ev, amount)
+            {
+                //console.log("yes");
+                //$scope.content.user = "";
+                $scope.cardPayAmount=parseFloat(amount);
+                $mdDialog.show({
+                    controller: 'CardPaymentCtrl',
+                    templateUrl: 'partials/paybycard.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose:true
+                })
+                    .then(function(user) {
+
+                    })
+
+            }
+
 
 		})//END OF AddCtrl
+
+        app.controller('CardPaymentCtrl', function ($scope, $mdDialog, $window, $mdToast, $charge, notifications) {
+
+            //debugger;
+            $scope.cancel = function() {
+                $mdDialog.cancel();
+            };
+            //$scope.submit = function()
+            //{
+            //    $scope.contentuser.status="true";
+            //    $scope.contentuser.ship_addr=$scope.contentuser.bill_addr;
+            //    var userObj = $scope.contentuser;
+            //
+            //    //debugger;
+            //    $charge.profile().store(userObj).success(function(data) {
+            //        //debugger;
+            //        if(data.id) {
+            //            console.log(data);
+            //            notifications.toast("Successfully Created User!","success");
+            //            $scope.contentuser.profileId=data.id;
+            //
+            //            $mdDialog.hide($scope.contentuser);
+            //        }
+            //    }).error(function(data) {
+            //        //debugger;
+            //        console.log(data);
+            //    })
+            //
+            //    //debugger;
+            //}
+
+        })//END OF AddCtrl
 
 		app.controller('PaymentListCtrl', function ($scope, $mdDialog, $window, $mdToast, $charge) {
 

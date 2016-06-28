@@ -60,22 +60,6 @@
                             </div>
                         </div>
 
-                        <div layout-gt-sm="row">
-                            <md-input-container class="md-block p-l-50" flex-gt-sm>
-                                <label>Payment Method</label>
-                                <md-select ng-required="true" name="paymentMethod" ng-model="content.paymentMethod">
-                                    <md-divider></md-divider>
-                                    <md-option value="Cash">Cash</md-option>
-                                    <md-option value="Cheque">Cheque</md-option>
-                                    <!--<md-option ng-repeat="profile in profilelist" ng-value="profile">{{profile.profilename}}</md-option>-->
-                                </md-select>
-                            </md-input-container>
-                            <md-input-container ng-show="content.paymentMethod=='Cheque'" class="md-block" flex-gt-sm>
-                                <label>Cheque No</label>
-                                <input ng-required="false" minlength="null" md-maxlength="null" type="" name="chequeNo" ng-pattern="" ng-model="content.chequeNo">
-                            </md-input-container>
-                        </div>
-
                     <!--</div>-->
 
                         <div layout-gt-sm="row" class="sub-header-wrap">
@@ -123,13 +107,33 @@
                             <!--<label style="font-size: 20px;font-weight: 600;padding-left: 100px; height: 30px">{{items[0].amount| currency}}</label>-->
                         </div>
 
-                    <!--<div class="body-content-wrap">-->
+                    <!--<div class="body-content-wrap"> ng-click="addNewUser($event)"-->
 
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Payment Amount</label>
-                                <input ng-required="true" minlength="null" md-maxlength="null" type="number" name="amount" min="0" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" ng-model="content.amount">
+                                <input ng-required="true" minlength="null" md-maxlength="null" type="number" name="amount" min="0" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" style="text-align:right;" ng-model="content.amount">
                             </md-input-container>
+                        </div>
+
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block p-l-50" flex-gt-sm>
+                                <label>Payment Method</label>
+                                <md-select ng-required="true" name="paymentMethod" ng-model="content.paymentMethod">
+                                    <md-divider></md-divider>
+                                    <md-option value="Cash">Cash</md-option>
+                                    <md-option value="Cheque">Cheque</md-option>
+                                    <md-option value="Card">Card</md-option>
+                                    <!--<md-option ng-repeat="profile in profilelist" ng-value="profile">{{profile.profilename}}</md-option>-->
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container ng-show="content.paymentMethod=='Cheque'" class="md-block" flex-gt-sm>
+                                <label>Cheque No</label>
+                                <input ng-required="false" minlength="null" md-maxlength="null" type="" name="chequeNo" ng-pattern="" ng-model="content.chequeNo">
+                            </md-input-container>
+                            <!--<div ng-if="content.paymentMethod=='Card'">-->
+                                <!--<div ng-init="addCardPayment($event, content.amount)"></div>-->
+                            <!--</div>-->
                         </div>
 
                         <div layout-gt-sm="row" class="sub-header-wrap">
