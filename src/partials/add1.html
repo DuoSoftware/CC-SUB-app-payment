@@ -66,13 +66,16 @@
                             <label>Invoice Details</label>
                         </div>
                         <div class="sub-header-table-wrap" layout="row" layout-wrap>
-                            <div flex="35" class="p-l-15">
+                            <div flex="25" class="p-l-15">
                                 Invoice No:
                             </div>
                             <div flex="25" class="text-left">
                                 Invoice Amount
                             </div>
-                            <div flex="20" class="text-left">
+                            <div flex="15" class="text-left">
+                                Adjustment
+                            </div>
+                            <div flex="15" class="text-left">
                                 Paid Amount
                             </div>
                             <div flex="20" class="text-right">
@@ -84,16 +87,19 @@
                                 <md-list-item  ng-repeat="item in invoicelist"  style="outline:none;">
                                     <md-card layout="row" class="md-card-wrap" layout-align="space-between center">
                                         <!--<div flex="30"><img src="{{item.business_contact_no}}" style="width:80px;margin-left: 10px;"/></div>-->
-                                        <div flex="25" layout="column">
+                                        <div flex="20" layout="column">
                                             <label class="md-card-label-wrap">{{item.invoiceNo}}</label>
                                         </div>
-                                        <div flex="25" layout="column">
+                                        <div flex="20" layout="column">
                                             <label class="md-card-label-wrap">{{item.invoiceAmount| currency}}</label>
                                         </div>
-                                        <div flex="25" layout="column">
+                                        <div flex="20" layout="column">
+                                            <label class="md-card-label-wrap">{{item.invoiceAdjustment| currency}}</label>
+                                        </div>
+                                        <div flex="20" layout="column">
                                             <label class="md-card-label-wrap">{{item.paidAmount| currency}}</label>
                                         </div>
-                                        <div flex="25" layout="column">
+                                        <div flex="20" layout="column">
                                             <label class="md-card-label-wrap">{{item.balancepayment| currency}}</label>
                                         </div>
 

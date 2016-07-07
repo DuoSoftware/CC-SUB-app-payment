@@ -13,7 +13,7 @@
     }
     function getSecurityToken() {
         var _st = gst("securityToken");
-        return (_st != null) ? _st : "333e20a6276e16ffd66be8af0c5077cf";
+        return (_st != null) ? _st : "111fe78c80a113b62910f95dae524c31";
     }
 	function BP(){
 		var sfn,ffn, u,endpoint,domain, b, p,host;
@@ -94,7 +94,8 @@
             profile: function(){ return new ProfileProxy();},
             payment: function(){ return new PaymentProxy();},
             invoice: function(){ return new InvoiceProxy();},
-            commondata: function(){ return new CommonDataProxy();},
+            adjustment: function(){ return new AdjustmentProxy();},
+            commondata: function(){ return new CommonDataProxy();}
 		}	
 	});
 
@@ -128,6 +129,18 @@
         p.all = function(s,t,o){p.p(handler + "/invoice/getAll/",service).qp({"skip":s,"take":t,"order":o}); return p;}
         p.store = function(i){p.p(handler + "/invoice/insert",service).b(i); return p;}
         p.getByAccountID=function(s){p.p(handler + "/invoice/getbyAccountId/",service).qp({"accountid":s}); return p;}
+        return p;
+    }
+
+    function AdjustmentProxy(){
+        var p = BP();
+        var service="adjustment";
+        var handler = "/duosoftware.adjustment.service";
+        p.allAdjustments = function(s,t,o){p.p(handler + "/adjustment/getAll/",service).qp({"skip":s,"take":t,"order":o}); return p;}
+        p.store = function(i){p.p(handler + "/adjustment/insert",service).b(i); return p;}
+        p.update = function(i){p.p(handler + "/adjustment/update",service).b(i); return p;}
+        p.getByInvoiceId=function(s){p.p(handler + "/adjustment/getByInvoiceId/",service).qp({"invoiceId":s}); return p;}
+        p.getByAdjustmentId=function(s){p.p(handler + "/adjustment/getById/",service).qp({"id":s}); return p;}
         return p;
     }
 

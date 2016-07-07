@@ -347,6 +347,7 @@
             $scope.loadInvoice = function (customer)
             {
                 //debugger;
+                var invoicenolist="";
                 var cusId=customer.value.profileId;//"2293";
                 //console.log(cusId);
                 $charge.invoice().getByAccountID(cusId).success(function(data) //all(0,10,'asc').success(function(data)
@@ -359,10 +360,42 @@
                         var balance= parseInt(obj.invoiceAmount)-parseInt(obj.paidAmount);
                         totbalance+=balance;
                         data[i].balancepayment=balance;
+
+                        if(i==0)
+                        {
+                            invoicenolist=obj.invoiceNo;
+                        }
+                        else
+                        {
+                            invoicenolist=invoicenolist+","+obj.invoiceNo;
+                        }
                     }
                     data[0].totalbalance=totbalance;
 
-                    $scope.invoicelist=data;
+                    console.log(invoicenolist);
+                    $charge.adjustment().getByInvoiceId(invoicenolist).success(function(subdata)
+                    {
+                        console.log(subdata);
+                        for (i = 0; i < data.length; i++) {
+                            var invoicedata=data[i];
+
+                            for (j = 0; j < subdata.length; j++) {
+                                if(subdata[j].invoiceid==invoicedata.invoiceNo)
+                                {
+                                    invoicedata.invoiceAdjustment=subdata[j].amount;
+                                }
+                            }
+
+                        }
+                        $scope.invoicelist=data;
+
+                    }).error(function(subdata)
+                    {
+                        console.log(subdata);
+                        $scope.invoicelist=data;
+                    })
+
+                    //$scope.invoicelist=data;
 
                 }).error(function(data)
                 {
