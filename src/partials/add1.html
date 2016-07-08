@@ -93,8 +93,14 @@
                                         <div flex="20" layout="column">
                                             <label class="md-card-label-wrap">{{item.invoiceAmount| currency}}</label>
                                         </div>
-                                        <div flex="20" layout="column">
+                                        <div ng-if="item.adjustmenttype=='0'" flex="20" layout="column">
                                             <label class="md-card-label-wrap">{{item.invoiceAdjustment| currency}}</label>
+                                        </div>
+                                        <div ng-if="item.adjustmenttype=='1'" flex="20" layout="column">
+                                            <label class="md-card-label-wrap">+{{item.invoiceAdjustment| currency}}</label>
+                                        </div>
+                                        <div ng-if="item.adjustmenttype=='2'" flex="20" layout="column">
+                                            <label class="md-card-label-wrap">-{{item.invoiceAdjustment| currency}}</label>
                                         </div>
                                         <div flex="20" layout="column">
                                             <label class="md-card-label-wrap">{{item.paidAmount| currency}}</label>

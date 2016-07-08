@@ -378,11 +378,21 @@
                         console.log(subdata);
                         for (i = 0; i < data.length; i++) {
                             var invoicedata=data[i];
+                            invoicedata.adjustmenttype='0';
 
                             for (j = 0; j < subdata.length; j++) {
                                 if(subdata[j].invoiceid==invoicedata.invoiceNo)
                                 {
+                                    //if(subdata[j].adjustmenttype==1)
+                                    //{
+                                    //    invoicedata.invoiceAdjustment="+"+subdata[j].amount;
+                                    //}
+                                    //else
+                                    //{
+                                    //    invoicedata.invoiceAdjustment="-"+subdata[j].amount;
+                                    //}
                                     invoicedata.invoiceAdjustment=subdata[j].amount;
+                                    invoicedata.adjustmenttype=subdata[j].adjustmenttype;
                                 }
                             }
 
