@@ -102,7 +102,7 @@
                                         {{row.paymentDate}}
                                     </div>
                                     <div flex="20" class="text-left p-l-20">
-                                        {{row.amount| currency}}
+                                        {{row.amount| currency:" "}}
                                     </div>
                                     <div flex="15" class="text-left p-l-25" >
                                         {{row.paymentMethod}}
@@ -153,7 +153,9 @@
                             <div flex="50">
                                 <div class="adj-right-text">
                                     <small>Payment Amount</small>
-                                    <h1>{{selectedprofile.amount| currency}}</h1>
+                                    <h1>{{selectedprofile.amount| currency:" "}}</h1>
+                                    <small>Currency: {{selectedprofile.currency}}</small><br>
+                                    <small>Currency Rate: <u>{{selectedprofile.rate}}</u></small>
                                 </div>
                             </div>
                         </div>
@@ -195,7 +197,7 @@
                                     <h5 class="text-gray-color font-300">Bank Charges</h5>
                                 </div>
                                 <div flex class="text-right">
-                                    <h5>{{selectedprofile.bankCharges| currency}}</h5>
+                                    <h5>{{selectedprofile.bankCharges| currency:" "}}</h5>
                                 </div>
                             </div>
                         </div>
@@ -319,13 +321,13 @@
                                     {{item.invoiceNo}}
                                 </td>
                                 <td align="center">
-                                    {{item.invoiceAmount| currency}}
+                                    {{item.invoiceAmount| currency:" "}}
                                 </td>
                                 <td align="center">
-                                    {{item.paidAmount| currency}}
+                                    {{item.paidAmount| currency:" "}}
                                 </td>
                                 <td align="center">
-                                    {{item.balancepayment| currency}}
+                                    {{item.balancepayment| currency:" "}}
                                 </td>
 
                             </tr>
@@ -333,7 +335,7 @@
 
                         <div layout-gt-sm="row" class="calc-detail-wrap">
                             <label class="calc-detail-label p-l-100">Total Balance Payment</label>
-                            <label class="calc-detail-label p-l-100" style="font-weight: 700; color: #005580">{{invoicePrintlist[0].totalbalance| currency}}</label>
+                            <label class="calc-detail-label p-l-100" style="font-weight: 700; color: #005580">{{invoicePrintlist[0].totalbalance| currency:" "}}</label>
                         </div>
 
                         <br/>
@@ -365,7 +367,7 @@
                                         <h5 class="text-gray-color font-300">Payment Amount</h5>
                                     </div>
                                     <div flex class="text-right price-text p-l-50">
-                                        <h1>{{selectedprofile.amount| currency}}</h1>
+                                        <h1>{{selectedprofile.amount| currency:" "}}</h1>
                                     </div>
                                 </div>
                             </div>
@@ -397,7 +399,7 @@
                                         <h5 class="text-gray-color font-300">Bank Charges</h5>
                                     </div>
                                     <div flex class="text-right p-l-50">
-                                        <h5>{{selectedprofile.bankCharges| currency}}</h5>
+                                        <h5>{{selectedprofile.bankCharges| currency:" "}}</h5>
                                     </div>
                                 </div>
                             </div>

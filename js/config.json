@@ -18,5 +18,10 @@
   "commondata":{
     "domain":"cloudcharge.com/services",
     "url":"d"
+  },
+  "currencyRate":{
+    "domain":"free.currencyconverterapi.com",
+    "security":"none",
+    "url":"d"
   }
 }

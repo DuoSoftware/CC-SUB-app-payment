@@ -13,10 +13,11 @@
     }
     function getSecurityToken() {
         var _st = gst("securityToken");
-        return (_st != null) ? _st : "111fe78c80a113b62910f95dae524c31";
+        return (_st != null) ? _st : "8bb4e93e877564262d46723d099108d9";
     }
 	function BP(){
-		var sfn,ffn, u,endpoint,domain, b, p,host;
+		var sfn,ffn, u,endpoint,domain, b, p,host,otherOptions="";
+        var reqObj;
         function call(){
             //debugger;
             var domainReq = {
@@ -32,15 +33,25 @@
                         if (data.hasOwnProperty(endpoint)) {
                             //console.log(data[r]["domain"]);
                             domain=data[endpoint]["domain"];
+                            otherOptions=data[endpoint]["security"];
                             host='user77duocom.space.';
                             break;
                         }
                     }
-                    var reqObj = {
-                        method: b ? "POST" : "GET" ,
-                        url: "http://" + domain + u,
-                        headers: {'Content-Type': 'application/json', 'securityToken': getSecurityToken()}
-                    };
+                    if(otherOptions==undefined) {
+                        reqObj = {
+                            method: b ? "POST" : "GET",
+                            url: "http://" + domain + u,
+                            headers: {'Content-Type': 'application/json', 'securityToken': getSecurityToken()}
+                        };
+                    }
+                    else {
+                        reqObj = {
+                            method: "JSONP",
+                            url: "http://" + domain + u,
+                            headers: {'Content-Type': 'application/json'}
+                        };
+                    }
                     //console.log(domainReq);
                     if (b) reqObj.data = b;
                     if (p) reqObj.params = p;
@@ -95,7 +106,8 @@
             payment: function(){ return new PaymentProxy();},
             invoice: function(){ return new InvoiceProxy();},
             adjustment: function(){ return new AdjustmentProxy();},
-            commondata: function(){ return new CommonDataProxy();}
+            commondata: function(){ return new CommonDataProxy();},
+            converter: function(){ return new ConverterProxy();}
 		}	
 	});
 
@@ -154,6 +166,14 @@
         p.getDuobaseFieldDetailsByTableNameAndFieldName=function(s,t){p.p(handler + "/commondata/getDuobaseFieldDetailsByTableNameAndFieldName/",service).qp({"tableName":s,"fieldName":t}); return p;}
         p.getUOMConversionByUOMId=function(s){p.p(handler + "/commondata/getUOMConversionByUOMId/",service).qp({"skip":s}); return p;}
         p.getUOMAppMapperByUOMId=function(s){p.p(handler + "/commondata/getUOMAppMapperByUOMId/",service).qp({"skip":s}); return p;}
+        return p;
+    }
+
+    function ConverterProxy(){
+        var p = BP();
+        var service="currencyRate";
+        var handler = "/api/v3";
+        p.calcCurrency = function(o){p.p(handler + "/convert?callback=JSON_CALLBACK",service).qp({"q":o}); return p;}
         return p;
     }
 

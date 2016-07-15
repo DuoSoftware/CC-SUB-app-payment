@@ -60,8 +60,27 @@
             $scope.productlist = [];
             $scope.storeslist = [];
             $scope.invoicelist = [];
+            $scope.currencyratelist = [];
+            $scope.BaseCurrency = "LKR";
+            $scope.currencyRate = 1;
             //$scope.productlist1=[];
             //$scope.productlist2=[];
+
+            $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_GeneralAttributes","BaseCurrency").success(function(data) {
+                $scope.BaseCurrency=data[0].RecordFieldData;
+                console.log($scope.BaseCurrency);
+            }).error(function(data) {
+                console.log(data);
+            })
+
+            $scope.selectedCurrency = $scope.BaseCurrency;
+
+            $scope.prefferedCurrencies=[];
+            $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_GeneralAttributes","FrequentCurrencies").success(function(data) {
+                $scope.prefferedCurrencies=data[0].RecordFieldData.trimLeft().split(" ");
+            }).error(function(data) {
+                console.log(data);
+            })
 
             //$charge.invoice().all(0,20,'asc').success(function(data)
             //{
@@ -261,8 +280,12 @@
                 $scope.content.amount="";
                 $scope.content.bankCharges="";
                 $scope.content.note="";
+                $scope.content.prefferedcurrency="";
                 self.searchText    = null;
                 $scope.invoicelist=[];
+                $scope.content.preferredcurrency="";
+                $scope.selectedCurrency=$scope.BaseCurrency;
+                $scope.currencyRate=1;
                 document.body.scrollTop = document.documentElement.scrollTop = 0;
             }
 
@@ -284,6 +307,21 @@
                     $scope.content.createdUser="admin";
                     $scope.content.createdDate = currentdate;
                     $scope.content.guAccountID = selecteduser.value.profileId;
+                    $scope.content.currency=$scope.selectedCurrency;
+                    $scope.content.rate=$scope.currencyRate;
+                    if($scope.BaseCurrency!=$scope.selectedCurrency)
+                    {
+                        if($scope.content.amount!="")
+                        {
+                            $scope.content.amount=parseFloat($scope.content.amount)/$scope.currencyRate;
+                            $scope.content.amount=Math.round($scope.content.amount*100)/100;
+                        }
+                        if($scope.content.bankCharges!="")
+                        {
+                            $scope.content.bankCharges=parseFloat($scope.content.bankCharges)/$scope.currencyRate;
+                            $scope.content.bankCharges=Math.round($scope.content.bankCharges*100)/100;
+                        }
+                    }
 
                     var paymentobject = $scope.content;
                     console.log(paymentobject);
@@ -357,7 +395,9 @@
                     var totbalance=0;
                     for (i = 0; i < data.length; i++) {
                         var obj=data[i];
-                        var balance= parseInt(obj.invoiceAmount)-parseInt(obj.paidAmount);
+                        obj.invoiceAmount=parseFloat(obj.invoiceAmount)*$scope.currencyRate;
+                        obj.paidAmount=parseFloat(obj.paidAmount)*$scope.currencyRate;
+                        var balance= obj.invoiceAmount-obj.paidAmount;
                         totbalance+=balance;
                         data[i].balancepayment=balance;
 
@@ -391,8 +431,18 @@
                                     //{
                                     //    invoicedata.invoiceAdjustment="-"+subdata[j].amount;
                                     //}
-                                    invoicedata.invoiceAdjustment=subdata[j].amount;
+                                    invoicedata.invoiceAdjustment=subdata[j].amount*$scope.currencyRate;
                                     invoicedata.adjustmenttype=subdata[j].adjustmenttype;
+                                    if(subdata[j].adjustmenttype==1)
+                                    {
+                                        invoicedata.balancepayment=invoicedata.balancepayment-invoicedata.invoiceAdjustment;
+                                        data[0].totalbalance=data[0].totalbalance-invoicedata.invoiceAdjustment;
+                                    }
+                                    else if(subdata[j].adjustmenttype==2)
+                                    {
+                                        invoicedata.balancepayment=invoicedata.balancepayment+invoicedata.invoiceAdjustment;
+                                        data[0].totalbalance=data[0].totalbalance+invoicedata.invoiceAdjustment;
+                                    }
                                 }
                             }
 
@@ -444,6 +494,115 @@
                     .then(function(user) {
 
                     })
+
+            }
+
+            $scope.convertCurrency = function(preferredCurrency)
+            {
+                debugger;
+                if($scope.BaseCurrency==preferredCurrency)
+                {
+                    $scope.selectedCurrency = $scope.BaseCurrency;
+                    $scope.currencyRate = 1;
+
+                    $scope.currencyratelist.push({
+                        currency : $scope.BaseCurrency,
+                        rate : $scope.currencyRate
+                    });
+
+                    if($scope.currencyratelist.length>1)
+                    {
+                        if($scope.content.amount!="")
+                        {
+                            $scope.content.amount=(parseFloat($scope.content.amount)/parseFloat($scope.currencyratelist[$scope.currencyratelist.length - 2].rate))*$scope.currencyRate;
+                            $scope.content.amount=Math.round($scope.content.amount*100)/100;
+                        }
+                        if($scope.content.bankCharges!="")
+                        {
+                            $scope.content.bankCharges=(parseFloat($scope.content.bankCharges)/parseFloat($scope.currencyratelist[$scope.currencyratelist.length - 2].rate))*$scope.currencyRate;
+                            $scope.content.bankCharges=Math.round($scope.content.bankCharges*100)/100;
+                        }
+                    }
+                    else if($scope.currencyratelist.length==1)
+                    {
+                        if($scope.content.amount!="")
+                        {
+                            $scope.content.amount=parseFloat($scope.content.amount)*$scope.currencyRate;
+                            $scope.content.amount=Math.round($scope.content.amount*100)/100;
+                        }
+                        if($scope.content.bankCharges!="")
+                        {
+                            $scope.content.bankCharges=parseFloat($scope.content.bankCharges)*$scope.currencyRate;
+                            $scope.content.bankCharges=Math.round($scope.content.bankCharges*100)/100;
+                        }
+                    }
+
+                    if($scope.customer_supplier.customer != null || $scope.customer_supplier.customer != "")
+                    {
+                        $scope.loadInvoice($scope.customer_supplier.customer);
+                    }
+                }
+                else
+                {
+                    $charge.converter().calcCurrency($scope.BaseCurrency+"_"+preferredCurrency).success(function(data)
+                    {
+                        //debugger;
+                        //var el = document.createElement( 'html' );
+                        //el.innerHTML = data;
+                        //
+                        //var element=el.getElementsByTagName( 'span' );
+                        //var results=element[0].innerHTML.split(" ");
+                        var param=$scope.BaseCurrency+"_"+preferredCurrency;
+                        var results=data.results;
+                        var result = results[param];
+
+                        $scope.currencyratelist.push({
+                            currency : preferredCurrency,
+                            rate : result.val
+                        });
+                        console.log($scope.currencyratelist);
+
+                        $scope.selectedCurrency = preferredCurrency;
+                        $scope.currencyRate = parseFloat(result.val);
+
+                        if($scope.currencyratelist.length>1)
+                        {
+                            if($scope.content.amount!="")
+                            {
+                                $scope.content.amount=(parseFloat($scope.content.amount)/parseFloat($scope.currencyratelist[$scope.currencyratelist.length - 2].rate))*$scope.currencyRate;
+                                $scope.content.amount=Math.round($scope.content.amount*100)/100;
+                            }
+                            if($scope.content.bankCharges!="")
+                            {
+                                $scope.content.bankCharges=(parseFloat($scope.content.bankCharges)/parseFloat($scope.currencyratelist[$scope.currencyratelist.length - 2].rate))*$scope.currencyRate;
+                                $scope.content.bankCharges=Math.round($scope.content.bankCharges*100)/100;
+                            }
+                        }
+                        else if($scope.currencyratelist.length==1)
+                        {
+                            if($scope.content.amount!="")
+                            {
+                                $scope.content.amount=parseFloat($scope.content.amount)*$scope.currencyRate;
+                                $scope.content.amount=Math.round($scope.content.amount*100)/100;
+                            }
+                            if($scope.content.bankCharges!="")
+                            {
+                                $scope.content.bankCharges=parseFloat($scope.content.bankCharges)*$scope.currencyRate;
+                                $scope.content.bankCharges=Math.round($scope.content.bankCharges*100)/100;
+                            }
+                        }
+
+                        if($scope.customer_supplier.customer != null || $scope.customer_supplier.customer != "")
+                        {
+                            $scope.loadInvoice($scope.customer_supplier.customer);
+                        }
+
+                    }).error(function(data)
+                    {
+                        console.log(data);
+                    })
+
+                }
 
             }
 
@@ -513,7 +672,29 @@
                         for (i = 0; i < data.length; i++) {
                             //console.log(moment(data[i].paymentDate).format('LL'));
                             data[i].paymentDate=moment(data[i].paymentDate).format('L');
-                            $scope.items.push(data[i]);
+                            //debugger;
+                            var insertedCurrency=data[i].currency;
+                            var insertedrate=1;
+                            if(data[i].rate!=null||data[i].rate!=""||data[i].rate!=undefined)
+                            {
+                                insertedrate=parseFloat(data[i].rate);
+                            }
+
+                            if(insertedCurrency!=$scope.BaseCurrency)
+                            {
+                                data[i].amount=Math.round((parseFloat(data[i].amount)*insertedrate)*100)/100;
+                                if(data[i].bankCharges!=null||data[i].bankCharges!=""||data[i].bankCharges!=undefined)
+                                {
+                                    data[i].bankCharges=Math.round((parseFloat(data[i].bankCharges)*insertedrate)*100)/100;
+                                }
+                                $scope.items.push(data[i]);
+                            }
+                            else
+                            {
+                                $scope.items.push(data[i]);
+                            }
+
+                            //$scope.items.push(data[i]);  payment service Version - 6.1.0.5
 
                         }
                         $scope.loading = false;
