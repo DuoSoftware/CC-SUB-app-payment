@@ -497,6 +497,10 @@
 
             }
 
+            $scope.closeApplication = function () {
+                window.parent.dwShellController.closeCustomApp();
+            };
+
             $scope.convertCurrency = function(preferredCurrency)
             {
                 debugger;
@@ -654,6 +658,8 @@
             var editfalse = true;
             $scope.editOff = editfalse;
 
+            $scope.DivClassName = 'flex-50';
+
             $scope.items=[];
             var skip=0;
             var take=100;
@@ -736,6 +742,8 @@
 
                 $scope.editOff = true;
                 //debugger;
+                $scope.DivClassName = 'flex-40';
+
                 for (var i = 0; i < $scope.items.length; i++) {
                     $scope.items[i].select = false;
                 }
@@ -815,6 +823,10 @@
                 }
 
             }
+
+            $scope.closeApplication = function () {
+                window.parent.dwShellController.closeCustomApp();
+            };
 
             $scope.cancelorder = function (editedprofile) {
 

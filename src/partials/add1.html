@@ -10,16 +10,16 @@
                         </div>
                         <div class="text-wrap">
                             <h1 class="font-Lato">Payment
-                                <!--<i class="ti-close last" ng-click="$state.go('dock')">-->
-                                    <!--<md-tooltip md-direction="bottom">-->
-                                        <!--close-->
-                                    <!--</md-tooltip>-->
-                                <!--</i>-->
-                                <i class="ti-arrow-left first" ng-click="returntolist()">
+                                <i class="ti-close last" ng-click="closeApplication()">
                                     <md-tooltip md-direction="bottom">
-                                        back
+                                        close
                                     </md-tooltip>
                                 </i>
+                                <!--<i class="ti-arrow-left first" ng-click="returntolist()">-->
+                                    <!--<md-tooltip md-direction="bottom">-->
+                                        <!--back-->
+                                    <!--</md-tooltip>-->
+                                <!--</i>-->
                             </h1>
 
                         </div>
@@ -197,5 +197,10 @@
             </md-content>
         </div>
     </div>
+</div>
+
+<div class="add-new hvr-pop view-icon-wrapper" >
+    <i class="ti-eye" ng-click="returntolist()"></i>
+    <md-tooltip md-direction="left">View Payment List</md-tooltip>
 </div>
 

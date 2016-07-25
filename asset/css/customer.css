@@ -275,6 +275,11 @@ md-input-container > label {
     box-shadow: -3px 17px 17px -14px rgba(0, 0, 0, 0.75);
 }
 
+.add-new.view-icon-wrapper{
+    top: 85%;
+    right: 1%;
+}
+
 .add-new > i {
     font-size: 30px;
     text-align: center;

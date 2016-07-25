@@ -10,11 +10,11 @@
                             </div>
                             <div class="text-wrap">
                                 <h1 class="font-Lato text-white-color">Payment
-                                    <!--<i class="ti-close last" ng-click="$state.go('dock')">-->
-                                        <!--<md-tooltip md-direction="bottom">-->
-                                            <!--close-->
-                                        <!--</md-tooltip>-->
-                                    <!--</i>-->
+                                    <i class="ti-close last" ng-click="closeApplication()">
+                                        <md-tooltip md-direction="bottom">
+                                            close
+                                        </md-tooltip>
+                                    </i>
                                 </h1>
                             </div>
                         </div>
@@ -26,7 +26,7 @@
 
 
             <!-- left layout -->
-            <div flex="40" id="adjContent">
+            <div flex="40" id="adjContent" class="{{DivClassName}}">
 
 
                 <div layout="column" class="sd">
@@ -40,11 +40,11 @@
                                         </div>
                                         <div class="text-wrap">
                                             <h1 class="font-Lato text-white-color">Payment
-                                                <!--<i class="ti-close last" ng-click="$state.go('dock')">-->
-                                                    <!--<md-tooltip md-direction="bottom">-->
-                                                        <!--close-->
-                                                    <!--</md-tooltip>-->
-                                                <!--</i>-->
+                                                <i class="ti-close last" ng-click="closeApplication()">
+                                                    <md-tooltip md-direction="bottom">
+                                                        close
+                                                    </md-tooltip>
+                                                </i>
                                             </h1>
                                         </div>
                                     </div>
@@ -88,6 +88,7 @@
                             </div>
                             <!--<div ng-slimscroll height="500" when-scrolled="more()" always-visible="false" border-radius="5px" opacity="0.2" position="right" enabled="ctrl.enabled">-->
                             <div class="table-content mac-style" style="height:500px;overflow-y: scroll;" slim-scroll data-options="{'keepFocus': true}">
+                                <div class="slim-scroll-wrapper" data-ng-transclude="" tabindex="-1">
                                 <md-card layout="row" class="table-card animated " layout-wrap
                                          ng-class="row.select==true?'selectedThis':'unSelect'"
                                          ng-click="editlistitem(row)"
@@ -115,6 +116,7 @@
                                         </div>
                                     </div>
                                 </md-card>
+                                </div>
                             </div>
                             <!--<div layout="row" ng-show="isdataavailable">-->
                                 <!--<div layout-gt-sm="row" class="serach-more" ng-click="searchmorebuttonclick()">-->
@@ -345,8 +347,8 @@
                             <div layout="row" class="top-header">
                                 <!--<div flex="50">-->
                                     <!--<div class="adj-left-text">-->
-                                        <!--&lt;!&ndash;<h1>{{selectedprofile.customer}}</h1>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<small>Payment No : {{selectedprofile.paymentNo}}</small>&ndash;&gt;-->
+                                        <!--<!--<h1>{{selectedprofile.customer}}</h1>-->-->
+                                        <!--<!--<small>Payment No : {{selectedprofile.paymentNo}}</small>-->-->
                                     <!--</div>-->
                                 <!--</div>-->
                                 <!--<div flex="50">-->
@@ -354,7 +356,7 @@
                                         <!--<h5 class="text-gray-color font-300">Payment Amount</h5>-->
                                     <!--</div>-->
                                     <!--<div class="adj-right-text">-->
-                                        <!--&lt;!&ndash;<small>Payment Amount</small>&ndash;&gt;-->
+                                        <!--<!--<small>Payment Amount</small>-->-->
                                         <!--<h1>{{selectedprofile.amount| currency}}</h1>-->
                                     <!--</div>-->
                                 <!--</div>-->
