@@ -497,6 +497,7 @@
 
             }
 
+            //Directed to main shell
             $scope.closeApplication = function () {
                 window.parent.dwShellController.closeCustomApp();
             };
