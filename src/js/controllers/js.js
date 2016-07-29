@@ -497,7 +497,7 @@
 
             }
 
-            //Directed to main shell
+            //direct back to shell
             $scope.closeApplication = function () {
                 window.parent.dwShellController.closeCustomApp();
             };
@@ -549,7 +549,7 @@
                 }
                 else
                 {
-                    $charge.converter().calcCurrency($scope.BaseCurrency+"_"+preferredCurrency).success(function(data)
+                    $charge.currency().calcCurrency($scope.BaseCurrency+"_"+preferredCurrency).success(function(data)
                     {
                         //debugger;
                         //var el = document.createElement( 'html' );
