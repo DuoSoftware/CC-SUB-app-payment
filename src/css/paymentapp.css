@@ -1,4 +1,8 @@
 
+body, html {
+    height: auto;
+}
+
 .p-l-15 {
     padding-left: 15px;
 }
