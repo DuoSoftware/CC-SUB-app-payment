@@ -1,6 +1,7 @@
 
 body, html {
     height: auto;
+    overflow: visible;
 }
 
 .p-l-15 {
@@ -75,6 +76,14 @@ body, html {
     padding-left: 40px;
     padding-right: 40px;
     overflow-x: auto;
+}
+
+#adjContent {
+    z-index: 0;
+}
+
+#adjDetails {
+    z-index: 1;
 }
 
 .sub-header-wrap {
