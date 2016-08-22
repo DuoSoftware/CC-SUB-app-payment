@@ -1,0 +1,325 @@
+<div id="payment-read" class="compact page-layout blank" layout="row">
+    <div class="invoice-read-container">
+
+        <!-- INVOICE -->
+        <div class="card md-whiteframe-8dp">
+
+            <div class="inv-read-header">
+                <div class="invoice-date">{{vm.selectedPayment.paymentDate | parseDate | date: 'dd/MM/yyyy'}}</div>
+
+                <div layout="row" layout-align="space-between stretch">
+                    <div class="client">
+                        <div class="invoice-number" layout="row" layout-align="start center">
+                            <span class="title">PAYMENT NO : </span>
+                            <span class="number">{{vm.selectedPayment.paymentNo}}</span>
+                        </div>
+
+                        <div class="invoice-type" layout="row" layout-align="start center">
+                             <span class="title">CUSTOMER : </span>
+                            <span class="number">{{vm.selectedPayment.customer}}</span>
+                        </div>
+
+
+                        <div class="due-date" layout="row" layout-align="start center">
+                            <span class="title">STATUS : </span>
+                            <span class="date">{{vm.selectedPayment.status}}</span>
+                        </div>
+
+                        <md-button class="md-icon-button" aria-label="More" ng-hide="vm.selectedPayment.status=='Cancelled'" ng-click="cancelorder(vm.selectedPayment)">
+                          <ng-md-icon icon="delete" class="tooltip-detail" size="20px"></ng-md-icon>
+                          <md-tooltip md-direction="right">Cancel Payment</md-tooltip>
+                        </md-button>
+                        <md-button class="md-icon-button" aria-label="More" ng-click="printDiv('paymentDiv')" >
+                          <ng-md-icon icon="print" class="tooltip-detail" size="20px"></ng-md-icon>
+                        </md-button>
+
+                        <div class="info">
+                            <div class="title">YAMULANKA</div>
+                            <div class="address">No.23/2, Second Cross Street, Colombo - 8, SriLanka</div>
+                            <div class="phone">+94-773936719</div>
+                            <div class="email">indi@yamu.lk</div>
+                            <div class="website">www.yamu.lk</div>
+                        </div>
+                    </div>
+
+                    <div class="issuer md-accent-bg" layout="row" layout-align="start center">
+                        <div class="logo" layout="row" layout-align="center center">
+                            <span>D</span>
+                        </div>
+
+                        <div class="info">
+                            <div class="title">DuoWorld .inc</div>
+                            <div class="address">No.413, Galled Rd, Colombo - 3, SriLanka</div>
+                            <div class="phone">+94-112388445</div>
+                            <div class="email">info@duoworld.com</div>
+                            <div class="website">www.duoworld.com</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inv-read-content">
+                <!--<table class="simple invoice-table">-->
+                    <!--<thead>-->
+                        <!--<th>DESCRIPTION</th>-->
+                        <!--<th class="text-right">UNIT PRICE</th>-->
+                        <!--<th class="text-right">QUANTITY</th>-->
+                        <!--<th class="text-right">TOTAL</th>-->
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                        <!--<tr ng-repeat="detail in vm.selectedInvoice.invoiceDetails">-->
+                            <!--<td>-->
+                                <!--<div class="title">-->
+                                    <!--Item Title-->
+                                <!--</div>-->
+                            <!--</td>-->
+                            <!--<td class="text-right">-->
+                                <!--{{detail.unitPrice | currency}}-->
+                            <!--</td>-->
+                            <!--<td class="text-right">-->
+                                <!--{{detail.gty}}-->
+                            <!--</td>-->
+                            <!--<td class="text-right">-->
+                                <!--{{detail.totalPrice | currency}}-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+
+                <table class="simple invoice-table-footer">
+                    <tbody>
+                        <tr class="subtotal">
+                            <td>Currency</td>
+                            <td>{{vm.selectedPayment.currency}}</td>
+                        </tr>
+                        <tr class="additionalcharge">
+                            <td>Currency Rate</td>
+                            <td>{{vm.selectedPayment.rate}}</td>
+                        </tr>
+                        <tr class="discount">
+                            <td>Payment Method</td>
+                            <td>{{vm.selectedPayment.paymentMethod}}</td>
+                        </tr>
+                        <tr class="tax">
+                            <td>Bank Charges</td>
+                            <td>{{vm.selectedPayment.bankCharges | currency:" "}}</td>
+                        </tr>
+                        <tr class="promotion" ng-if="vm.selectedPayment.note">
+                            <td>Note</td>
+                            <td>{{vm.selectedPayment.note}}</td>
+                        </tr>
+                        <tr class="total">
+                            <td>Payment Amount</td>
+                            <td>{{vm.selectedPayment.amount | currency:" "}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="inv-read-footer">
+                <div class="note">Please pay within 7 days. Thank you for your business.</div>
+                <div layout="row" layout-align="start start">
+                    <div class="logo md-accent-bg" layout="row" layout-align="center center">
+                        <div>D</div>
+                    </div>
+                    <div class="small-note">
+                        In condimentum malesuada efficitur. Mauris volutpat placerat auctor. Ut ac congue dolor. Quisque
+                        scelerisque lacus sed feugiat fermentum. Cras aliquet facilisis pellentesque. Nunc hendrerit
+                        quam at leo commodo, a suscipit tellus dapibus. Etiam at felis volutpat est mollis lacinia.
+                        Mauris placerat sem sit amet velit mollis, in porttitor ex finibus. Proin eu nibh id libero
+                        tincidunt lacinia et eget eros.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / INVOICE -->
+
+        <!-- Use the following element to add breaks to your pages -->
+        <!-- This will make sure that the section after this element will be printed on a new page -->
+        <div class="page-break"></div>
+
+    </div>
+</div>
+
+<div style="display: none">
+  <div style="background-color: white" class="right-layout" id="paymentDiv">
+
+    <img src="{{vm.selectedPayment.companylogo}}" height="100" width="100">
+
+    <h1 align="center"> <u>Receipt </u></h1>
+
+    <table id="paymentDetails" style="border: #080808;width: 100%">
+      <tr>
+        <td>
+          Customer
+        </td>
+        <td>
+          :
+        </td>
+        <td>
+          <b> {{vm.selectedPayment.customer}}</b>
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td style="font-size: 25px" align="right">
+          Payment No : <b> {{vm.selectedPayment.paymentNo}}</b>
+        </td>
+      </tr>
+      <!--<tr>-->
+      <!--<td>-->
+      <!--Payment No-->
+      <!--</td>-->
+      <!--<td>-->
+      <!--:-->
+      <!--</td>-->
+      <!--<td>-->
+      <!--{{selectedprofile.paymentNo}}-->
+      <!--</td>-->
+      <!--</tr>-->
+      <tr>
+        <td>
+          Payment Date
+        </td>
+        <td>
+          :
+        </td>
+        <td>
+          {{vm.selectedPayment.paymentDate}}
+        </td>
+      </tr>
+      <!--<tr>-->
+      <!--<td>-->
+      <!--Status-->
+      <!--</td>-->
+      <!--<td>-->
+      <!--:-->
+      <!--</td>-->
+      <!--<td>-->
+      <!--{{selectedprofile.status}}-->
+      <!--</td>-->
+      <!--</tr>-->
+    </table>
+
+    <br/>
+
+    <h3> <u>Invoice Details </u></h3>
+
+    <table id="invoiceDetails" style="border: #080808;width: 100%">
+      <tr >
+        <th style="border-bottom: groove">
+          Invoice No
+        </th>
+        <th style="border-bottom: groove">
+          Invoice Amount
+        </th>
+        <th style="border-bottom: groove">
+          Paid Amount
+        </th>
+        <th style="border-bottom: groove">
+          Balance Payment
+        </th>
+      </tr>
+
+      <tr ng-repeat="item in invoicePrintlist">
+        <td align="center">
+          {{item.invoiceNo}}
+        </td>
+        <td align="center">
+          {{item.invoiceAmount| currency:" "}}
+        </td>
+        <td align="center">
+          {{item.paidAmount| currency:" "}}
+        </td>
+        <td align="center">
+          {{item.balancepayment| currency:" "}}
+        </td>
+
+      </tr>
+    </table>
+
+    <div layout-gt-sm="row" class="calc-detail-wrap">
+      <label class="calc-detail-label p-l-100">Total Balance Payment</label>
+      <label class="calc-detail-label p-l-100" style="font-weight: 700; color: #005580">{{invoicePrintlist[0].totalbalance| currency:" "}}</label>
+    </div>
+
+    <br/>
+    <br/>
+
+    <div layout="row">
+      <div layout="row" class="top-header">
+        <!--<div flex="50">-->
+        <!--<div class="adj-left-text">-->
+        <!--<!--<h1>{{selectedprofile.customer}}</h1>-->
+        <!--<!--<small>Payment No : {{selectedprofile.paymentNo}}</small>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div flex="50">-->
+        <!--<div class="adj-left-text">-->
+        <!--<h5 class="text-gray-color font-300">Payment Amount</h5>-->
+        <!--</div>-->
+        <!--<div class="adj-right-text">-->
+        <!--<!--<small>Payment Amount</small>-->
+        <!--<h1>{{selectedprofile.amount| currency}}</h1>-->
+        <!--</div>-->
+        <!--</div>-->
+      </div>
+    </div>
+    <div layout="column">
+      <div class="item-details " layout="row">
+        <div class="item" layout="row">
+          <div flex class="text-left">
+            <h5 class="text-gray-color font-300">Payment Amount</h5>
+          </div>
+          <div flex class="text-right price-text p-l-50">
+            <h1>{{vm.selectedPayment.amount| currency:" "}}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div layout="column" flex="100">
+      <!--<div class="item-details" layout="column">-->
+      <!--<div class="item" layout="row">-->
+      <!--<div flex class="text-left">-->
+      <!--<h5 class="text-gray-color font-300">Payment Date</h5>-->
+      <!--</div>-->
+      <!--<div flex class="text-right p-l-50">-->
+      <!--<h5>{{selectedprofile.paymentDate.split('T')[0].split(' ')[0]}}</h5>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <div class="item-details " layout="row">
+        <div class="item row-gray" layout="row">
+          <div flex class="text-left">
+            <h5 class="text-gray-color font-300">Payment Method</h5>
+          </div>
+          <div flex class="text-right p-l-50">
+            <h5>{{vm.selectedPayment.paymentMethod}}</h5>
+          </div>
+        </div>
+      </div>
+      <div class="item-details " layout="row">
+        <div class="item" layout="row">
+          <div flex class="text-left">
+            <h5 class="text-gray-color font-300">Bank Charges</h5>
+          </div>
+          <div flex class="text-right p-l-50">
+            <h5>{{vm.selectedPayment.bankCharges| currency:" "}}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div layout="column">
+      <h5 class="text-gray-color font-300 m-0 note-text">Note</h5>
+      <div class="note-wrap">
+        <p>{{vm.selectedPayment.note}}
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
