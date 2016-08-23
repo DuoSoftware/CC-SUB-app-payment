@@ -3,11 +3,11 @@
     'use strict';
 
     angular
-        .module('app.product')
-        .controller('AddProductController', AddProductController);
+        .module('app.payment')
+        .controller('AddPaymentController', AddPaymentController);
 
     /** @ngInject */
-    function AddProductController($mdDialog, selectedMail)
+    function AddPaymentController($mdDialog, selectedMail)
     {
         var vm = this;
 
