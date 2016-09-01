@@ -25,11 +25,11 @@
                             <span class="date">{{vm.selectedPayment.status}}</span>
                         </div>
 
-                        <md-button class="md-icon-button" aria-label="More" ng-hide="vm.selectedPayment.status=='Cancelled'" ng-click="cancelorder(vm.selectedPayment)">
+                        <md-button class="md-icon-button" aria-label="More" ng-hide="vm.selectedPayment.status=='Cancelled'">
                           <ng-md-icon icon="delete" class="tooltip-detail" size="20px"></ng-md-icon>
-                          <md-tooltip md-direction="right">Cancel Payment</md-tooltip>
+                          <!--<md-tooltip md-direction="right">Cancel Payment</md-tooltip>-->
                         </md-button>
-                        <md-button class="md-icon-button" aria-label="More" ng-click="printDiv('paymentDiv')" >
+                        <md-button class="md-icon-button" aria-label="More" >
                           <ng-md-icon icon="print" class="tooltip-detail" size="20px"></ng-md-icon>
                         </md-button>
 

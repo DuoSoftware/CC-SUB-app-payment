@@ -4,7 +4,7 @@
 
         .invoice-list-item {
             position: relative;
-            padding: 16px;
+            padding: 5px 16px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.12);
             cursor: pointer;
 
@@ -76,25 +76,26 @@
                 }
             }
 
-            .date{
-                width:100px;
-                height:auto;
-                text-align:center;
-                color:#3f3f3f;
+          .date{
+            width:100px;
+            height:55px;
+            text-align:center;
+            color:#3f3f3f;
 
-                span:nth-child(1){
-                    font-size:36px;
-                }
-
-                span:nth-child(2){
-                    font-size:14px;
-                    font-weight:700;
-                }
-
-                span:nth-child(3){
-                    font-size:20px;
-                }
+            span:nth-child(1){
+              font-size: 20px;
+              height: 23px;
             }
+
+            span:nth-child(2){
+              font-size:14px;
+              font-weight:700;
+            }
+
+            span:nth-child(3){
+              font-size:15px;
+            }
+          }
 
             .client{
                 width:150px;
@@ -140,7 +141,7 @@
                 height:auto;
 
                 .ammount{
-                    font-size:26px;
+                    font-size:18px;
                     color:#3f3f3f;
                     i{
                         font-size:8px;

@@ -28,23 +28,26 @@
                 </div>
             </div>
         </div>
-        <div class="date" layout="column" layout-align="center center" style="padding-right: 200px;">
-            <span>{{payment.paymentDate | parseDate | date: 'dd'}}</span><span>{{payment.paymentDate | parseDate | date: 'MMMM'}}</span><span>{{payment.paymentDate | parseDate | date: 'yyyy'}}</span>
+
+        <div flex class="date" layout="column" layout-align="center center">
+            <span>{{payment.paymentDate | parseDate | date: 'dd'}}</span>
+            <span>{{payment.paymentDate | parseDate | date: 'MMMM' | limitTo: 3}}</span>
+            <span>{{payment.paymentDate | parseDate | date: 'yyyy'}}</span>
         </div>
 
         <!--<div class="client" layout="column" layout-align="center center">-->
             <!--{{payment.amount| currency:" "}}-->
         <!--</div>-->
 
-        <div class="status" layout="column" layout-align="center center">
-            <span class="pill partial" >{{payment.paymentMethod}}</span>
-        </div>
-        <!--style="background-color: {{payment.StatusColor}}"-->
-
         <div class="value" layout="column" layout-align="center center">
             <span class="ammount">{{payment.amount | isoCurrency:payment.currency}}</span>
             <!-- <span class="totaldue"><i>{{}}</i></span> -->
         </div>
+
+        <div class="status" layout="column" layout-align="center center">
+          <span class="pill partial" >{{payment.paymentMethod}}</span>
+        </div>
+        <!--style="background-color: {{payment.StatusColor}}"-->
 
         <!-- <div layout="row" layout-align="space-between end">
             <md-button class="md-icon-button" ng-click="vm.toggleStarred(product, $event)"
