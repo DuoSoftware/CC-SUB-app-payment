@@ -15,7 +15,7 @@
             .state('app.payment', {
                 url    : '/payment',
                 views  : {
-                    'content@app': {
+                    'payment@app': {
                         templateUrl: 'app/main/payment/payment.html',
                         controller : 'PaymentController as vm'
                     }

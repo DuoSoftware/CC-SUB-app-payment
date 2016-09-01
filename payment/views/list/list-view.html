@@ -42,7 +42,7 @@
         <!--style="background-color: {{payment.StatusColor}}"-->
 
         <div class="value" layout="column" layout-align="center center">
-            <span class="ammount"><i>{{payment.currency}}</i>{{payment.amount}}</span>
+            <span class="ammount">{{payment.amount | isoCurrency:payment.currency}}</span>
             <!-- <span class="totaldue"><i>{{}}</i></span> -->
         </div>
 

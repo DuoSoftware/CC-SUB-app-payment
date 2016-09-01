@@ -550,6 +550,13 @@
         document.body.scrollTop = document.documentElement.scrollTop = 0;
       }
 
+      $scope.refreshpage = function(){
+        $scope.items = [];
+        skip=0;
+        $scope.loading = true;
+        $scope.more();
+      }
+
 
       $scope.submit = function () {
         //if ($scope.editForm.$valid == true) {
@@ -607,6 +614,7 @@
             //    $window.location.reload();
             //}, millisecondsToWait);
             $scope.clearform();
+            $scope.refreshpage();
             //$window.location.href='#/paymentlist';
 
           }).error(function(data){
