@@ -533,6 +533,7 @@
       $scope.clearform = function (){
         //$scope.editForm.$setPristine();
         //$scope.editForm.$setUntouched();
+		 $scope.submitted=false;
         $scope.customer_supplier.customer="";
         //$scope.content.paymentDate=moment(new Date().toISOString()).format('LL');
         $scope.content.paymentDate=new Date();
@@ -562,6 +563,7 @@
         //if ($scope.editForm.$valid == true) {
           //debugger;
           console.log("form validated");
+		   $scope.submitted=true;
           var productitems=[];
 
           var currentdate=new Date;
