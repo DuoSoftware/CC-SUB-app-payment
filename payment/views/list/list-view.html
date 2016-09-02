@@ -5,11 +5,11 @@
      ng-class="{'starred': payment.starred, 'selected': vm.selectedPayment === payment, 'checked': vm.isChecked(payment)}">
 
     <div layout="row" layout-align="start center">
-        <md-checkbox class="no-label"
-                     ng-checked="vm.isChecked(payment)"
-                     ng-click="vm.toggleCheck(payment, $event)"
-                     aria-label="{{vm.isChecked(payment)? 'Uncheck':'check'}}">
-        </md-checkbox>
+        <!--<md-checkbox class="no-label"-->
+                     <!--ng-checked="vm.isChecked(payment)"-->
+                     <!--ng-click="vm.toggleCheck(payment, $event)"-->
+                     <!--aria-label="{{vm.isChecked(payment)? 'Uncheck':'check'}}">-->
+        <!--</md-checkbox>-->
 
 
         <div class="info" flex layout="row">
@@ -30,9 +30,9 @@
         </div>
 
         <div flex class="date" layout="column" layout-align="center center">
-            <span>{{payment.paymentDate | parseDate | date: 'dd'}}</span>
-            <span>{{payment.paymentDate | parseDate | date: 'MMMM' | limitTo: 3}}</span>
-            <span>{{payment.paymentDate | parseDate | date: 'yyyy'}}</span>
+            <span>{{payment.paymentDate | parseDate | date: 'dd'}} {{payment.paymentDate | parseDate | date: 'MMMM' | limitTo: 3}} {{payment.paymentDate | parseDate | date: 'yyyy'}}</span>
+            <!--<span>{{payment.paymentDate | parseDate | date: 'MMMM' | limitTo: 3}}</span>-->
+            <!--<span>{{payment.paymentDate | parseDate | date: 'yyyy'}}</span>-->
         </div>
 
         <!--<div class="client" layout="column" layout-align="center center">-->

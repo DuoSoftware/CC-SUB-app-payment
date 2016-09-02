@@ -70,98 +70,98 @@
             <!-- / INVOICE VIEW PANE TOOLBAR -->
 
             <!-- CONTENT TOOLBAR -->
-            <div class="toolbar" layout="row" layout-align="space-between center" ng-if="vm.activeInvoicePaneIndex === 0">
+            <!--<div class="toolbar" layout="row" layout-align="space-between center" ng-if="vm.activeInvoicePaneIndex === 0">-->
 
-                <div layout="row" layout-align="start center">
-                    <md-checkbox class="no-label" aria-label="{{vm.allChecked?'Uncheck All':'Check All'}}"
-                                 ng-checked="vm.allChecked" ng-click="vm.checkAll()"></md-checkbox>
-                    <md-menu>
-                        <md-button class="md-icon-button"
-                                   ng-click="$mdOpenMenu($event)"
-                                   aria-label="Filters">
-                            <md-icon md-font-icon="icon-menu-down"></md-icon>
-                        </md-button>
-                        <md-menu-content width="3">
-                            <md-menu-item>
-                                <md-button aria-label="All">
-                                    All
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button aria-label="None">None
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button aria-label="Starred">Starred
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button aria-label="Unstarred">Unstarred
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
+                <!--<div layout="row" layout-align="start center">-->
+                    <!--<md-checkbox class="no-label" aria-label="{{vm.allChecked?'Uncheck All':'Check All'}}"-->
+                                 <!--ng-checked="vm.allChecked" ng-click="vm.checkAll()"></md-checkbox>-->
+                    <!--<md-menu>-->
+                        <!--<md-button class="md-icon-button"-->
+                                   <!--ng-click="$mdOpenMenu($event)"-->
+                                   <!--aria-label="Filters">-->
+                            <!--<md-icon md-font-icon="icon-menu-down"></md-icon>-->
+                        <!--</md-button>-->
+                        <!--<md-menu-content width="3">-->
+                            <!--<md-menu-item>-->
+                                <!--<md-button aria-label="All">-->
+                                    <!--All-->
+                                <!--</md-button>-->
+                            <!--</md-menu-item>-->
+                            <!--<md-menu-item>-->
+                                <!--<md-button aria-label="None">None-->
+                                <!--</md-button>-->
+                            <!--</md-menu-item>-->
+                            <!--<md-menu-item>-->
+                                <!--<md-button aria-label="Starred">Starred-->
+                                <!--</md-button>-->
+                            <!--</md-menu-item>-->
+                            <!--<md-menu-item>-->
+                                <!--<md-button aria-label="Unstarred">Unstarred-->
+                                <!--</md-button>-->
+                            <!--</md-menu-item>-->
+                        <!--</md-menu-content>-->
+                    <!--</md-menu>-->
 
-                    <div class="divider-vertical" hide show-gt-sm></div>
+                    <!--<div class="divider-vertical" hide show-gt-sm></div>-->
 
-                    <md-button class="md-icon-button" aria-label="Archive" hide show-gt-sm>
-                        <md-icon md-font-icon="icon-archive"></md-icon>
-                        <md-tooltip><span>Archive</span></md-tooltip>
-                    </md-button>
+                    <!--<md-button class="md-icon-button" aria-label="Archive" hide show-gt-sm>-->
+                        <!--<md-icon md-font-icon="icon-archive"></md-icon>-->
+                        <!--<md-tooltip><span>Archive</span></md-tooltip>-->
+                    <!--</md-button>-->
 
-                    <md-button class="md-icon-button" aria-label="Clear" hide show-gt-sm>
-                        <md-icon md-font-icon="icon-alert-octagon"></md-icon>
-                        <md-tooltip><span>Clear</span></md-tooltip>
-                    </md-button>
+                    <!--<md-button class="md-icon-button" aria-label="Clear" hide show-gt-sm>-->
+                        <!--<md-icon md-font-icon="icon-alert-octagon"></md-icon>-->
+                        <!--<md-tooltip><span>Clear</span></md-tooltip>-->
+                    <!--</md-button>-->
 
-                    <md-button class="md-icon-button" aria-label="Delete" hide show-gt-sm>
-                        <md-icon md-font-icon="icon-delete"></md-icon>
-                        <md-tooltip><span>Delete</span></md-tooltip>
-                    </md-button>
+                    <!--<md-button class="md-icon-button" aria-label="Delete" hide show-gt-sm>-->
+                        <!--<md-icon md-font-icon="icon-delete"></md-icon>-->
+                        <!--<md-tooltip><span>Delete</span></md-tooltip>-->
+                    <!--</md-button>-->
 
 
-                    <md-menu hide-gt-sm>
-                        <md-button class="md-icon-button"
-                                   ng-click="$mdOpenMenu($event)">
-                            <md-icon md-font-icon="icon-dots-vertical"></md-icon>
-                        </md-button>
-                        <md-menu-content width="3">
-                            <md-menu-item>
-                                <md-button aria-label="Archive">
-                                    <md-icon md-font-icon="icon-archive"></md-icon>
-                                    <span>Archive</span>
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button aria-label="Clear">
-                                    <md-icon md-font-icon="icon-alert-octagon"></md-icon>
-                                    <span>Clear</span>
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button aria-label="Delete">
-                                    <md-icon md-font-icon="icon-delete"></md-icon>
-                                    <span>Delete</span>
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-                </div>
+                    <!--<md-menu hide-gt-sm>-->
+                        <!--<md-button class="md-icon-button"-->
+                                   <!--ng-click="$mdOpenMenu($event)">-->
+                            <!--<md-icon md-font-icon="icon-dots-vertical"></md-icon>-->
+                        <!--</md-button>-->
+                        <!--<md-menu-content width="3">-->
+                            <!--<md-menu-item>-->
+                                <!--<md-button aria-label="Archive">-->
+                                    <!--<md-icon md-font-icon="icon-archive"></md-icon>-->
+                                    <!--<span>Archive</span>-->
+                                <!--</md-button>-->
+                            <!--</md-menu-item>-->
+                            <!--<md-menu-item>-->
+                                <!--<md-button aria-label="Clear">-->
+                                    <!--<md-icon md-font-icon="icon-alert-octagon"></md-icon>-->
+                                    <!--<span>Clear</span>-->
+                                <!--</md-button>-->
+                            <!--</md-menu-item>-->
+                            <!--<md-menu-item>-->
+                                <!--<md-button aria-label="Delete">-->
+                                    <!--<md-icon md-font-icon="icon-delete"></md-icon>-->
+                                    <!--<span>Delete</span>-->
+                                <!--</md-button>-->
+                            <!--</md-menu-item>-->
+                        <!--</md-menu-content>-->
+                    <!--</md-menu>-->
+                <!--</div>-->
 
-                <div layout="row" layout-align="start center">
-                    <span class="page-info" hide-sm>1 - 100 of 980</span>
+                <!--<div layout="row" layout-align="start center">-->
+                    <!--<span class="page-info" hide-sm>1 - 100 of 980</span>-->
 
-                    <md-button class="md-icon-button arrow" aria-label="Previous">
-                        <md-icon md-font-icon="icon-chevron-left"></md-icon>
-                        <md-tooltip><span>Previous</span></md-tooltip>
-                    </md-button>
+                    <!--<md-button class="md-icon-button arrow" aria-label="Previous">-->
+                        <!--<md-icon md-font-icon="icon-chevron-left"></md-icon>-->
+                        <!--<md-tooltip><span>Previous</span></md-tooltip>-->
+                    <!--</md-button>-->
 
-                    <md-button class="md-icon-button arrow" aria-label="Next">
-                        <md-icon md-font-icon="icon-chevron-right"></md-icon>
-                        <md-tooltip><span>Next</span></md-tooltip>
-                    </md-button>
-                </div>
-            </div>
+                    <!--<md-button class="md-icon-button arrow" aria-label="Next">-->
+                        <!--<md-icon md-font-icon="icon-chevron-right"></md-icon>-->
+                        <!--<md-tooltip><span>Next</span></md-tooltip>-->
+                    <!--</md-button>-->
+                <!--</div>-->
+            <!--</div>-->
             <!-- / CONTENT TOOLBAR -->
 
             <!-- CONTENT WRAPPER -->
@@ -222,98 +222,98 @@
             <!-- / INVOICE VIEW PANE TOOLBAR -->
 
             <!-- CONTENT TOOLBAR -->
-            <div class="toolbar" layout="row" layout-align="space-between center" ng-if="vm.activeInvoicePaneIndex === 0">
+            <!--<div class="toolbar" layout="row" layout-align="space-between center" ng-if="vm.activeInvoicePaneIndex === 0">-->
 
-                <div layout="row" layout-align="start center">
-                    <md-checkbox class="no-label" aria-label="{{vm.allChecked?'Uncheck All':'Check All'}}"
-                                 ng-checked="vm.allChecked" ng-click="vm.checkAll()"></md-checkbox>
-                    <md-menu>
-                        <md-button class="md-icon-button"
-                                   ng-click="$mdOpenMenu($event)"
-                                   aria-label="Filters">
-                            <md-icon md-font-icon="icon-menu-down"></md-icon>
-                        </md-button>
-                        <md-menu-content width="3">
-                            <md-menu-item>
-                                <md-button aria-label="All">
-                                    All
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button aria-label="None">None
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button aria-label="Starred">Starred
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button aria-label="Unstarred">Unstarred
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
+                <!--<div layout="row" layout-align="start center">-->
+                    <!--<md-checkbox class="no-label" aria-label="{{vm.allChecked?'Uncheck All':'Check All'}}"-->
+                                 <!--ng-checked="vm.allChecked" ng-click="vm.checkAll()"></md-checkbox>-->
+                    <!--<md-menu>-->
+                        <!--<md-button class="md-icon-button"-->
+                                   <!--ng-click="$mdOpenMenu($event)"-->
+                                   <!--aria-label="Filters">-->
+                            <!--<md-icon md-font-icon="icon-menu-down"></md-icon>-->
+                        <!--</md-button>-->
+                        <!--<md-menu-content width="3">-->
+                            <!--<md-menu-item>-->
+                                <!--<md-button aria-label="All">-->
+                                    <!--All-->
+                                <!--</md-button>-->
+                            <!--</md-menu-item>-->
+                            <!--<md-menu-item>-->
+                                <!--<md-button aria-label="None">None-->
+                                <!--</md-button>-->
+                            <!--</md-menu-item>-->
+                            <!--<md-menu-item>-->
+                                <!--<md-button aria-label="Starred">Starred-->
+                                <!--</md-button>-->
+                            <!--</md-menu-item>-->
+                            <!--<md-menu-item>-->
+                                <!--<md-button aria-label="Unstarred">Unstarred-->
+                                <!--</md-button>-->
+                            <!--</md-menu-item>-->
+                        <!--</md-menu-content>-->
+                    <!--</md-menu>-->
 
-                    <div class="divider-vertical" hide show-gt-sm></div>
+                    <!--<div class="divider-vertical" hide show-gt-sm></div>-->
 
-                    <md-button class="md-icon-button" aria-label="Archive" hide show-gt-sm>
-                        <md-icon md-font-icon="icon-archive"></md-icon>
-                        <md-tooltip><span>Archive</span></md-tooltip>
-                    </md-button>
+                    <!--<md-button class="md-icon-button" aria-label="Archive" hide show-gt-sm>-->
+                        <!--<md-icon md-font-icon="icon-archive"></md-icon>-->
+                        <!--<md-tooltip><span>Archive</span></md-tooltip>-->
+                    <!--</md-button>-->
 
-                    <md-button class="md-icon-button" aria-label="Clear" hide show-gt-sm>
-                        <md-icon md-font-icon="icon-alert-octagon"></md-icon>
-                        <md-tooltip><span>Clear</span></md-tooltip>
-                    </md-button>
+                    <!--<md-button class="md-icon-button" aria-label="Clear" hide show-gt-sm>-->
+                        <!--<md-icon md-font-icon="icon-alert-octagon"></md-icon>-->
+                        <!--<md-tooltip><span>Clear</span></md-tooltip>-->
+                    <!--</md-button>-->
 
-                    <md-button class="md-icon-button" aria-label="Delete" hide show-gt-sm>
-                        <md-icon md-font-icon="icon-delete"></md-icon>
-                        <md-tooltip><span>Delete</span></md-tooltip>
-                    </md-button>
+                    <!--<md-button class="md-icon-button" aria-label="Delete" hide show-gt-sm>-->
+                        <!--<md-icon md-font-icon="icon-delete"></md-icon>-->
+                        <!--<md-tooltip><span>Delete</span></md-tooltip>-->
+                    <!--</md-button>-->
 
 
-                    <md-menu hide-gt-sm>
-                        <md-button class="md-icon-button"
-                                   ng-click="$mdOpenMenu($event)">
-                            <md-icon md-font-icon="icon-dots-vertical"></md-icon>
-                        </md-button>
-                        <md-menu-content width="3">
-                            <md-menu-item>
-                                <md-button aria-label="Archive">
-                                    <md-icon md-font-icon="icon-archive"></md-icon>
-                                    <span>Archive</span>
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button aria-label="Clear">
-                                    <md-icon md-font-icon="icon-alert-octagon"></md-icon>
-                                    <span>Clear</span>
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button aria-label="Delete">
-                                    <md-icon md-font-icon="icon-delete"></md-icon>
-                                    <span>Delete</span>
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-                </div>
+                    <!--<md-menu hide-gt-sm>-->
+                        <!--<md-button class="md-icon-button"-->
+                                   <!--ng-click="$mdOpenMenu($event)">-->
+                            <!--<md-icon md-font-icon="icon-dots-vertical"></md-icon>-->
+                        <!--</md-button>-->
+                        <!--<md-menu-content width="3">-->
+                            <!--<md-menu-item>-->
+                                <!--<md-button aria-label="Archive">-->
+                                    <!--<md-icon md-font-icon="icon-archive"></md-icon>-->
+                                    <!--<span>Archive</span>-->
+                                <!--</md-button>-->
+                            <!--</md-menu-item>-->
+                            <!--<md-menu-item>-->
+                                <!--<md-button aria-label="Clear">-->
+                                    <!--<md-icon md-font-icon="icon-alert-octagon"></md-icon>-->
+                                    <!--<span>Clear</span>-->
+                                <!--</md-button>-->
+                            <!--</md-menu-item>-->
+                            <!--<md-menu-item>-->
+                                <!--<md-button aria-label="Delete">-->
+                                    <!--<md-icon md-font-icon="icon-delete"></md-icon>-->
+                                    <!--<span>Delete</span>-->
+                                <!--</md-button>-->
+                            <!--</md-menu-item>-->
+                        <!--</md-menu-content>-->
+                    <!--</md-menu>-->
+                <!--</div>-->
 
-                <div layout="row" layout-align="start center">
-                    <span class="page-info" hide-sm>1 - 100 of 980</span>
+                <!--<div layout="row" layout-align="start center">-->
+                    <!--<span class="page-info" hide-sm>1 - 100 of 980</span>-->
 
-                    <md-button class="md-icon-button arrow" aria-label="Previous">
-                        <md-icon md-font-icon="icon-chevron-left"></md-icon>
-                        <md-tooltip><span>Previous</span></md-tooltip>
-                    </md-button>
+                    <!--<md-button class="md-icon-button arrow" aria-label="Previous">-->
+                        <!--<md-icon md-font-icon="icon-chevron-left"></md-icon>-->
+                        <!--<md-tooltip><span>Previous</span></md-tooltip>-->
+                    <!--</md-button>-->
 
-                    <md-button class="md-icon-button arrow" aria-label="Next">
-                        <md-icon md-font-icon="icon-chevron-right"></md-icon>
-                        <md-tooltip><span>Next</span></md-tooltip>
-                    </md-button>
-                </div>
-            </div>
+                    <!--<md-button class="md-icon-button arrow" aria-label="Next">-->
+                        <!--<md-icon md-font-icon="icon-chevron-right"></md-icon>-->
+                        <!--<md-tooltip><span>Next</span></md-tooltip>-->
+                    <!--</md-button>-->
+                <!--</div>-->
+            <!--</div>-->
             <!-- / CONTENT TOOLBAR -->
 
             <!-- CONTENT WRAPPER -->
@@ -323,9 +323,12 @@
                 <form name="editForm" ng-submit="submit()">
                   <!--<md-content flex layout-padding> style="height:600px;overflow-y: scroll;"-->
                   <div class="body-content-wrap">
-                    <div layout-gt-sm="row" class="sub-header-wrap">
-                      <label>Customer</label>
+
+                    <div layout-gt-sm="row">
+                      <label>General Detial
+                      </label>
                     </div>
+
                     <div layout-gt-sm="row">
                       <md-autocomplete flex
                                        md-select-on-match
@@ -368,48 +371,49 @@
                         <input ng-required="false" minlength="null" md-maxlength="null" type="" name="rate" min="" ng-pattern="" ng-disabled="true" ng-model="currencyRate">
                       </md-input-container>
                     </div>
+                  </div>
 
+                  <md-divider></md-divider>
+
+                  <div class="body-content-wrap">
                     <!--</div>-->
 
-                    <div layout-gt-sm="row" class="sub-header-wrap">
+                    <div layout-gt-sm="row" style="margin-bottom: 20px;">
                       <label>Invoice Details</label>
                     </div>
-                    <div class="sub-header-table-wrap" layout="row" layout-wrap>
-                      <div flex="25" class="p-l-15">
+
+                    <div layout="row" layout-wrap style="border-bottom: solid 1px #cccccc; margin-bottom: 5px; color: #aaa;font-size: 14px;text-align: center">
+                      <div flex="20" class="p-l-15">
                         Invoice No:
                       </div>
-                      <div flex="25" class="text-left">
+                      <div flex="20" class="text-left" style="text-align: center">
                         Invoice Amount
                       </div>
-                      <div flex="15" class="text-left">
+                      <div flex="20" class="text-left" style="text-align: center">
                         Adjustment
                       </div>
-                      <div flex="15" class="text-left">
+                      <div flex="20" class="text-left" style="text-align: center">
                         Paid Amount
                       </div>
-                      <div flex="20" class="text-right">
+                      <div flex="20" class="text-right" style="padding-right: 30px;text-align: center">
                         Balance Payment
                       </div>
                     </div>
                     <div>
                       <md-list style="height:250px;overflow-y: scroll;">
-                        <md-list-item  ng-repeat="item in invoicelist"  style="outline:none;">
+                        <md-list-item  ng-repeat="item in invoicelist"  style="outline:none;padding: 0;text-align: center">
                           <md-card layout="row" class="md-card-wrap" layout-align="space-between center">
                             <!--<div flex="30"><img src="{{item.business_contact_no}}" style="width:80px;margin-left: 10px;"/></div>-->
-                            <div flex="20" layout="column">
+                            <div flex="20" layout="column" layout-align="center left">
                               <label class="md-card-label-wrap">{{item.invoiceNo}}</label>
                             </div>
                             <div flex="20" layout="column">
                               <label class="md-card-label-wrap">{{item.invoiceAmount| currency:" "}}</label>
                             </div>
-                            <div ng-if="item.adjustmenttype=='0'" flex="20" layout="column">
-                              <label class="md-card-label-wrap">{{item.invoiceAdjustment| currency:" "}}</label>
-                            </div>
-                            <div ng-if="item.adjustmenttype=='1'" flex="20" layout="column">
-                              <label class="md-card-label-wrap">-{{item.invoiceAdjustment| currency:" "}}</label>
-                            </div>
-                            <div ng-if="item.adjustmenttype=='2'" flex="20" layout="column">
-                              <label class="md-card-label-wrap">+{{item.invoiceAdjustment| currency:" "}}</label>
+                            <div flex="20" layout="column">
+                              <label class="md-card-label-wrap" ng-if="item.adjustmenttype=='0'">{{item.invoiceAdjustment| currency:" "}}</label>
+                              <label ng-if="item.adjustmenttype=='1'" class="md-card-label-wrap">-{{item.invoiceAdjustment| currency:" "}}</label>
+                              <label ng-if="item.adjustmenttype=='2'" class="md-card-label-wrap">+{{item.invoiceAdjustment| currency:" "}}</label>
                             </div>
                             <div flex="20" layout="column">
                               <label class="md-card-label-wrap">{{item.paidAmount| currency:" "}}</label>
@@ -422,42 +426,55 @@
                         </md-list-item >
                       </md-list>
                     </div>
-                    <div layout-gt-sm="row" class="calc-detail-wrap">
-                      <label class="calc-detail-label p-l-100">Total Balance Payments</label>
-                      <label class="calc-detail-label p-l-100">{{invoicelist[0].totalbalance| currency:" "}}</label>
+                    <md-divider></md-divider>
+
+                    <div layout-gt-sm="row" style="text-align: center;padding: 10px 0;border-bottom: solid 1px #cccccc;margin-bottom: 20px">
+                      <div flex>
+                        <label class="calc-detail-label">Total Balance Payments</label>
+                      </div>
+                      <div flex style="font-weight: 400">
+                        <label class="calc-detail-label">{{invoicelist[0].totalbalance| currency:" "}}</label>
+                      </div>
                       <!--<label style="font-size: 20px;font-weight: 600;padding-left: 100px; height: 30px">{{items[0].amount| currency}}</label>-->
                     </div>
 
                     <!--<div class="body-content-wrap"> ng-click="addNewUser($event)"-->
 
                     <div layout-gt-sm="row">
-                      <md-input-container class="md-block" flex-gt-sm>
+                      <md-input-container class="md-block" flex>
                         <label>Payment Amount</label>
                         <input ng-required="true" minlength="null" md-maxlength="null" type="number" name="amount" min="0" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" style="text-align:right;" ng-model="content.amount">
                       </md-input-container>
+
+                      <div flex="10"></div>
+
+                      <div flex>
+                        <md-input-container class="md-block p-l-50" flex-gt-sm>
+                          <label>Payment Method</label>
+                          <md-select ng-required="true" name="paymentMethod" ng-model="content.paymentMethod">
+                            <md-divider></md-divider>
+                            <md-option value="Cash">Cash</md-option>
+                            <md-option value="Cheque">Cheque</md-option>
+                            <md-option value="Card">Card</md-option>
+                            <!--<md-option ng-repeat="profile in profilelist" ng-value="profile">{{profile.profilename}}</md-option>-->
+                          </md-select>
+                        </md-input-container>
+                        <md-input-container ng-show="content.paymentMethod=='Cheque'" class="md-block" flex-gt-sm>
+                          <label>Cheque No</label>
+                          <input ng-required="false" minlength="null" md-maxlength="null" type="" name="chequeNo" ng-pattern="" ng-model="content.chequeNo">
+                        </md-input-container>
+                        <!--<div ng-if="content.paymentMethod=='Card'">-->
+                        <!--<div ng-init="addCardPayment($event, content.amount)"></div>-->
+                        <!--</div>-->
+                      </div>
                     </div>
+                  </div>
+
+                  <md-divider></md-divider>
+
+                  <div class="body-content-wrap">
 
                     <div layout-gt-sm="row">
-                      <md-input-container class="md-block p-l-50" flex-gt-sm>
-                        <label>Payment Method</label>
-                        <md-select ng-required="true" name="paymentMethod" ng-model="content.paymentMethod">
-                          <md-divider></md-divider>
-                          <md-option value="Cash">Cash</md-option>
-                          <md-option value="Cheque">Cheque</md-option>
-                          <md-option value="Card">Card</md-option>
-                          <!--<md-option ng-repeat="profile in profilelist" ng-value="profile">{{profile.profilename}}</md-option>-->
-                        </md-select>
-                      </md-input-container>
-                      <md-input-container ng-show="content.paymentMethod=='Cheque'" class="md-block" flex-gt-sm>
-                        <label>Cheque No</label>
-                        <input ng-required="false" minlength="null" md-maxlength="null" type="" name="chequeNo" ng-pattern="" ng-model="content.chequeNo">
-                      </md-input-container>
-                      <!--<div ng-if="content.paymentMethod=='Card'">-->
-                      <!--<div ng-init="addCardPayment($event, content.amount)"></div>-->
-                      <!--</div>-->
-                    </div>
-
-                    <div layout-gt-sm="row" class="sub-header-wrap">
                       <label>Other</label>
                     </div>
 
@@ -467,29 +484,41 @@
                           <label>Bank Charges</label>
                           <input ng-required="false" minlength="null" md-maxlength="null" style="width: 180px;" type="number" name="bankCharges" min="0" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" ng-model="content.bankCharges">
                         </md-input-container>
-                        <md-input-container class="md-block" flex-gt-sm>
-                          <label>Notes</label>
-                          <input ng-required="false" minlength="null" md-maxlength="null" style="width: 618px;" type="" name="note" ng-pattern="" ng-model="content.note">
-                        </md-input-container>
                       </div>
                     </div>
 
+                    <div layout="row" flex>
+                      <md-input-container class="md-block" flex>
+                        <label>Notes</label>
+                        <input ng-required="false" minlength="null" md-maxlength="null" type="" name="note" ng-pattern="" ng-model="content.note">
+                      </md-input-container>
+                    </div>
 
+                  </div>
+                  <div layout="row" layout-align="space-between center" class="bottom-fixed-bar layout-align-space-between-center layout-row">
+                    <div layout="row"></div>
+
+                    <div layout="row" class="layout-row">
+                      <md-button ng-click="clearform();"">Clear</md-button>
+                      <md-button ng-disabled="submitted" type="submit" class="md-raised md-warn">Submit</md-button>
+                    </div>
                   </div>
 
 
                   <!--</md-content>-->
 
-                  <div class="form-footer-btn-wrap">
-                    <div layout-gt-sm="row" class="p-0">
-                      <!--<a flex="50" class="md-raise btn btn-cancel" ng-click="returntolist()">cancel-->
-                      <!--</a>-->
-                      <!--<a flex="50" class="md-raise btn btn-submit" type="submit" ng-click="showListBottomSheet()">submit-->
-                      <!--</a>-->
-                      <md-button flex="50" class="md-raise btn btn-cancel" ng-click="clearform();" type="button">CLEAR</md-button>
-                      <md-button flex="50" class="md-raise btn btn-submit" ng-disabled="submitted" type="submit">SUBMIT</md-button>
-                    </div>
-                  </div>
+                  <!--<div class="form-footer-btn-wrap">-->
+                  <!--<div layout-gt-sm="row" class="p-0">-->
+                  <!--&lt;!&ndash;<a flex="50" class="md-raise btn btn-cancel" ng-click="returntolist()">cancel&ndash;&gt;-->
+                  <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                  <!--&lt;!&ndash;<a flex="50" class="md-raise btn btn-submit" type="submit" ng-click="showListBottomSheet()">submit&ndash;&gt;-->
+                  <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                  <!--<md-button flex="50" class="md-raise btn btn-cancel" ng-click="clearform();" type="button">CLEAR</md-button>-->
+                  <!--<md-button flex="50" class="md-raise btn btn-submit" ng-disabled="submitted" type="submit">SUBMIT</md-button>-->
+                  <!--</div>-->
+                  <!--</div>-->
+
+
                 </form>
               </md-content>
                 <!--<md-content style="width:100%;height: 100%" ms-scroll>-->
