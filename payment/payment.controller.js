@@ -498,14 +498,14 @@
             {
               $scope.profilelist.push({
                 display : obj.business_name,
-                value : {profilename : obj.business_name.toLowerCase(), profileId : obj.profileId, othername : obj.business_contact_name, profile_type : obj.profile_type}
+                value : {profilename : obj.business_name, profileId : obj.profileId, othername : obj.business_contact_name, profile_type : obj.profile_type}
               });
             }
             else if(obj.profile_type=='Individual')
             {
               $scope.profilelist.push({
                 display : obj.first_name,
-                value : {profilename : obj.first_name.toLowerCase(), profileId : obj.profileId, othername : obj.last_name, profile_type : obj.profile_type}
+                value : {profilename : obj.first_name, profileId : obj.profileId, othername : obj.last_name, profile_type : obj.profile_type}
               });
             }
 
@@ -533,7 +533,6 @@
       $scope.clearform = function (){
         //$scope.editForm.$setPristine();
         //$scope.editForm.$setUntouched();
-		 $scope.submitted=false;
         $scope.customer_supplier.customer="";
         //$scope.content.paymentDate=moment(new Date().toISOString()).format('LL');
         $scope.content.paymentDate=new Date();
@@ -549,6 +548,7 @@
         $scope.selectedCurrency=$scope.BaseCurrency;
         $scope.currencyRate=1;
         document.body.scrollTop = document.documentElement.scrollTop = 0;
+        $scope.submitted=false;
       }
 
       $scope.refreshpage = function(){
@@ -562,8 +562,8 @@
       $scope.submit = function () {
         //if ($scope.editForm.$valid == true) {
           //debugger;
+          $scope.submitted=true;
           console.log("form validated");
-		   $scope.submitted=true;
           var productitems=[];
 
           var currentdate=new Date;
