@@ -239,6 +239,8 @@
         console.log(data);
       })
 
+      $scope.paymentPrefix="";
+
       $scope.isLoading = true;
       $scope.isdataavailable=true;
       var editfalse = true;
@@ -258,42 +260,53 @@
           if($scope.loading)
           {
             skip += take;
-            for (var i = 0; i < data.length; i++) {
-              //console.log(moment(data[i].paymentDate).format('LL'));
-              data[i].paymentDate=moment(data[i].paymentDate).format('L');
-              //debugger;
-              var insertedCurrency=data[i].currency;
-              var insertedrate=1;
-              if(data[i].rate!=null||data[i].rate!=""||data[i].rate!=undefined)
-              {
-                insertedrate=parseFloat(data[i].rate);
-              }
 
-              if(insertedCurrency!=$scope.BaseCurrency)
-              {
-                data[i].amount=Math.round((parseFloat(data[i].amount)*insertedrate)*100)/100;
-                if(data[i].bankCharges!=null||data[i].bankCharges!=""||data[i].bankCharges!=undefined)
+            $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_PaymentAttributes","PaymentPrefix").success(function(data2) {
+              $scope.paymentPrefix=data2[0].RecordFieldData;
+              console.log($scope.paymentPrefix);
+
+              for (var i = 0; i < data.length; i++) {
+                //console.log(moment(data[i].paymentDate).format('LL'));
+                data[i].paymentDate=moment(data[i].paymentDate).format('L');
+                data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
+                //debugger;
+                var insertedCurrency=data[i].currency;
+                var insertedrate=1;
+                if(data[i].rate!=null||data[i].rate!=""||data[i].rate!=undefined)
                 {
-                  data[i].bankCharges=Math.round((parseFloat(data[i].bankCharges)*insertedrate)*100)/100;
+                  insertedrate=parseFloat(data[i].rate);
                 }
-                $scope.items.push(data[i]);
+
+                if(insertedCurrency!=$scope.BaseCurrency)
+                {
+                  data[i].amount=Math.round((parseFloat(data[i].amount)*insertedrate)*100)/100;
+                  if(data[i].bankCharges!=null||data[i].bankCharges!=""||data[i].bankCharges!=undefined)
+                  {
+                    data[i].bankCharges=Math.round((parseFloat(data[i].bankCharges)*insertedrate)*100)/100;
+                  }
+                  $scope.items.push(data[i]);
+                }
+                else
+                {
+                  $scope.items.push(data[i]);
+                }
+
+                //$scope.items.push(data[i]);  payment service Version - 6.1.0.5
+
               }
-              else
-              {
-                $scope.items.push(data[i]);
+              vm.payments=$scope.items;
+
+              $scope.loading = false;
+              $scope.isLoading = false;
+              $scope.isdataavailable=true;
+              if(data.length<take){
+                $scope.isdataavailable=false;
               }
 
-              //$scope.items.push(data[i]);  payment service Version - 6.1.0.5
+            }).error(function(data) {
+              console.log(data);
+            })
 
-            }
-            vm.payments=$scope.items;
-
-            $scope.loading = false;
-            $scope.isLoading = false;
-            $scope.isdataavailable=true;
-            if(data.length<take){
-              $scope.isdataavailable=false;
-            }
           }
 
         }).error(function(data)
