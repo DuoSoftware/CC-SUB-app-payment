@@ -1,0 +1,34 @@
+<!-- INVOICE LIST ITEMS -->
+<div class="invoice-list-item" ng-repeat="payment in items | filter: vm.search | filter: global.search"
+     md-ink-ripple
+     ng-click="vm.selectPayment(payment)"
+     ng-class="{'starred': payment.starred, 'selected': vm.selectedPayment === payment, 'checked': vm.isChecked(payment)}">
+
+  <div layout="row" layout-align="start center">
+    <div class="info" flex layout="row">
+      <div class="invoiceMainInfo" layout="column" layout-align="center start">
+        <span>
+          {{payment.paymentNo}}
+        </span>
+      </div>
+    </div>
+
+    <div flex class="date" layout="column" layout-align="center start">
+      <span>{{payment.customer}}</span>
+    </div>
+
+    <div flex class="date" layout="column" layout-align="center start">
+      <span>{{payment.paymentDate | parseDate | date: 'dd'}} {{payment.paymentDate | parseDate | date: 'MMMM' | limitTo: 3}} {{payment.paymentDate | parseDate | date: 'yyyy'}}</span>
+    </div>
+
+    <div flex class="value" layout="column" layout-align="center start">
+      <span class="ammount">{{payment.amount | isoCurrency:payment.currency}}</span>
+      <!-- <span class="totaldue"><i>{{}}</i></span> -->
+    </div>
+
+    <div flex="10" class="status" layout="column" layout-align="center start">
+      <span class="pill partial" >{{payment.paymentMethod}}</span>
+    </div>
+  </div>
+</div>
+<!-- PRODUCT LIST ITEMS
