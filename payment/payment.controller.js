@@ -41,6 +41,8 @@
         vm.toggleStarred = toggleStarred;
         vm.toggleCheck = toggleCheck;
 
+        vm.loadByKeyword = $scope.loadByKeywordPayment;
+
         //////////
 
         // Watch screen size to activate responsive read pane
@@ -320,6 +322,54 @@
       };
       // we call the function twice to populate the list
       $scope.more();
+
+      var skipPaymentSearch, takePaymentSearch;
+      var tempList;
+      $scope.loadByKeywordPayment= function (keyword) {
+        if($scope.items.length>50) {
+          if (keyword.length == 3) {
+            console.log(keyword);
+            //debugger;
+            skipPaymentSearch = 0;
+            takePaymentSearch = 10;
+            tempList = [];
+            $charge.payment().filterByKey(keyword, skipPaymentSearch, takePaymentSearch,'desc').success(function (data) {
+              for (var i = 0; i < data.length; i++) {
+                tempList.push(data[i]);
+              }
+              skipPaymentSearch += takePaymentSearch;
+              $scope.loadPaging(keyword, skipPaymentSearch, takePaymentSearch);
+            }).error(function (data) {
+              vm.payments = [];
+              vm.selectedPayment = null;
+            });
+          }
+          else if (keyword.length == 0 || keyword == null) {
+            vm.payments = $scope.items;
+          }
+        }
+      }
+
+      $scope.loadPaging= function (keyword,skip, take) {
+        $charge.payment().filterByKey(keyword, skip, take, 'desc').success(function (data) {
+          for(var i=0;i<data.length;i++)
+          {
+            tempList.push(data[i]);
+          }
+          skip += take;
+          $scope.loadPaging(keyword,skip, take);
+        }).error(function (data) {
+          if(tempList.length>0) {
+            vm.payments = tempList;
+            //$scope.openProduct(vm.products[0]);
+          }
+          else
+          {
+            vm.payments=[];
+            vm.selectedPayment=null;
+          }
+        });
+      }
 
       $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_CompanyAttributes","CompanyLogo").success(function(data)
       {
