@@ -327,7 +327,15 @@
       var tempList;
       $scope.loadByKeywordPayment= function (keyword) {
         if($scope.items.length>50) {
-          if (keyword.length == 3) {
+          //debugger;
+          var searchLength=3;
+          if(keyword.toLowerCase().startsWith($scope.paymentPrefix.toLowerCase()))
+          {
+            keyword=keyword.substr($scope.paymentPrefix.length);
+            console.log(keyword);
+            searchLength=1;
+          }
+          if (keyword.length == searchLength) {
             console.log(keyword);
             //debugger;
             skipPaymentSearch = 0;
@@ -335,7 +343,31 @@
             tempList = [];
             $charge.payment().filterByKey(keyword, skipPaymentSearch, takePaymentSearch,'desc').success(function (data) {
               for (var i = 0; i < data.length; i++) {
-                tempList.push(data[i]);
+                data[i].paymentDate=moment(data[i].paymentDate).format('L');
+                data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
+                //debugger;
+                var insertedCurrency=data[i].currency;
+                var insertedrate=1;
+                if(data[i].rate!=null||data[i].rate!=""||data[i].rate!=undefined)
+                {
+                  insertedrate=parseFloat(data[i].rate);
+                }
+
+                if(insertedCurrency!=$scope.BaseCurrency)
+                {
+                  data[i].amount=Math.round((parseFloat(data[i].amount)*insertedrate)*100)/100;
+                  if(data[i].bankCharges!=null||data[i].bankCharges!=""||data[i].bankCharges!=undefined)
+                  {
+                    data[i].bankCharges=Math.round((parseFloat(data[i].bankCharges)*insertedrate)*100)/100;
+                  }
+                  tempList.push(data[i]);
+                }
+                else
+                {
+                  tempList.push(data[i]);
+                }
+
+                //tempList.push(data[i]);
               }
               skipPaymentSearch += takePaymentSearch;
               $scope.loadPaging(keyword, skipPaymentSearch, takePaymentSearch);
@@ -354,7 +386,31 @@
         $charge.payment().filterByKey(keyword, skip, take, 'desc').success(function (data) {
           for(var i=0;i<data.length;i++)
           {
-            tempList.push(data[i]);
+            data[i].paymentDate=moment(data[i].paymentDate).format('L');
+            data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
+            //debugger;
+            var insertedCurrency=data[i].currency;
+            var insertedrate=1;
+            if(data[i].rate!=null||data[i].rate!=""||data[i].rate!=undefined)
+            {
+              insertedrate=parseFloat(data[i].rate);
+            }
+
+            if(insertedCurrency!=$scope.BaseCurrency)
+            {
+              data[i].amount=Math.round((parseFloat(data[i].amount)*insertedrate)*100)/100;
+              if(data[i].bankCharges!=null||data[i].bankCharges!=""||data[i].bankCharges!=undefined)
+              {
+                data[i].bankCharges=Math.round((parseFloat(data[i].bankCharges)*insertedrate)*100)/100;
+              }
+              tempList.push(data[i]);
+            }
+            else
+            {
+              tempList.push(data[i]);
+            }
+
+            //tempList.push(data[i]);
           }
           skip += take;
           $scope.loadPaging(keyword,skip, take);
