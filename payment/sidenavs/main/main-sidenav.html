@@ -29,95 +29,57 @@
         </md-button>
     </div>
 
-    <!--<div class="navigation-simple" layout="column">-->
-        <!--<md-button class="item" aria-label="inbox">-->
-            <!--<div layout="row" layout-align="start center">-->
-                <!--<md-icon md-font-icon="icon-inbox" class="s16"></md-icon>-->
-                <!--<span class="title">All Invoices</span>-->
-            <!--</div>-->
-        <!--</md-button>-->
+    <div class="navigation-simple" layout="column">
+        <div class="item subheader">Filters</div>
 
-        <!--<md-button class="item" aria-label="starred">-->
-            <!--<div layout="row" layout-align="start center">-->
-                <!--<md-icon md-font-icon="icon-star" class="s16"></md-icon>-->
-                <!--<span class="title" flex>Recurring</span>-->
-            <!--</div>-->
-        <!--</md-button>-->
+        <md-button class="item" aria-label="inbox" ng-click="refreshpage()">
+          <div layout="row" layout-align="start center">
+            <md-icon md-font-icon="icon-inbox" class="s16"></md-icon>
+            <span class="title">All</span>
+          </div>
+        </md-button>
+
+      <md-button class="item" aria-label="starred" ng-click="filterMainList('status','Active')">
+        <div layout="row" layout-align="start center">
+          <md-icon md-font-icon="icon-star" class="s16"></md-icon>
+          <span class="title" flex>Active Payments</span>
+        </div>
+      </md-button>
+
+        <md-button class="item" aria-label="starred" ng-click="filterMainList('status','Cancelled')">
+            <div layout="row" layout-align="start center">
+                <md-icon md-font-icon="icon-star" class="s16"></md-icon>
+                <span class="title" flex>Cancelled Payments</span>
+            </div>
+        </md-button>
 
         <!--<md-button class="item" aria-label="important">-->
             <!--<div layout="row" layout-align="start center">-->
                 <!--<md-icon md-font-icon="icon-alert-circle" class="s16"></md-icon>-->
-                <!--<span class="title" flex>Favourite</span>-->
+                <!--<span class="title" flex>Cash Payments</span>-->
             <!--</div>-->
         <!--</md-button>-->
+        <div class="item subheader">Payment Type</div>
 
-        <!--<div class="item subheader">Filters</div>-->
-
-        <!--<md-button class="item" aria-label="label notes">-->
-            <!--<div layout="row" layout-align="start center">-->
-                <!--<md-icon md-font-icon="icon-label" class="s16 blue-grey-fg"></md-icon>-->
-                <!--<span class="title">Draft</span>-->
-            <!--</div>-->
-        <!--</md-button>-->
-        <!--<md-button class="item" aria-label="label notes">-->
-            <!--<div layout="row" layout-align="start center">-->
-                <!--<md-icon md-font-icon="icon-label" class="s16 blue-grey-fg"></md-icon>-->
-                <!--<span class="title">Sent</span>-->
-            <!--</div>-->
-        <!--</md-button>-->
-        <!--<md-button class="item" aria-label="label notes">-->
-            <!--<div layout="row" layout-align="start center">-->
-                <!--<md-icon md-font-icon="icon-label" class="s16 blue-grey-fg"></md-icon>-->
-                <!--<span class="title">Viewed</span>-->
-            <!--</div>-->
-        <!--</md-button>-->
-        <!--<md-button class="item" aria-label="label notes">-->
-            <!--<div layout="row" layout-align="start center">-->
-                <!--<md-icon md-font-icon="icon-label" class="s16 blue-grey-fg"></md-icon>-->
-                <!--<span class="title">Partial</span>-->
-            <!--</div>-->
-        <!--</md-button>-->
-        <!--<md-button class="item" aria-label="label notes">-->
-            <!--<div layout="row" layout-align="start center">-->
-                <!--<md-icon md-font-icon="icon-label" class="s16 blue-grey-fg"></md-icon>-->
-                <!--<span class="title">Paid</span>-->
-            <!--</div>-->
-        <!--</md-button>-->
-        <!--<md-button class="item" aria-label="label notes">-->
-            <!--<div layout="row" layout-align="start center">-->
-                <!--<md-icon md-font-icon="icon-label" class="s16 blue-grey-fg"></md-icon>-->
-                <!--<span class="title">Unrealized</span>-->
-            <!--</div>-->
-        <!--</md-button>-->
-        <!--<md-button class="item" aria-label="label notes">-->
-            <!--<div layout="row" layout-align="start center">-->
-                <!--<md-icon md-font-icon="icon-label" class="s16 blue-grey-fg"></md-icon>-->
-                <!--<span class="title">Ignored</span>-->
-            <!--</div>-->
-        <!--</md-button>-->
-        <!--<md-button class="item" aria-label="label notes">-->
-            <!--<div layout="row" layout-align="start center">-->
-                <!--<md-icon md-font-icon="icon-label" class="s16 blue-grey-fg"></md-icon>-->
-                <!--<span class="title">Archived</span>-->
-            <!--</div>-->
-        <!--</md-button>-->
-
-        <!--<md-divider></md-divider>-->
-
-        <!--<md-button class="item" aria-label="settings">-->
-            <!--<div layout="row" layout-align="start center">-->
-                <!--<md-icon md-font-icon="icon-cog" class="s16"></md-icon>-->
-                <!--<span class="title">Settings</span>-->
-            <!--</div>-->
-        <!--</md-button>-->
-
-        <!--<md-button class="item" aria-label="help">-->
-            <!--<div layout="row" layout-align="start center">-->
-                <!--<md-icon md-font-icon="icon-help" class="s16"></md-icon>-->
-                <!--<span class="title">Help</span>-->
-            <!--</div>-->
-        <!--</md-button>-->
-    <!--</div>-->
+        <md-button class="item" aria-label="label notes" ng-click="filterMainList('paymentMethod','Cash')">
+            <div layout="row" layout-align="start center">
+                <md-icon md-font-icon="icon-label" class="s16 blue-grey-fg"></md-icon>
+                <span class="title">Cash</span>
+            </div>
+        </md-button>
+        <md-button class="item" aria-label="label notes" ng-click="filterMainList('paymentMethod','Cheque')">
+            <div layout="row" layout-align="start center">
+                <md-icon md-font-icon="icon-label" class="s16 blue-grey-fg"></md-icon>
+                <span class="title">Cheque</span>
+            </div>
+        </md-button>
+        <md-button class="item" aria-label="label notes" ng-click="filterMainList('paymentMethod','Card')">
+            <div layout="row" layout-align="start center">
+                <md-icon md-font-icon="icon-label" class="s16 blue-grey-fg"></md-icon>
+                <span class="title">Card</span>
+            </div>
+        </md-button>
+    </div>
 
 </md-content>
 <!-- / SIDENAV CONTENT -->

@@ -329,11 +329,13 @@
         if($scope.items.length>50) {
           //debugger;
           var searchLength=3;
+          var idLength=0;
           if(keyword.toLowerCase().startsWith($scope.paymentPrefix.toLowerCase()))
           {
             keyword=keyword.substr($scope.paymentPrefix.length);
             console.log(keyword);
             searchLength=1;
+            idLength=2;
           }
           if (keyword.length == searchLength) {
             console.log(keyword);
@@ -341,7 +343,7 @@
             skipPaymentSearch = 0;
             takePaymentSearch = 10;
             tempList = [];
-            $charge.payment().filterByKey(keyword, skipPaymentSearch, takePaymentSearch,'desc').success(function (data) {
+            $charge.payment().filterByKey(keyword, idLength, skipPaymentSearch, takePaymentSearch,'desc').success(function (data) {
               for (var i = 0; i < data.length; i++) {
                 data[i].paymentDate=moment(data[i].paymentDate).format('L');
                 data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
@@ -370,7 +372,7 @@
                 //tempList.push(data[i]);
               }
               skipPaymentSearch += takePaymentSearch;
-              $scope.loadPaging(keyword, skipPaymentSearch, takePaymentSearch);
+              $scope.loadPaging(keyword, idLength, skipPaymentSearch, takePaymentSearch);
             }).error(function (data) {
               vm.payments = [];
               vm.selectedPayment = null;
@@ -382,8 +384,8 @@
         }
       }
 
-      $scope.loadPaging= function (keyword,skip, take) {
-        $charge.payment().filterByKey(keyword, skip, take, 'desc').success(function (data) {
+      $scope.loadPaging= function (keyword, idLength,skip, take) {
+        $charge.payment().filterByKey(keyword, idLength, skip, take, 'desc').success(function (data) {
           for(var i=0;i<data.length;i++)
           {
             data[i].paymentDate=moment(data[i].paymentDate).format('L');
@@ -413,7 +415,7 @@
             //tempList.push(data[i]);
           }
           skip += take;
-          $scope.loadPaging(keyword,skip, take);
+          $scope.loadPaging(keyword, idLength,skip, take);
         }).error(function (data) {
           if(tempList.length>0) {
             vm.payments = tempList;
@@ -440,6 +442,94 @@
       $scope.searchmorebuttonclick = function (){
         $scope.loading = true;
         $scope.more();
+      }
+
+      var filterList;
+      $scope.filterMainList = function (filterBy,value){
+        filterList = [];
+        var skipFilterList=0;
+        var takeFilterList=50;
+        //debugger;
+        $charge.payment().filter(filterBy, value, skipFilterList, takeFilterList, 'desc').success(function (data) {
+          for(var i=0;i<data.length;i++)
+          {
+            data[i].paymentDate=moment(data[i].paymentDate).format('L');
+            data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
+            //debugger;
+            var insertedCurrency=data[i].currency;
+            var insertedrate=1;
+            if(data[i].rate!=null||data[i].rate!=""||data[i].rate!=undefined)
+            {
+              insertedrate=parseFloat(data[i].rate);
+            }
+
+            if(insertedCurrency!=$scope.BaseCurrency)
+            {
+              data[i].amount=Math.round((parseFloat(data[i].amount)*insertedrate)*100)/100;
+              if(data[i].bankCharges!=null||data[i].bankCharges!=""||data[i].bankCharges!=undefined)
+              {
+                data[i].bankCharges=Math.round((parseFloat(data[i].bankCharges)*insertedrate)*100)/100;
+              }
+              filterList.push(data[i]);
+            }
+            else
+            {
+              filterList.push(data[i]);
+            }
+
+            //tempList.push(data[i]);
+          }
+          skipFilterList += takeFilterList;
+          $scope.loadFilterPaging(filterBy, value, skipFilterList, takeFilterList);
+        }).error(function (data) {
+          vm.payments = [];
+          vm.selectedPayment = null;
+        });
+      }
+
+      $scope.loadFilterPaging = function (filterBy, value, skip, take){
+        $charge.payment().filter(filterBy, value, skip, take, 'desc').success(function (data) {
+          for(var i=0;i<data.length;i++)
+          {
+            data[i].paymentDate=moment(data[i].paymentDate).format('L');
+            data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
+            //debugger;
+            var insertedCurrency=data[i].currency;
+            var insertedrate=1;
+            if(data[i].rate!=null||data[i].rate!=""||data[i].rate!=undefined)
+            {
+              insertedrate=parseFloat(data[i].rate);
+            }
+
+            if(insertedCurrency!=$scope.BaseCurrency)
+            {
+              data[i].amount=Math.round((parseFloat(data[i].amount)*insertedrate)*100)/100;
+              if(data[i].bankCharges!=null||data[i].bankCharges!=""||data[i].bankCharges!=undefined)
+              {
+                data[i].bankCharges=Math.round((parseFloat(data[i].bankCharges)*insertedrate)*100)/100;
+              }
+              filterList.push(data[i]);
+            }
+            else
+            {
+              filterList.push(data[i]);
+            }
+
+            //tempList.push(data[i]);
+          }
+          skip += take;
+          $scope.loadFilterPaging(filterBy, value, skip, take);
+        }).error(function (data) {
+          if(filterList.length>0) {
+            vm.payments = filterList;
+            //$scope.openProduct(vm.products[0]);
+          }
+          else
+          {
+            vm.payments=[];
+            vm.selectedPayment=null;
+          }
+        });
       }
 
       $scope.editlistitem = function (item) {
@@ -536,7 +626,9 @@
 
       $scope.cancelorder = function (editedprofile) {
 
-        $charge.payment().cancel(editedprofile.paymentNo).success(function(data){
+        var paymentNumber=editedprofile.paymentNo.substr($scope.paymentPrefix.length);
+        console.log(paymentNumber);
+        $charge.payment().cancel(paymentNumber).success(function(data){
           console.log(data);
 
           $mdToast.show({
@@ -671,6 +763,7 @@
       }
 
       $scope.refreshpage = function(){
+        vm.payments = [];
         $scope.items = [];
         skip=0;
         $scope.loading = true;
