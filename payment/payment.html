@@ -58,7 +58,7 @@
                     </md-menu-item>
                     </md-menu-item>
                     <md-menu-item>
-                      <md-button aria-label="Delete" ng-hide="vm.selectedPayment.status=='Cancelled'" ng-click="cancelorder(vm.selectedPayment)">
+                      <md-button aria-label="Delete" ng-hide="vm.selectedPayment.status=='Cancelled'" ng-click="showCancelPaymentConfirm($event,vm.selectedPayment)">
                         <md-icon md-font-icon="icon-delete"></md-icon>
                         <span>Cancel Payment</span>
                       </md-button>

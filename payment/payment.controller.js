@@ -222,14 +222,18 @@
       $scope.storeslist = [];
       $scope.invoicelist = [];
       $scope.currencyratelist = [];
-      $scope.BaseCurrency = "LKR";
+      $scope.BaseCurrency = "";
       $scope.currencyRate = 1;
+      $scope.content={};
 
       $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_GeneralAttributes","BaseCurrency").success(function(data) {
         $scope.BaseCurrency=data[0].RecordFieldData;
         console.log($scope.BaseCurrency);
+        $scope.content.preferredcurrency=$scope.BaseCurrency;
+
       }).error(function(data) {
         console.log(data);
+        $scope.BaseCurrency="USD";
       })
 
       $scope.selectedCurrency = $scope.BaseCurrency;
@@ -624,6 +628,23 @@
         window.parent.dwShellController.closeCustomApp();
       };
 
+      $scope.showCancelPaymentConfirm = function(ev,editedprofile) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog.confirm()
+          .title('Would you like to Cancel this Payment?')
+          .textContent('You cannot revert this action again for a active Payment!')
+          .ariaLabel('Lucky day')
+          .targetEvent(ev)
+          .ok('Please do it!')
+          .cancel('No!');
+
+        $mdDialog.show(confirm).then(function() {
+          $scope.cancelorder(editedprofile);
+        }, function() {
+
+        });
+      };
+
       $scope.cancelorder = function (editedprofile) {
 
         var paymentNumber=editedprofile.paymentNo.substr($scope.paymentPrefix.length);
@@ -636,6 +657,8 @@
             hideDelay: 2000,
             position: 'bottom right'
           });
+          $scope.refreshpage();
+          closeReadPane();
 
         }).error(function(data){
           console.log(data);
@@ -740,6 +763,7 @@
       //$scope.content.paymentDate=moment(new Date().toISOString()).format('LL');
       $scope.content.paymentDate=new Date();
       $scope.customer_supplier={};
+      //$scope.content.preferredcurrency=$scope.BaseCurrency;
 
       $scope.clearform = function (){
         //$scope.editForm.$setPristine();
@@ -755,7 +779,7 @@
         $scope.content.prefferedcurrency="";
         self.searchText    = null;
         $scope.invoicelist=[];
-        $scope.content.preferredcurrency="";
+        $scope.content.preferredcurrency=$scope.BaseCurrency;
         $scope.selectedCurrency=$scope.BaseCurrency;
         $scope.currencyRate=1;
         document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -829,6 +853,7 @@
             //}, millisecondsToWait);
             $scope.clearform();
             $scope.refreshpage();
+            closeReadPane();
             //$window.location.href='#/paymentlist';
 
           }).error(function(data){
