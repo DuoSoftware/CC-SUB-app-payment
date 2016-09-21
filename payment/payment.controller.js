@@ -853,7 +853,7 @@
             //}, millisecondsToWait);
             $scope.clearform();
             $scope.refreshpage();
-            closeReadPane();
+            toggleinnerView();
             //$window.location.href='#/paymentlist';
 
           }).error(function(data){
