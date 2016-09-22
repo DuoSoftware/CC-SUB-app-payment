@@ -43,6 +43,8 @@
 
         vm.loadByKeyword = $scope.loadByKeywordPayment;
 
+        $scope.showFilers=true;
+
         //////////
 
         // Watch screen size to activate responsive read pane
@@ -73,6 +75,8 @@
             vm.selectedPayment = payment;
             $scope.loadInvoiceByCustomerId(payment.guCustomerID);
 
+            $scope.showFilers=false;
+
             $timeout(function ()
             {
                 vm.activeInvoicePaneIndex = 1;
@@ -96,6 +100,7 @@
             {
                 vm.scrollEl.scrollTop(vm.scrollPos);
             }, 650);
+            $scope.showFilers=true;
         }
 
         /**
@@ -209,9 +214,11 @@
             if(vm.appInnerState === "default"){
                 vm.appInnerState = "add";
                 vm.pageTitle="View Payments";
+                $scope.showFilers=false;
             }else{
                 vm.appInnerState = "default";
                 vm.pageTitle="Create New";
+                $scope.showFilers=true;
             }
         }
 
@@ -241,6 +248,17 @@
       $scope.prefferedCurrencies=[];
       $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_GeneralAttributes","FrequentCurrencies").success(function(data) {
         $scope.prefferedCurrencies=data[0].RecordFieldData.trimLeft().split(" ");
+      }).error(function(data) {
+        console.log(data);
+      })
+
+      $charge.commondata().getDuobaseValuesByTableName("CTS_CompanyAttributes").success(function(data) {
+        $scope.CompanyProfile=data;
+        $scope.companyName=data[0].RecordFieldData;
+        $scope.companyAddress=data[1].RecordFieldData;
+        $scope.companyPhone=data[2].RecordFieldData;
+        $scope.companyEmail=data[3].RecordFieldData;
+        $scope.companyLogo=data[4].RecordFieldData;
       }).error(function(data) {
         console.log(data);
       })

@@ -44,15 +44,15 @@
 
                     <div class="issuer md-accent-bg" layout="row" layout-align="start center">
                         <div class="logo" layout="row" layout-align="center center">
-                            <span>D</span>
+                            <span>{{companyName| limitTo:1}}</span>
                         </div>
 
                         <div class="info">
-                            <div class="title">DuoWorld .inc</div>
-                            <div class="address">No.413, Galled Rd, Colombo - 3, SriLanka</div>
-                            <div class="phone">+94-112388445</div>
-                            <div class="email">info@duoworld.com</div>
-                            <div class="website">www.duoworld.com</div>
+                            <div class="title">{{companyName}}</div>
+                            <div class="address">{{companyAddress}}</div>
+                            <div class="phone">{{companyPhone}}</div>
+                            <div class="email">{{companyEmail}}</div>
+                            <!--<div class="website">{{companyWebSite}}</div>-->
                         </div>
                     </div>
                 </div>
