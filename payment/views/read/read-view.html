@@ -34,11 +34,11 @@
                         </md-button>
 
                         <div class="info">
-                            <div class="title">YAMULANKA</div>
-                            <div class="address">No.23/2, Second Cross Street, Colombo - 8, SriLanka</div>
-                            <div class="phone">+94-773936719</div>
-                            <div class="email">indi@yamu.lk</div>
-                            <div class="website">www.yamu.lk</div>
+                            <div class="title">{{vm.selectedPayment.UserName.toUpperCase()}}</div>
+                            <div class="address">{{vm.selectedPayment.UserAddress}}</div>
+                            <div class="phone">{{vm.selectedPayment.UserContact}}</div>
+                            <div class="email">{{vm.selectedPayment.UserEmail}}</div>
+                            <!--<div class="website">{{vm.selectedPayment.UserWebSite}}</div>-->
                         </div>
                     </div>
 

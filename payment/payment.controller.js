@@ -75,6 +75,29 @@
             vm.selectedPayment = payment;
             $scope.loadInvoiceByCustomerId(payment.guCustomerID);
 
+            var paymentNumber=payment.paymentNo.substr($scope.paymentPrefix.length);
+            $charge.payment().searchPayment(paymentNumber).success(function(data){
+              console.log(data);
+
+              if(data[0].profile_type=='Individual')
+              {
+                vm.selectedPayment.UserName=data[0].first_name+" "+data[0].last_name;
+                vm.selectedPayment.UserAddress=data[0].bill_addr;
+                vm.selectedPayment.UserContact=data[0].phone;
+                vm.selectedPayment.UserEmail=data[0].email_addr;
+              }
+              else if(data[0].profile_type=='Business')
+              {
+                vm.selectedPayment.UserName=data[0].business_contact_name; //business_name,business_contact_name
+                vm.selectedPayment.UserAddress=data[0].bill_addr;
+                vm.selectedPayment.UserContact=data[0].business_contact_no;
+                vm.selectedPayment.UserEmail=data[0].email_addr;
+              }
+
+            }).error(function(data){
+              console.log(data);
+            })
+
             $scope.showFilers=false;
 
             $timeout(function ()
