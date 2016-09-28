@@ -41,7 +41,7 @@
             /*stateParams: {
                 'param1': 'page'
              },*/
-            weight   : 1
+            weight   : 9
         });
     }
 
