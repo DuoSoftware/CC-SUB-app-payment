@@ -716,7 +716,7 @@
         var printContents = document.getElementById(divName).innerHTML;
         var popupWin = window.open('', '_blank', 'width=1800,height=700');
         popupWin.document.open();
-        popupWin.document.write('<html><head><link href="app/main/payment/views/read/print-view.css" rel="stylesheet" type="text/css"></head><body onload="window.print()">' + printContents + '</body></html>');
+        popupWin.document.write('<html><head><link href="app/main/payment/views/read/read-view.scss" rel="stylesheet" type="text/css"></head><body onload="window.print()">' + printContents + '</body></html>');
         popupWin.document.close();
       }
 
@@ -745,13 +745,21 @@
         for (var i = 0,len = $scope.profilelist.length; i<len; ++i){
           //console.log($scope.allBanks[i].value.value);
 
-          if($scope.profilelist[i].value.profilename.toLowerCase().indexOf(query.toLowerCase()) !=-1)
+          if($scope.profilelist[i].value.profilename!=""&&$scope.profilelist[i].value.profilename!=undefined)
           {
-            results.push($scope.profilelist[i]);
+            if($scope.profilelist[i].value.profilename.toLowerCase().indexOf(query.toLowerCase()) !=-1)
+            {
+              results.push($scope.profilelist[i]);
+              continue;
+            }
           }
-          else if($scope.profilelist[i].value.othername.toLowerCase().indexOf(query.toLowerCase()) !=-1)
+          if($scope.profilelist[i].value.othername!=""&&$scope.profilelist[i].value.othername!=undefined)
           {
-            results.push($scope.profilelist[i]);
+            if($scope.profilelist[i].value.othername.toLowerCase().indexOf(query.toLowerCase()) !=-1)
+            {
+              results.push($scope.profilelist[i]);
+              continue;
+            }
           }
         }
         return results;
@@ -769,7 +777,11 @@
           for (var i = 0; i < data.length; i++) {
             var obj=data[i];
 
-            if(obj.profile_type=='Business')
+            if(obj.status==0)
+            {
+
+            }
+            else if(obj.profile_type=='Business')
             {
               $scope.profilelist.push({
                 display : obj.business_name,

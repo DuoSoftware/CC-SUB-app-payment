@@ -13,7 +13,6 @@
 
   // Center
   .center {
-    margin-top: 6px;
     .header {
       padding: 24px 0;
 
@@ -27,8 +26,8 @@
       }
 
       .search {
-        height: 40px;
-        line-height: 40px;
+        height: 56px;
+        line-height: 56px;
         padding: 18px;
         background: #FFFFFF;
 
@@ -38,21 +37,17 @@
 
         input {
           padding-left: 16px;
-          height: 40px;
+          height: 56px;
           color: rgba(0, 0, 0, 0.54);
-          border-bottom: none;
         }
       }
     }
 
     .content-card {
-margin-top: 6px;
+
       .toolbar {
         position: relative;
-        padding: 0px 16px;
-        min-height: auto;
-        max-height: none;
-        height: auto;
+        padding: 8px 16px;
 
         &.product-read-pane-toolbar {
           display: none;
