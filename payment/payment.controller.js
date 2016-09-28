@@ -716,7 +716,7 @@
         var printContents = document.getElementById(divName).innerHTML;
         var popupWin = window.open('', '_blank', 'width=1800,height=700');
         popupWin.document.open();
-        popupWin.document.write('<html><head><link href="app/main/payment/views/read/read-view.scss" rel="stylesheet" type="text/css"></head><body onload="window.print()">' + printContents + '</body></html>');
+        popupWin.document.write('<html><head><link href="app/main/payment/views/read/print-view.css" rel="stylesheet" type="text/css"></head><body onload="window.print()">' + printContents + '</body></html>');
         popupWin.document.close();
       }
 

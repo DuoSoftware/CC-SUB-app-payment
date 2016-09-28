@@ -11,7 +11,7 @@
 
         .invoice-list-item {
             position: relative;
-            padding: 5px 16px;
+            padding: 5px 16px!important;
             border-bottom: 1px solid rgba(0, 0, 0, 0.12);
             cursor: pointer;
 
@@ -60,10 +60,10 @@
 
                 .invoiceMainInfo {
                     color:#05a3ec;
-                    font-size: 22px;
-                    font-weight: 300;
-                    //padding-left: 16px;
-                    //padding-bottom: 8px;
+                    font-size: 16px!important;
+                    font-weight: 400!important;
+                    padding-left: 0px!important;
+                    padding-bottom: 0px!important;
 
                     .invoiceType {
                         font-size: 13px;
@@ -85,14 +85,14 @@
 
           .date{
             width:100px;
-            height:55px;
             text-align:center;
+            height: auto !important;
             color:#3f3f3f;
 
             span:nth-child(1){
               //font-size: 20px;
               //height: 23px;
-              font-size: 17px;
+              font-size: 16px!important;
               height: 23px;
               color: #777;
             }
