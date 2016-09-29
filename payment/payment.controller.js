@@ -260,13 +260,13 @@
         $scope.BaseCurrency=data[0].RecordFieldData;
         console.log($scope.BaseCurrency);
         $scope.content.preferredcurrency=$scope.BaseCurrency;
+        $scope.selectedCurrency = $scope.BaseCurrency;
 
       }).error(function(data) {
         console.log(data);
         $scope.BaseCurrency="USD";
+        $scope.selectedCurrency = $scope.BaseCurrency;
       })
-
-      $scope.selectedCurrency = $scope.BaseCurrency;
 
       $scope.prefferedCurrencies=[];
       $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_GeneralAttributes","FrequentCurrencies").success(function(data) {
@@ -716,7 +716,7 @@
         var printContents = document.getElementById(divName).innerHTML;
         var popupWin = window.open('', '_blank', 'width=1800,height=700');
         popupWin.document.open();
-        popupWin.document.write('<html><head><link href="app/main/payment/views/read/read-view.scss" rel="stylesheet" type="text/css"></head><body onload="window.print()">' + printContents + '</body></html>');
+        popupWin.document.write('<html><head><link href="app/main/payment/views/read/print-view.css" rel="stylesheet" type="text/css"></head><body onload="window.print()">' + printContents + '</body></html>');
         popupWin.document.close();
       }
 
@@ -873,12 +873,12 @@
             if($scope.content.amount!="")
             {
               $scope.content.amount=parseFloat($scope.content.amount)/$scope.currencyRate;
-              $scope.content.amount=Math.round($scope.content.amount*100)/100;
+              //$scope.content.amount=Math.round($scope.content.amount*100)/100;
             }
             if($scope.content.bankCharges!="")
             {
               $scope.content.bankCharges=parseFloat($scope.content.bankCharges)/$scope.currencyRate;
-              $scope.content.bankCharges=Math.round($scope.content.bankCharges*100)/100;
+              //$scope.content.bankCharges=Math.round($scope.content.bankCharges*100)/100;
             }
           }
 

@@ -51,7 +51,7 @@
 
                   <md-menu-content width="3">
                     <md-menu-item>
-                      <md-button aria-label="Print" ng-click="printDiv('paymentDiv')">
+                      <md-button aria-label="Print" ng-click="printDiv('payment-read')">
                         <md-icon md-font-icon="icon-floppy"></md-icon>
                         <span>Print</span>
                       </md-button>
@@ -343,18 +343,18 @@
                               <label class="md-card-label-wrap">{{item.invoiceNo}}</label>
                             </div>
                             <div flex="20" layout="column">
-                              <label class="md-card-label-wrap">{{item.invoiceAmount| currency:" "}}</label>
+                              <label class="md-card-label-wrap">{{item.invoiceAmount| isoCurrency:content.preferredcurrency}}</label>
                             </div>
                             <div flex="20" layout="column">
-                              <label class="md-card-label-wrap" ng-if="item.adjustmenttype=='0'">{{item.invoiceAdjustment| currency:" "}}</label>
-                              <label ng-if="item.adjustmenttype=='1'" class="md-card-label-wrap">-{{item.invoiceAdjustment| currency:" "}}</label>
-                              <label ng-if="item.adjustmenttype=='2'" class="md-card-label-wrap">+{{item.invoiceAdjustment| currency:" "}}</label>
+                              <label class="md-card-label-wrap" ng-if="item.adjustmenttype=='0'">{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
+                              <label ng-if="item.adjustmenttype=='1'" class="md-card-label-wrap">-{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
+                              <label ng-if="item.adjustmenttype=='2'" class="md-card-label-wrap">+{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
                             </div>
                             <div flex="20" layout="column">
-                              <label class="md-card-label-wrap">{{item.paidAmount| currency:" "}}</label>
+                              <label class="md-card-label-wrap">{{item.paidAmount| isoCurrency:content.preferredcurrency}}</label>
                             </div>
                             <div flex="20" layout="column">
-                              <label class="md-card-label-wrap">{{item.balancepayment| currency:" "}}</label>
+                              <label class="md-card-label-wrap">{{item.balancepayment| isoCurrency:content.preferredcurrency}}</label>
                             </div>
 
                           </md-card>
@@ -368,7 +368,7 @@
                         <label class="calc-detail-label">Total Balance Payments</label>
                       </div>
                       <div flex style="font-weight: 400">
-                        <label class="calc-detail-label">{{invoicelist[0].totalbalance| currency:" "}}</label>
+                        <label class="calc-detail-label">{{invoicelist[0].totalbalance| isoCurrency:content.preferredcurrency}}</label>
                       </div>
                       <!--<label style="font-size: 20px;font-weight: 600;padding-left: 100px; height: 30px">{{items[0].amount| currency}}</label>-->
                     </div>
