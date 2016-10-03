@@ -860,59 +860,72 @@
 
           var selecteduser=$scope.customer_supplier.customer;
 
-          $scope.content.customer=selecteduser.value.profilename;
-          $scope.content.guCustomerID=selecteduser.value.profileId;
-          $scope.content.guTranID="11";
-          $scope.content.createdUser="admin";
-          $scope.content.createdDate = currentdate;
-          $scope.content.guAccountID = selecteduser.value.profileId;
-          $scope.content.currency=$scope.selectedCurrency;
-          $scope.content.rate=$scope.currencyRate;
-          if($scope.BaseCurrency!=$scope.selectedCurrency)
+          if(selecteduser==null||selecteduser==""||$scope.content.paymentMethod==undefined)
           {
-            if($scope.content.amount!="")
-            {
-              $scope.content.amount=parseFloat($scope.content.amount)/$scope.currencyRate;
-              //$scope.content.amount=Math.round($scope.content.amount*100)/100;
-            }
-            if($scope.content.bankCharges!="")
-            {
-              $scope.content.bankCharges=parseFloat($scope.content.bankCharges)/$scope.currencyRate;
-              //$scope.content.bankCharges=Math.round($scope.content.bankCharges*100)/100;
-            }
+            $mdToast.show({
+              template: '<md-toast class="md-toast-error" >Fill the necessary details!</md-toast>',
+              hideDelay: 2000,
+              position: 'bottom right'
+            });
+            $scope.submitted=false;
           }
-
-          var paymentobject = $scope.content;
-          console.log(paymentobject);
-          $charge.payment().store(paymentobject).success(function(data){
-            console.log(data);
-            if(data.id!="")
+          else
+          {
+            $scope.content.customer=selecteduser.value.profilename;
+            $scope.content.guCustomerID=selecteduser.value.profileId;
+            $scope.content.guTranID="11";
+            $scope.content.createdUser="admin";
+            $scope.content.createdDate = currentdate;
+            $scope.content.guAccountID = selecteduser.value.profileId;
+            $scope.content.currency=$scope.selectedCurrency;
+            $scope.content.rate=$scope.currencyRate;
+            if($scope.BaseCurrency!=$scope.selectedCurrency)
             {
-              notifications.toast("Successfully created the Payment Invoice with : "+data.id,"success");
+              if($scope.content.amount!="")
+              {
+                $scope.content.amount=parseFloat($scope.content.amount)/$scope.currencyRate;
+                //$scope.content.amount=Math.round($scope.content.amount*100)/100;
+              }
+              if($scope.content.bankCharges!="")
+              {
+                $scope.content.bankCharges=parseFloat($scope.content.bankCharges)/$scope.currencyRate;
+                //$scope.content.bankCharges=Math.round($scope.content.bankCharges*100)/100;
+              }
+            }
+
+            var paymentobject = $scope.content;
+            console.log(paymentobject);
+            $charge.payment().store(paymentobject).success(function(data){
+              console.log(data);
+              if(data.id!="")
+              {
+                notifications.toast("Successfully created the Payment Invoice with : "+data.id,"success");
+                //$mdToast.show({
+                //	template: '<md-toast class="md-toast-success" >Successfully created the Payment Invoice with : '+data.id+'</md-toast>',
+                //	hideDelay: 2000,
+                //	position: 'bottom right'
+                //});
+              }
               //$mdToast.show({
-              //	template: '<md-toast class="md-toast-success" >Successfully created the Payment Invoice with : '+data.id+'</md-toast>',
+              //	template: '<md-toast class="md-toast-success" >Successfully added to Inventory!</md-toast>',
               //	hideDelay: 2000,
               //	position: 'bottom right'
               //});
-            }
-            //$mdToast.show({
-            //	template: '<md-toast class="md-toast-success" >Successfully added to Inventory!</md-toast>',
-            //	hideDelay: 2000,
-            //	position: 'bottom right'
-            //});
-            //var millisecondsToWait = 500;
-            //setTimeout(function() {
-            //    $window.location.reload();
-            //}, millisecondsToWait);
-            $scope.clearform();
-            $scope.refreshpage();
-            toggleinnerView();
-            //$window.location.href='#/paymentlist';
+              //var millisecondsToWait = 500;
+              //setTimeout(function() {
+              //    $window.location.reload();
+              //}, millisecondsToWait);
+              $scope.clearform();
+              $scope.refreshpage();
+              toggleinnerView();
+              //$window.location.href='#/paymentlist';
 
-          }).error(function(data){
-            //debugger;
-            console.log(data);
-          })
+            }).error(function(data){
+              //debugger;
+              console.log(data);
+              $scope.submitted=false;
+            })
+          }
 
         //} else//This is done because the HTML simple validation might work and enter the submit, however the form can still be invalid
         //{
