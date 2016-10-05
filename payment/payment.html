@@ -264,20 +264,27 @@
                       </label>
                     </div>
 
-                    <div layout-gt-sm="row">
+                    <div layout-gt-sm="row" class="rel">
+                      <div layout="row" layout-align="center center" class="preloader-dot-auto" ng-show="vm.isAutoDisabled" >
+                        <img src="assets/images/142.gif" alt=""/>
+                      </div>
                       <md-autocomplete flex
+                                       md-input-id="acProfileIdPayment"
+                                       ng-keydown="toggleProfileSearchMre($event)"
+                                       ng-required="true"
                                        md-select-on-match
                                        ng-keypress="enter($event)"
-                                       ng-disabled="vm.isDisabled"
+                                       ng-disabled="vm.isAutoDisabled"
                                        md-input-name="autocompleteField"
                                        md-no-cache="vm.noCache"
                                        md-selected-item="customer_supplier.customer"
                                        md-selected-item-change="loadInvoice(customer_supplier.customer)"
+                                       md-search-text-change="loadProfileByKeyword(vm.searchText)"
                                        md-search-text="vm.searchText"
                                        md-items="item in vm.querySearch(vm.searchText)"
                                        md-item-text="item.display"
                                        md-floating-label="Customer"
-                                       md-min-length="0">
+                                       md-min-length="" style="height: 65px;">
                         <md-item-template>
                           <span md-highlight-text="vm.searchText">{{item.display+" : "+item.value.othername}}</span>
                         </md-item-template>

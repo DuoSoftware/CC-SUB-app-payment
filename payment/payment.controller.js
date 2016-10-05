@@ -429,6 +429,132 @@
         }
       }
 
+
+      var skip,take;
+      var tempProfileList;
+      vm.isAutoDisabled = false;
+      //var autoElem = angular.element('#invoice-auto');
+      $scope.searchMre=false;
+      $scope.loadProfileByKeyword= function (keyword) {
+        debugger;
+        if(!$scope.searchMre) {
+          //debugger;
+          if ($scope.profilelist.length == 9) {
+            if (keyword != undefined) {
+              if (keyword.length == 3) {
+                vm.isAutoDisabled = true;
+                skip = 0;
+                take = 10;
+                var tempProfileList = [];
+                $scope.filteredUsers = [];
+                $charge.profile().filterByKey(keyword,skip,take).success(function (data) {
+                  for (var i = 0; i < data.length; i++) {
+                    var obj = data[i];
+                    if(obj.profile_type=='Individual')
+                    {
+                      tempProfileList.push({
+                        display : obj.first_name,
+                        value : {profilename : obj.first_name, profileId : obj.profileId, othername : obj.last_name, profile_type : obj.profile_type, bill_addr : obj.bill_addr, category : obj.category, email : obj.email_addr}
+                      });
+                    }
+                    else if(obj.profile_type=='Business') {
+                      tempProfileList.push({
+                        display : obj.business_name,
+                        value : {profilename : obj.business_name, profileId : obj.profileId, othername : obj.business_contact_name, profile_type : obj.profile_type, bill_addr : obj.bill_addr, category : obj.category, email : obj.email_addr}
+                      });
+                    }
+
+                  }
+                  $scope.filteredUsers = tempProfileList;
+                  vm.isAutoDisabled = false;
+                  //autoElem.focus();
+                  setTimeout(function(){
+                    document.querySelector('#acProfileIdPayment').focus();
+                  },0);
+                  if (data.length < take)
+                    $scope.searchMre = true;
+                  //skip += take;
+                  //$scope.loadPaging(keyword, rows, index, status, skip, take);
+                }).error(function (data) {
+                  vm.isAutoDisabled = false;
+                  setTimeout(function(){
+                    document.querySelector('#acProfileIdPayment').focus();
+                  },0);
+                  //autoElem.empty();
+                  //debugger;
+                  //vm.products = [];
+                  //vm.selectedProduct = null;
+                });
+              }
+              else if(keyword.length>3)
+              {
+                //debugger;
+                skip = 0;
+                take = 10;
+                tempProfileList = [];
+                vm.isAutoDisabled = true;
+                $scope.filteredUsers = [];
+                $charge.profile().filterByKey(keyword,skip,take).success(function (data) {
+                  for (var i = 0; i < data.length; i++) {
+                    var obj = data[i];
+                    if(obj.profile_type=='Individual')
+                    {
+                      tempProfileList.push({
+                        display : obj.first_name,
+                        value : {profilename : obj.first_name, profileId : obj.profileId, othername : obj.last_name, profile_type : obj.profile_type, bill_addr : obj.bill_addr, category : obj.category, email : obj.email_addr}
+                      });
+                    }
+                    else if(obj.profile_type=='Business') {
+                      tempProfileList.push({
+                        display : obj.business_name,
+                        value : {profilename : obj.business_name, profileId : obj.profileId, othername : obj.business_contact_name, profile_type : obj.profile_type, bill_addr : obj.bill_addr, category : obj.category, email : obj.email_addr}
+                      });
+                    }
+
+                  }
+                  $scope.filteredUsers = tempProfileList;
+                  vm.isAutoDisabled = false;
+                  //debugger;
+                  setTimeout(function(){
+                    document.querySelector('#acProfileIdPayment').focus();
+                  },0);
+
+                  if (data.length < take)
+                    $scope.searchMre = true;
+                }).error(function (data) {
+                  vm.isAutoDisabled = false;
+                  setTimeout(function(){
+                    document.querySelector('#acProfileIdPayment').focus();
+                  },0);
+                  //autoElem.empty();
+                });
+              }
+              else if (keyword.length == 0 || keyword == null) {
+                $scope.filteredUsers = $scope.profilelist;
+                $scope.searchMre = false;
+              }
+            }
+            else if (keyword == undefined) {
+              $scope.filteredUsers = $scope.profilelist;
+              $scope.searchMre = false;
+            }
+          }
+        }
+        else if (keyword == undefined || keyword.length == 0) {
+          $scope.filteredUsers = $scope.profilelist;
+          $scope.searchMre = false;
+        }
+      }
+
+
+      $scope.toggleProfileSearchMre= function (ev) {
+        //debugger;
+        if (ev.keyCode === 8) {
+          $scope.searchMre = false;
+        }
+      }
+
+
       $scope.loadPaging= function (keyword, idLength,skip, take) {
         $charge.payment().filterByKey(keyword, idLength, skip, take, 'desc').success(function (data) {
           for(var i=0;i<data.length;i++)
@@ -611,6 +737,24 @@
 
       $scope.editOff = true;
 
+      $scope.prefixInvoice="";
+      $scope.lenPrefixInvoice=0;
+
+      $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_InvoiceAttributes","InvoicePrefix").success(function(data) {
+        var invoicePrefix=data[0];
+        $scope.prefixInvoice=invoicePrefix!=""?invoicePrefix.RecordFieldData:"";
+      //debugger;
+      }).error(function(data) {
+        console.log(data);
+        $scope.prefixInvoice="";
+      })
+      $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_InvoiceAttributes","PrefixLength").success(function(data) {
+        var prefixLength=data[0];
+        $scope.lenPrefixInvoice=prefixLength!=0? parseInt(prefixLength.RecordFieldData):0;
+      }).error(function(data) {
+        console.log(data);
+      })
+
       $scope.loadInvoiceByCustomerId = function (customerId)
       {
         //debugger;
@@ -625,6 +769,10 @@
           var totbalance=0;
           for (var i = 0; i < data.length; i++) {
             var obj=data[i];
+
+            var invoiceNum=$filter('numberFixedLen')(obj.invoiceNo,$scope.lenPrefixInvoice);
+            obj.invoiceNo=$scope.prefixInvoice+'-'+invoiceNum;
+
             var balance= parseInt(obj.invoiceAmount)-parseInt(obj.paidAmount);
             totbalance+=balance;
             data[i].balancepayment=balance;
@@ -742,22 +890,22 @@
         //Custom Filter
         var results=[];
         var len=0;
-        for (var i = 0,len = $scope.profilelist.length; i<len; ++i){
+        for (var i = 0,len = $scope.filteredUsers.length; i<len; ++i){
           //console.log($scope.allBanks[i].value.value);
 
-          if($scope.profilelist[i].value.profilename!=""&&$scope.profilelist[i].value.profilename!=undefined)
+          if($scope.filteredUsers[i].value.profilename!=""&&$scope.filteredUsers[i].value.profilename!=undefined)
           {
-            if($scope.profilelist[i].value.profilename.toLowerCase().indexOf(query.toLowerCase()) !=-1)
+            if($scope.filteredUsers[i].value.profilename.toLowerCase().indexOf(query.toLowerCase()) !=-1)
             {
-              results.push($scope.profilelist[i]);
+              results.push($scope.filteredUsers[i]);
               continue;
             }
           }
-          if($scope.profilelist[i].value.othername!=""&&$scope.profilelist[i].value.othername!=undefined)
+          if($scope.filteredUsers[i].value.othername!=""&&$scope.filteredUsers[i].value.othername!=undefined)
           {
-            if($scope.profilelist[i].value.othername.toLowerCase().indexOf(query.toLowerCase()) !=-1)
+            if($scope.filteredUsers[i].value.othername.toLowerCase().indexOf(query.toLowerCase()) !=-1)
             {
-              results.push($scope.profilelist[i]);
+              results.push($scope.filteredUsers[i]);
               continue;
             }
           }
@@ -767,7 +915,7 @@
       $scope.profilelist = [];
 
       var skipprofiles=0;
-      var takeprofiles=100;
+      var takeprofiles=10;
 
       function loadAll() {
 
@@ -797,7 +945,7 @@
             }
 
           }
-          loadAll();
+          //loadAll();
 
           //for (i = 0, len = data.length; i<len; ++i){
           //    $scope.allBanks.push ({display: data[i].BankName, value:{TenantID:data[i].TenantID, value:data[i].BankName.toLowerCase()}});
@@ -837,6 +985,8 @@
         $scope.currencyRate=1;
         document.body.scrollTop = document.documentElement.scrollTop = 0;
         $scope.submitted=false;
+        vm.isAutoDisabled = false;
+        $scope.searchMre = false;
       }
 
       $scope.refreshpage = function(){
@@ -969,6 +1119,10 @@
           var totbalance=0;
           for (var i = 0; i < data.length; i++) {
             var obj=data[i];
+
+            var invoiceNum=$filter('numberFixedLen')(obj.invoiceNo,$scope.lenPrefixInvoice);
+            obj.invoiceNo=$scope.prefixInvoice+'-'+invoiceNum;
+
             obj.invoiceAmount=parseFloat(obj.invoiceAmount)*$scope.currencyRate;
             obj.paidAmount=parseFloat(obj.paidAmount)*$scope.currencyRate;
             var balance= obj.invoiceAmount-obj.paidAmount;

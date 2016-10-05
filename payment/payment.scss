@@ -10,6 +10,19 @@
     //background: #FFFFFF;
     //z-index: 9999;
   }
+  .preloader-dot-auto{
+    height: 10px;
+    position: absolute;
+    right: 0;
+    bottom: 25px;
+    z-index: 9999;
+    img{
+      width: 40px;
+    }
+  }
+  .rel{
+    position: relative;
+  }
 
   // Center
   .center {

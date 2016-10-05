@@ -5,7 +5,8 @@
     angular
         .module('app.payment', [])
         .config(config)
-        .filter('parseDate',parseDateFilter);
+        .filter('parseDate',parseDateFilter)
+        .filter('numberFixedLen',numberFixedLength);
 
     /** @ngInject */
     function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
@@ -49,5 +50,21 @@
         return function(input){
             return new Date(input);
         };
+    }
+
+    function numberFixedLength()
+    {
+      return function (n, len) {
+        var num = parseInt(n, 10);
+        len = parseInt(len, 10);
+        if (isNaN(num) || isNaN(len)) {
+          return n;
+        }
+        num = ''+num;
+        while (num.length < len) {
+          num = '0'+num;
+        }
+        return num;
+      };
     }
 })();
