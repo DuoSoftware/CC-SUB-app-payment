@@ -342,6 +342,7 @@
 
               }
               vm.payments=$scope.items;
+              debugger;
 
               $scope.loading = false;
               $scope.isLoading = false;
@@ -432,6 +433,7 @@
 
       var skip,take;
       var tempProfileList;
+      $scope.filteredUsers = [];
       vm.isAutoDisabled = false;
       //var autoElem = angular.element('#invoice-auto');
       $scope.searchMre=false;
@@ -1108,88 +1110,92 @@
 
       $scope.loadInvoice = function (customer)
       {
-        //debugger;
-        var invoicenolist="";
-        var cusId=customer.value.profileId;//"2293";
-        //console.log(cusId);
-        $charge.invoice().getByAccountID(cusId).success(function(data) //all(0,10,'asc').success(function(data)
+        if(customer!=null&&customer!=undefined)
         {
-          console.log(data);
-
-          var totbalance=0;
-          for (var i = 0; i < data.length; i++) {
-            var obj=data[i];
-
-            var invoiceNum=$filter('numberFixedLen')(obj.invoiceNo,$scope.lenPrefixInvoice);
-            obj.invoiceNo=$scope.prefixInvoice+'-'+invoiceNum;
-
-            obj.invoiceAmount=parseFloat(obj.invoiceAmount)*$scope.currencyRate;
-            obj.paidAmount=parseFloat(obj.paidAmount)*$scope.currencyRate;
-            var balance= obj.invoiceAmount-obj.paidAmount;
-            totbalance+=balance;
-            data[i].balancepayment=balance;
-
-            if(i==0)
-            {
-              invoicenolist=obj.invoiceNo;
-            }
-            else
-            {
-              invoicenolist=invoicenolist+","+obj.invoiceNo;
-            }
-          }
-          data[0].totalbalance=totbalance;
-
-          console.log(invoicenolist);
-          $charge.adjustment().getByInvoiceId(invoicenolist).success(function(subdata)
+          var invoicenolist="";
+          var cusId=customer.value.profileId;//"2293";
+          //console.log(cusId);
+          $charge.invoice().getByAccountID(cusId).success(function(data) //all(0,10,'asc').success(function(data)
           {
-            console.log(subdata);
-            for (var i = 0; i < data.length; i++) {
-              var invoicedata=data[i];
-              invoicedata.adjustmenttype='0';
+            console.log(data);
 
-              for (var j = 0; j < subdata.length; j++) {
-                if(subdata[j].invoiceid==invoicedata.invoiceNo)
-                {
-                  //if(subdata[j].adjustmenttype==1)
-                  //{
-                  //    invoicedata.invoiceAdjustment="+"+subdata[j].amount;
-                  //}
-                  //else
-                  //{
-                  //    invoicedata.invoiceAdjustment="-"+subdata[j].amount;
-                  //}
-                  invoicedata.invoiceAdjustment=subdata[j].amount*$scope.currencyRate;
-                  invoicedata.adjustmenttype=subdata[j].adjustmenttype;
-                  if(subdata[j].adjustmenttype==1)
+            var totbalance=0;
+            for (var i = 0; i < data.length; i++) {
+              var obj=data[i];
+
+              if(i==0)
+              {
+                invoicenolist=obj.invoiceNo;
+              }
+              else
+              {
+                invoicenolist=invoicenolist+","+obj.invoiceNo;
+              }
+              obj.invoiceNo_withoutPrefix=obj.invoiceNo;
+
+              var invoiceNum=$filter('numberFixedLen')(obj.invoiceNo,$scope.lenPrefixInvoice);
+              obj.invoiceNo=$scope.prefixInvoice+'-'+invoiceNum;
+
+              obj.invoiceAmount=parseFloat(obj.invoiceAmount)*$scope.currencyRate;
+              obj.paidAmount=parseFloat(obj.paidAmount)*$scope.currencyRate;
+              var balance= obj.invoiceAmount-obj.paidAmount;
+              totbalance+=balance;
+              data[i].balancepayment=balance;
+
+            }
+            data[0].totalbalance=totbalance;
+
+            console.log(invoicenolist);
+            $charge.adjustment().getByInvoiceId(invoicenolist).success(function(subdata)
+            {
+              console.log(subdata);
+              for (var i = 0; i < data.length; i++) {
+                var invoicedata=data[i];
+                invoicedata.adjustmenttype='0';
+
+                for (var j = 0; j < subdata.length; j++) {
+                  if(subdata[j].invoiceid==invoicedata.invoiceNo_withoutPrefix)
                   {
-                    invoicedata.balancepayment=invoicedata.balancepayment-invoicedata.invoiceAdjustment;
-                    data[0].totalbalance=data[0].totalbalance-invoicedata.invoiceAdjustment;
-                  }
-                  else if(subdata[j].adjustmenttype==2)
-                  {
-                    invoicedata.balancepayment=invoicedata.balancepayment+invoicedata.invoiceAdjustment;
-                    data[0].totalbalance=data[0].totalbalance+invoicedata.invoiceAdjustment;
+                    //if(subdata[j].adjustmenttype==1)
+                    //{
+                    //    invoicedata.invoiceAdjustment="+"+subdata[j].amount;
+                    //}
+                    //else
+                    //{
+                    //    invoicedata.invoiceAdjustment="-"+subdata[j].amount;
+                    //}
+                    invoicedata.invoiceAdjustment=subdata[j].amount*$scope.currencyRate;
+                    invoicedata.adjustmenttype=subdata[j].adjustmenttype;
+                    if(subdata[j].adjustmenttype==1)
+                    {
+                      invoicedata.balancepayment=invoicedata.balancepayment-invoicedata.invoiceAdjustment;
+                      data[0].totalbalance=data[0].totalbalance-invoicedata.invoiceAdjustment;
+                    }
+                    else if(subdata[j].adjustmenttype==2)
+                    {
+                      invoicedata.balancepayment=invoicedata.balancepayment+invoicedata.invoiceAdjustment;
+                      data[0].totalbalance=data[0].totalbalance+invoicedata.invoiceAdjustment;
+                    }
                   }
                 }
+
               }
+              $scope.invoicelist=data;
 
-            }
-            $scope.invoicelist=data;
+            }).error(function(subdata)
+            {
+              console.log(subdata);
+              $scope.invoicelist=data;
+            })
 
-          }).error(function(subdata)
+            //$scope.invoicelist=data;
+
+          }).error(function(data)
           {
-            console.log(subdata);
-            $scope.invoicelist=data;
+            console.log(data);
+            $scope.invoicelist=[];
           })
-
-          //$scope.invoicelist=data;
-
-        }).error(function(data)
-        {
-          console.log(data);
-          $scope.invoicelist=[];
-        })
+        }
       }
 
       $scope.receiptcount = 1;

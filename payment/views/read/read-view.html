@@ -22,7 +22,8 @@
 
                         <div class="due-date" layout="row" layout-align="start center">
                             <span class="title">STATUS : </span>
-                            <span class="date">{{vm.selectedPayment.status}}</span>
+                            <span class="date" style="color: #05a3ec" ng-if="vm.selectedPayment.status=='Active'">{{vm.selectedPayment.status}}</span>
+                            <span class="date" style="color: #BD362F" ng-if="vm.selectedPayment.status=='Cancelled'">{{vm.selectedPayment.status}}</span>
                         </div>
 
                         <!--<md-button class="md-icon-button" aria-label="More" ng-hide="vm.selectedPayment.status=='Cancelled'">-->

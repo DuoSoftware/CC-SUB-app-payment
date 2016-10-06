@@ -21,13 +21,20 @@
       <span>{{payment.paymentDate | parseDate | date: 'dd'}} {{payment.paymentDate | parseDate | date: 'MMMM' | limitTo: 3}} {{payment.paymentDate | parseDate | date: 'yyyy'}}</span>
     </div>
 
-    <div flex class="value" layout="column" layout-align="center start">
-      <span class="ammount">{{payment.amount | isoCurrency:payment.currency}}</span>
+    <div flex class="date" layout="column" layout-align="center end">
+      <span>{{payment.amount | isoCurrency:payment.currency}}</span>
       <!-- <span class="totaldue"><i>{{}}</i></span> -->
     </div>
 
-    <div flex="10" class="status" layout="column" layout-align="center start">
-      <span class="pill partial" >{{payment.paymentMethod}}</span>
+    <div flex="10"></div>
+
+    <div flex="10" class="date" layout="column" layout-align="center start">
+      <span>{{payment.paymentMethod}}</span>
+    </div>
+
+    <div flex="10" class="status" layout="column" layout-align="center end">
+      <span class="pill paid" ng-if="payment.status=='Active'">{{payment.status}}</span>
+      <span class="pill unpaid" ng-if="payment.status=='Cancelled'">{{payment.status}}</span>
     </div>
   </div>
 </div>
