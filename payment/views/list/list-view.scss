@@ -42,7 +42,7 @@
             .info {
                 overflow: hidden;
                 width: 0;
-                margin: 0px;
+                margin: 0px!important;
 
                 .clientCygil{
                     .listMedia {
@@ -132,8 +132,8 @@
                 }
 
                 .unpaid{
-                    background-color:orange;
-                    border:1px solid orange;
+                    background-color:orange!important;
+                    border:1px solid orange!important;
                 }
 
                 .partial{
@@ -142,8 +142,8 @@
                 }
 
                 .paid{
-                    background-color:rgb(83, 206, 83);
-                    border:1px solid rgb(83, 206, 83);
+                    background-color:rgb(83, 206, 83)!important;
+                    border:1px solid rgb(83, 206, 83)!important;
                 }
             }
 

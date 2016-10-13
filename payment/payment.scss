@@ -1,4 +1,10 @@
 #payment {
+  .preloader{
+    position: absolute;
+    top: 40%;
+    left: 45%;
+    z-index: 9999;
+  }
 
   .bottom-fixed-bar{
     //position: absolute;

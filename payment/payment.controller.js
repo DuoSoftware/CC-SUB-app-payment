@@ -315,6 +315,8 @@
               for (var i = 0; i < data.length; i++) {
                 //console.log(moment(data[i].paymentDate).format('LL'));
                 data[i].paymentDate=moment(data[i].paymentDate).format('L');
+                data[i].paymentNoWithoutPrefix=data[i].paymentNo;
+
                 data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
                 //debugger;
                 var insertedCurrency=data[i].currency;
@@ -342,6 +344,7 @@
 
               }
               vm.payments=$scope.items;
+              $scope.listLoaded = true;
               debugger;
 
               $scope.loading = false;
@@ -352,6 +355,8 @@
               }
 
             }).error(function(data) {
+              $scope.listLoaded = true;
+
               console.log(data);
             })
 
@@ -392,6 +397,8 @@
             $charge.payment().filterByKey(keyword, idLength, skipPaymentSearch, takePaymentSearch,'desc').success(function (data) {
               for (var i = 0; i < data.length; i++) {
                 data[i].paymentDate=moment(data[i].paymentDate).format('L');
+                data[i].paymentNoWithoutPrefix=data[i].paymentNo;
+
                 data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
                 //debugger;
                 var insertedCurrency=data[i].currency;
@@ -562,6 +569,8 @@
           for(var i=0;i<data.length;i++)
           {
             data[i].paymentDate=moment(data[i].paymentDate).format('L');
+            data[i].paymentNoWithoutPrefix=data[i].paymentNo;
+
             data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
             //debugger;
             var insertedCurrency=data[i].currency;
@@ -627,6 +636,8 @@
           for(var i=0;i<data.length;i++)
           {
             data[i].paymentDate=moment(data[i].paymentDate).format('L');
+            data[i].paymentNoWithoutPrefix=data[i].paymentNo;
+
             data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
             //debugger;
             var insertedCurrency=data[i].currency;
@@ -665,6 +676,8 @@
           for(var i=0;i<data.length;i++)
           {
             data[i].paymentDate=moment(data[i].paymentDate).format('L');
+            data[i].paymentNoWithoutPrefix=data[i].paymentNo;
+
             data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
             //debugger;
             var insertedCurrency=data[i].currency;
@@ -868,6 +881,42 @@
         popupWin.document.open();
         popupWin.document.write('<html><head><link href="app/main/payment/views/read/print-view.css" rel="stylesheet" type="text/css"></head><body onload="window.print()">' + printContents + '</body></html>');
         popupWin.document.close();
+      }
+
+      $scope.emailTemplateInit = function(ev,base64Conversion){
+        $mdDialog.show({
+          controller: 'AddPaymentEmailController',
+          templateUrl: 'app/main/payment/views/read/mailTemplate.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose:true,
+          locals : {
+            selectedPayment: vm.selectedPayment,
+            base64Content:base64Conversion,
+            adminData:$scope.adminData
+          },
+          fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        })
+        debugger;
+
+      }
+
+      $scope.adminData=null;
+      $scope.getAdminUser= function () {
+        $charge.commondetails().getAdminInfo().success(function(data){
+          $scope.adminData=data;
+        }).error(function (data) {
+
+        })
+      }
+
+      $scope.getAdminUser();
+
+      $scope.emailPayment= function (ev,divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var base64Conversion=window.btoa(unescape(encodeURIComponent(printContents)));
+        $scope.emailTemplateInit(ev,base64Conversion);
+
       }
 
 

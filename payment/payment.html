@@ -57,6 +57,12 @@
                       </md-button>
                     </md-menu-item>
                     <md-menu-item>
+                      <md-button aria-label="Email" ng-click="emailPayment($event,'payment-read')">
+                        <md-icon md-font-icon="icon-email"></md-icon>
+                        <span>Email</span>
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
                       <md-button aria-label="Delete" ng-disabled="vm.selectedPayment.status=='Cancelled'" ng-click="showCancelPaymentConfirm($event,vm.selectedPayment)">
                         <md-icon md-font-icon="icon-delete"></md-icon>
                         <span>Cancel Payment</span>
@@ -113,6 +119,9 @@
                     <md-tab>
                         <md-tab-label>Payment List Pane</md-tab-label>
                         <md-tab-body>
+                          <div class="preloader" layout="row" layout-sm="column" layout-align="space-around" ng-hide="listLoaded">
+                            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                          </div>
                             <div class="content invoice-list-pane"
                                  ng-include="'app/main/payment/views/list/list-view.html'" ms-scroll>
                             </div>
