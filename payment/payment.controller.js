@@ -315,8 +315,6 @@
               for (var i = 0; i < data.length; i++) {
                 //console.log(moment(data[i].paymentDate).format('LL'));
                 data[i].paymentDate=moment(data[i].paymentDate).format('L');
-                data[i].paymentNoWithoutPrefix=data[i].paymentNo;
-
                 data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
                 //debugger;
                 var insertedCurrency=data[i].currency;
@@ -397,8 +395,6 @@
             $charge.payment().filterByKey(keyword, idLength, skipPaymentSearch, takePaymentSearch,'desc').success(function (data) {
               for (var i = 0; i < data.length; i++) {
                 data[i].paymentDate=moment(data[i].paymentDate).format('L');
-                data[i].paymentNoWithoutPrefix=data[i].paymentNo;
-
                 data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
                 //debugger;
                 var insertedCurrency=data[i].currency;
@@ -569,8 +565,6 @@
           for(var i=0;i<data.length;i++)
           {
             data[i].paymentDate=moment(data[i].paymentDate).format('L');
-            data[i].paymentNoWithoutPrefix=data[i].paymentNo;
-
             data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
             //debugger;
             var insertedCurrency=data[i].currency;
@@ -636,8 +630,6 @@
           for(var i=0;i<data.length;i++)
           {
             data[i].paymentDate=moment(data[i].paymentDate).format('L');
-            data[i].paymentNoWithoutPrefix=data[i].paymentNo;
-
             data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
             //debugger;
             var insertedCurrency=data[i].currency;
@@ -676,8 +668,6 @@
           for(var i=0;i<data.length;i++)
           {
             data[i].paymentDate=moment(data[i].paymentDate).format('L');
-            data[i].paymentNoWithoutPrefix=data[i].paymentNo;
-
             data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
             //debugger;
             var insertedCurrency=data[i].currency;
