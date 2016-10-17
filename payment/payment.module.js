@@ -11,7 +11,7 @@
     function config($stateProvider, msNavigationServiceProvider, mesentitlementProvider)
     {
 
-        mesentitlementProvider.setStateCheck("Payment");
+        mesentitlementProvider.setStateCheck("payment");
 
         $stateProvider
             .state('app.payment', {
@@ -24,7 +24,7 @@
                 },
                 resolve: {
                     security: ['$q','mesentitlement', function($q,mesentitlement){
-                        var entitledStatesReturn = mesentitlement.stateDepResolver('Payment');
+                        var entitledStatesReturn = mesentitlement.stateDepResolver('payment');
 
                         if(entitledStatesReturn !== true){
                               return $q.reject("unauthorized");
