@@ -1,0 +1,127 @@
+<md-dialog style="width:100%;height: 100%;">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <div>Mail to {{selectedPayment.UserName}}</div>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="closeDialog()">
+          <md-icon md-font-icon="icon-close" aria-label="Close Mail"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-content ms-scroll>
+      <div class="md-dialog-content" flex>
+        <div class="email-header-block" layout="column">
+          <div layout="row" class="rel">
+            <div layout="row" layout-align="center center" class="preloader-dot-auto" ng-show="isAutoTODisabled" >
+              <img src="assets/images/142.gif" alt=""/>
+            </div>
+            <md-input-container style="margin-top: 0px;margin-bottom: 0px;" flex="10" layout="column" layout-align="center start">
+              <div>TO :</div>
+            </md-input-container>
+            <md-chips ng-model="recipients" name="recipient" readonly="vm.readonly"
+                      md-removable="vm.removable" md-max-chips="5" flex>
+              <md-autocomplete flex
+                               md-input-id="acProfileIdPayment1"
+                               ng-keydown="toggleProfileSearchMre($event)"
+                               ng-keypress="enter($event)"
+                               ng-disabled="isAutoTODisabled"
+                               md-input-name="autocompleteField"
+                               md-selected-item="customer_supplier.customer"
+                               md-search-text-change="loadProfileByKeyword(vm.searchText, 'to')"
+                               md-search-text="vm.searchText"
+                               md-items="item in querySearch(vm.searchText)"
+                               md-item-text="item.display"
+                               md-min-length="">
+                <span md-highlight-text="ctrl.searchText">{{item.display}}</span>
+                <!--<md-item-template>-->
+                <!--<span md-highlight-text="vm.searchText">{{item.display}}</span>-->
+                <!--</md-item-template>-->
+              </md-autocomplete>
+              <md-chip-template>{{$chip.display}}</md-chip-template>
+              <button md-chip-remove class="md-primary vegetablechip">
+                <md-icon md-font-icon="icon-close-circle"></md-icon>
+              </button>
+            </md-chips>
+          </div>
+          <div layout="row" class="rel">
+            <div layout="row" layout-align="center center" class="preloader-dot-auto" ng-show="isAutoCCDisabled" >
+              <img src="assets/images/142.gif" alt=""/>
+            </div>
+            <md-input-container style="margin-top: 0px;margin-bottom: 0px;" flex="10" layout="column" layout-align="center start">
+              <div>CC :</div>
+            </md-input-container>
+            <md-chips ng-model="selectedUser" md-autocomplete-snap
+                      md-transform-chip="transformChip($chip)"
+                      md-require-match="vm.autocompleteDemoRequireMatch"
+                      name="recipient" readonly="vm.readonly"
+                      md-removable="vm.removable" flex>
+              <md-autocomplete flex
+                               md-input-id="acProfileIdPayment2"
+                               ng-keydown="toggleProfileSearchMre($event)"
+                               ng-keypress="enter($event)"
+                               md-input-name="autocompleteField"
+                               ng-disabled="isAutoCCDisabled"
+                               md-selected-item="customer_supplier.customer"
+                               md-search-text-change="loadProfileByKeyword(vm.searchText)"
+                               md-search-text="vm.searchText"
+                               md-items="item in querySearch(vm.searchText)"
+                               md-item-text="item.display"
+                               md-min-length="">
+                <span md-highlight-text="ctrl.searchText">{{item.display}}</span>
+                <!--<md-item-template>-->
+                  <!--<span md-highlight-text="vm.searchText">{{item.display}}</span>-->
+                <!--</md-item-template>-->
+              </md-autocomplete>
+
+              <md-chip-template>{{$chip.display}}</md-chip-template>
+              <button md-chip-remove class="md-primary vegetablechip">
+                <md-icon md-font-icon="icon-close-circle"></md-icon>
+              </button>
+            </md-chips>
+          </div>
+          <div layout="row">
+            <md-input-container style="margin-top: 0px;margin-bottom: 0px;" flex="10" layout="column" layout-align="center start">
+              <div>SUBJECT :</div>
+            </md-input-container>
+            <md-input-container flex style="margin-bottom: 0px;margin-top: 20px">
+              <input ng-model="subject" type="text"/>
+            </md-input-container>
+          </div>
+        </div>
+
+        <div text-angular ng-model="bodycontent" ta-toolbar="[['bold','italics','underline','strikeThrough'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],['ul','ol'],['indent','outdent'],['quote'],['clear']]"></div>
+
+        <!--<div class="email-body-block">-->
+          <!--<div style="border-radius: 10px;border: solid 1px #cccccc;width: 100%;padding: 10px;">-->
+            <!--<textarea name="" id="" cols="30" rows="20" style="width: 100%;"></textarea>-->
+          <!--</div>-->
+        <!--</div>-->
+      </div>
+    </md-content>
+
+    <md-dialog-actions layout="row">
+      <div flex layout="row" layout-align="start center">
+        <div layout="row" layout-align="center center">
+          <md-checkbox ng-model="addAttachment" class="md-primary attach-chk"><span ng-hide="addAttachment">Add Attachment</span></md-checkbox>
+          <div ng-show="addAttachment" layout="row" layout-align="center center">
+            <md-icon md-font-icon="icon-file-pdf md-warn" flex="5"></md-icon>
+            <div flex>
+              {{selectedPayment.paymentNo}}.pdf
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div flex="20">
+        <md-button ng-click="closeDialog()">
+          Cancel
+        </md-button>
+        <md-button class="md-raised md-accent" ng-click="sendMail()">
+          Send
+        </md-button>
+      </div>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

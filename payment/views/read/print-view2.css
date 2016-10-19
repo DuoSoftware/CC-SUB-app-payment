@@ -1,0 +1,168 @@
+body{
+  font-family: 'Roboto'!important;
+}
+.card{
+  padding: 0px;
+}
+.invoice-date{
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.54);
+  margin-bottom: 32px;
+}
+.client, .issuer{
+  width: 50%;
+  float: left;
+}
+.issuer{
+  background-color: #ffffff;
+  color: #000!important;
+  /*padding: 45px 0;*/
+  margin-right: -88px;
+}
+.issuer .info{
+  padding: 0 16px;
+  width: 230px;
+  float: left;
+  color: #000;
+  margin-top: 1px;
+  line-height: 18px;
+}
+.inv-read-content{
+  width: 100%;
+}
+.title{
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 14px;
+}
+.client .info{
+  margin-top: 20px;
+}
+.client .info .title{
+  color: rgba(0, 0, 0, 0.54)!important;
+}
+.number, .date{
+  padding-left: 6px;
+  font-size: 14px;
+}
+.invoice-number, .invoice-type{
+  margin-bottom: 5px;
+}
+.info{
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.54);
+  line-height: 22px;
+}
+.info .title{
+  color: #ffffff;
+  font-size: 13px;
+}
+.logo{
+  width: 96px;
+  height: 96px;
+  font-size: 72px;
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.7);
+  float: left;
+  color:#fff;
+}
+table.simple{
+  width: 100%;
+  padding-top: 30px;
+}
+table.simple thead tr th {
+  padding: 16px 8px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.54);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  white-space: nowrap;
+  min-width: 120px;
+}
+table.simple thead tr th:first-child{
+  text-align: left;
+}
+table.simple thead tr th:last-child{
+  text-align: right;
+}
+table.simple .subtotal, table.simple .additionalcharge, table.simple .discount, table.simple .tax{
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.54);
+  border-bottom: none;
+  padding: 4px 8px;
+}
+table.simple tr td{
+  color: rgba(0, 0, 0, 0.54);
+}
+table.simple tr td:last-child{
+  text-align: right;
+  padding: 4px 8px;
+}
+table.invoice-table-footer .total td{
+  padding: 24px 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  font-size: 27px;
+  font-weight: 300;
+  color: black;
+}
+table.invoice-table-footer .total td:first-child{
+  width: 400px;
+}
+table.invoice-table-footer .total td:nth-child(2){
+  text-align: left;
+}
+table.invoice-table-footer .total td:last-child{
+  text-align: right;
+}
+.invoice-table{
+  text-align: left;
+}
+.invoice-table tr td{
+  color: #000!important;
+  text-align: left;
+  padding: 16px 8px;
+}
+.invoice-table tr td.text-right, .invoice-table thead th.text-right{
+  text-align: right;
+}
+.invoice-table tr td:last-child{
+  text-align: right;
+}
+
+.invoice-table-footer{
+  margin-top: 20px;
+  margin-bottom: 50px;
+  width: 100%;
+}
+.inv-read-footer .note {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.inv-read-footer .logo {
+  padding-top: 5px;
+  width: 32px;
+  min-width: 32px;
+  height: 26px;
+  font-size: 17px;
+  font-weight: 500;
+  margin-right: 24px;
+  border-radius: 2px;
+  overflow: hidden;
+  background-color: rgb(3,155,229);
+  color: rgba(255,255,255,1);
+}
+.inv-read-footer .logo div{
+  text-align: center;
+  vertical-align: middle;
+  font-size: 17px;
+  font-weight: 500;
+  width: 16px;
+  margin: auto;
+}
+.inv-read-footer .small-note{
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.54);
+  line-height: 18px;
+}
