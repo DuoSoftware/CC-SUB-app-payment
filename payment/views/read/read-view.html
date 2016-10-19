@@ -8,7 +8,7 @@
                 <div class="invoice-date">{{vm.selectedPayment.paymentDate | parseDate | date: 'dd/MM/yyyy'}}</div>
 
                 <div layout="row" layout-align="space-between stretch">
-                    <div class="client">
+                    <div class="client" flex="30">
                         <div class="invoice-number" layout="row" layout-align="start center">
                             <span class="title">PAYMENT NO : </span>
                             <span class="number">{{vm.selectedPayment.paymentNo}}</span>
@@ -18,7 +18,6 @@
                              <span class="title">CUSTOMER : </span>
                             <span class="number">{{vm.selectedPayment.customer}}</span>
                         </div>
-
 
                         <div class="due-date" layout="row" layout-align="start center">
                             <span class="title">STATUS : </span>
@@ -43,6 +42,8 @@
                         </div>
                     </div>
 
+                    <div flex></div>
+
                     <div class="issuer md-accent-bg" layout="row" layout-align="start center">
                         <div class="logo" layout="row" layout-align="center center">
                             <span>{{companyName| limitTo:1}}</span>
@@ -64,22 +65,27 @@
                 <table class="simple invoice-table-footer">
                     <tbody>
                         <tr class="subtotal">
+                            <td></td>
                             <td>CURRENCY</td>
                             <td>{{vm.selectedPayment.currency}}</td>
                         </tr>
                         <tr class="additionalcharge">
+                            <td></td>
                             <td>CURRENCY RATE</td>
                             <td>{{vm.selectedPayment.rate}}</td>
                         </tr>
                         <tr class="discount">
+                            <td></td>
                             <td>PAYMENT METHOD</td>
                             <td>{{vm.selectedPayment.paymentMethod}}</td>
                         </tr>
                         <tr class="tax">
+                            <td></td>
                             <td>BANK CHARGES</td>
                             <td>{{vm.selectedPayment.bankCharges | isoCurrency:vm.selectedPayment.currency}}</td>
                         </tr>
                         <tr class="total">
+                          <td></td>
                           <td>PAYMENT AMOUNT</td>
                           <td>{{vm.selectedPayment.amount | isoCurrency:vm.selectedPayment.currency}}</td>
                         </tr>

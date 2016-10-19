@@ -350,7 +350,7 @@
       var req={
         "app" :"Payment",
         "html":base64Content,
-        "id":$scope.selectedPayment.paymentNo,
+        "id":$scope.selectedPayment.paymentNoWithoutPrefix,
         "body":$scope.bodycontent,
         "subject" :$scope.subject,
         "to":$scope.to,

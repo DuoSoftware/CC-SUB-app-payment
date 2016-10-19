@@ -255,6 +255,7 @@
       $scope.BaseCurrency = "";
       $scope.currencyRate = 1;
       $scope.content={};
+      $scope.hideSearchMore=false;
 
       $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_GeneralAttributes","BaseCurrency").success(function(data) {
         $scope.BaseCurrency=data[0].RecordFieldData;
@@ -315,6 +316,8 @@
               for (var i = 0; i < data.length; i++) {
                 //console.log(moment(data[i].paymentDate).format('LL'));
                 data[i].paymentDate=moment(data[i].paymentDate).format('L');
+                data[i].paymentNoWithoutPrefix=data[i].paymentNo;
+
                 data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
                 //debugger;
                 var insertedCurrency=data[i].currency;
@@ -350,10 +353,12 @@
               $scope.isdataavailable=true;
               if(data.length<take){
                 $scope.isdataavailable=false;
+                $scope.hideSearchMore=true;
               }
 
             }).error(function(data) {
               $scope.listLoaded = true;
+              $scope.hideSearchMore=true;
 
               console.log(data);
             })
@@ -366,6 +371,8 @@
           $scope.isSpinnerShown=false;
           $scope.isdataavailable=false;
           $scope.isLoading = false;
+          $scope.listLoaded = true;
+          $scope.hideSearchMore=true;
         })
 
       };
@@ -374,10 +381,16 @@
 
       var skipPaymentSearch, takePaymentSearch;
       var tempList;
-      $scope.loadByKeywordPayment= function (keyword) {
-        if($scope.items.length>50) {
+      $scope.loadByKeywordPayment= function (keyword,length) {
+        if($scope.items.length==100) {
           //debugger;
-          var searchLength=3;
+          if(length==undefined)
+          {
+            keyword="undefined";
+            length=0;
+          }
+          var searchLength=length;
+          //var searchLength=3;
           var idLength=0;
           if(keyword.toLowerCase().startsWith($scope.paymentPrefix.toLowerCase()))
           {
@@ -390,11 +403,13 @@
             console.log(keyword);
             //debugger;
             skipPaymentSearch = 0;
-            takePaymentSearch = 10;
+            takePaymentSearch = 100;
             tempList = [];
             $charge.payment().filterByKey(keyword, idLength, skipPaymentSearch, takePaymentSearch,'desc').success(function (data) {
               for (var i = 0; i < data.length; i++) {
                 data[i].paymentDate=moment(data[i].paymentDate).format('L');
+                data[i].paymentNoWithoutPrefix=data[i].paymentNo;
+
                 data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
                 //debugger;
                 var insertedCurrency=data[i].currency;
@@ -420,15 +435,31 @@
 
                 //tempList.push(data[i]);
               }
-              skipPaymentSearch += takePaymentSearch;
-              $scope.loadPaging(keyword, idLength, skipPaymentSearch, takePaymentSearch);
+              vm.payments = tempList;
+              //skipPaymentSearch += takePaymentSearch;
+              //$scope.loadPaging(keyword, idLength, skipPaymentSearch, takePaymentSearch);
             }).error(function (data) {
-              vm.payments = [];
-              vm.selectedPayment = null;
+              if(tempList.length>0) {
+                vm.payments = tempList;
+                //$scope.openProduct(vm.products[0]);
+              }
+              else
+              {
+                vm.payments=[];
+                vm.selectedPayment=null;
+              }
+              $scope.listLoaded = true;
             });
           }
           else if (keyword.length == 0 || keyword == null) {
             vm.payments = $scope.items;
+            $scope.listLoaded = true;
+          }
+
+          if(searchLength==0||searchLength==undefined)
+          {
+            $scope.loading = true;
+            $scope.more();
           }
         }
       }
@@ -565,6 +596,8 @@
           for(var i=0;i<data.length;i++)
           {
             data[i].paymentDate=moment(data[i].paymentDate).format('L');
+            data[i].paymentNoWithoutPrefix=data[i].paymentNo;
+
             data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
             //debugger;
             var insertedCurrency=data[i].currency;
@@ -630,6 +663,8 @@
           for(var i=0;i<data.length;i++)
           {
             data[i].paymentDate=moment(data[i].paymentDate).format('L');
+            data[i].paymentNoWithoutPrefix=data[i].paymentNo;
+
             data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
             //debugger;
             var insertedCurrency=data[i].currency;
@@ -668,6 +703,8 @@
           for(var i=0;i<data.length;i++)
           {
             data[i].paymentDate=moment(data[i].paymentDate).format('L');
+            data[i].paymentNoWithoutPrefix=data[i].paymentNo;
+
             data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
             //debugger;
             var insertedCurrency=data[i].currency;
@@ -986,6 +1023,8 @@
             }
 
           }
+
+          $scope.filteredUsers=$scope.profilelist;
           //loadAll();
 
           //for (i = 0, len = data.length; i<len; ++i){
@@ -1035,6 +1074,7 @@
         $scope.items = [];
         skip=0;
         $scope.loading = true;
+        $scope.hideSearchMore=false;
         $scope.more();
       }
 
