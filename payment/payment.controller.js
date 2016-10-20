@@ -76,7 +76,8 @@
             vm.selectedPayment = payment;
             $scope.loadInvoiceByCustomerId(payment.guCustomerID);
 
-            var paymentNumber=payment.paymentNo.substr($scope.paymentPrefix.length);
+            //var paymentNumber=payment.paymentNo.substr($scope.paymentPrefix.length);
+            var paymentNumber=payment.paymentNoWithoutPrefix;
             paymentNumber=parseInt(paymentNumber);
             $charge.payment().searchPayment(paymentNumber).success(function(data){
               console.log(data);
@@ -906,7 +907,8 @@
 
       $scope.cancelorder = function (editedprofile) {
 
-        var paymentNumber=editedprofile.paymentNo.substr($scope.paymentPrefix.length);
+        //var paymentNumber=editedprofile.paymentNo.substr($scope.paymentPrefix.length);
+        var paymentNumber=editedprofile.paymentNoWithoutPrefix;
         paymentNumber=parseInt(paymentNumber);
         console.log(paymentNumber);
         $charge.payment().cancel(paymentNumber).success(function(data){
