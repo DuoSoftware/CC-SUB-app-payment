@@ -40,6 +40,7 @@
         vm.selectPayment = selectPayment;
         vm.toggleStarred = toggleStarred;
         vm.toggleCheck = toggleCheck;
+        vm.searchMoreInit = true;
 
         vm.loadByKeyword = $scope.loadByKeywordPayment;
 
@@ -76,6 +77,7 @@
             $scope.loadInvoiceByCustomerId(payment.guCustomerID);
 
             var paymentNumber=payment.paymentNo.substr($scope.paymentPrefix.length);
+            paymentNumber=parseInt(paymentNumber);
             $charge.payment().searchPayment(paymentNumber).success(function(data){
               console.log(data);
 
@@ -288,6 +290,7 @@
       })
 
       $scope.paymentPrefix="";
+      $scope.lenPrefixPayment=0;
 
       $scope.isLoading = true;
       $scope.isdataavailable=true;
@@ -309,16 +312,21 @@
           {
             skip += take;
 
-            $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_PaymentAttributes","PaymentPrefix").success(function(data2) {
-              $scope.paymentPrefix=data2[0].RecordFieldData;
+            //$charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_PaymentAttributes","PaymentPrefix").success(function(data2) {
+            //$scope.paymentPrefix=data2[0].RecordFieldData;
+              $scope.paymentPrefix=localStorage.getItem("paymentPrefix");
               console.log($scope.paymentPrefix);
+
+              var prefixLengthPayment=localStorage.getItem("paymentPrefixLength");
+              $scope.lenPrefixPayment=prefixLengthPayment!=0? parseInt(prefixLengthPayment):0;
 
               for (var i = 0; i < data.length; i++) {
                 //console.log(moment(data[i].paymentDate).format('LL'));
                 data[i].paymentDate=moment(data[i].paymentDate).format('L');
                 data[i].paymentNoWithoutPrefix=data[i].paymentNo;
 
-                data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
+                var paymentNum=$filter('numberFixedLen')(data[i].paymentNo,$scope.lenPrefixPayment);
+                data[i].paymentNo=$scope.paymentPrefix+paymentNum;
                 //debugger;
                 var insertedCurrency=data[i].currency;
                 var insertedrate=1;
@@ -346,6 +354,7 @@
               }
               vm.payments=$scope.items;
               $scope.listLoaded = true;
+              vm.searchMoreInit = false;
               debugger;
 
               $scope.loading = false;
@@ -356,12 +365,12 @@
                 $scope.hideSearchMore=true;
               }
 
-            }).error(function(data) {
-              $scope.listLoaded = true;
-              $scope.hideSearchMore=true;
-
-              console.log(data);
-            })
+            //}).error(function(data) {
+            //  $scope.listLoaded = true;
+            //  $scope.hideSearchMore=true;
+            //
+            //  console.log(data);
+            //})
 
           }
 
@@ -392,12 +401,24 @@
           var searchLength=length;
           //var searchLength=3;
           var idLength=0;
+          var keywordIdLength=0;
           if(keyword.toLowerCase().startsWith($scope.paymentPrefix.toLowerCase()))
           {
             keyword=keyword.substr($scope.paymentPrefix.length);
             console.log(keyword);
-            searchLength=1;
-            idLength=2;
+            if(keyword!="")
+            {
+              keywordIdLength=$scope.lenPrefixPayment-keyword.length;
+              keyword=parseInt(keyword);
+              keyword=keyword.toString();
+              if(keyword!="0")
+              {
+                searchLength=keyword.length;
+                idLength=searchLength+keywordIdLength;
+              }
+            }
+            //searchLength=1;
+            //idLength=2;
           }
           if (keyword.length == searchLength) {
             console.log(keyword);
@@ -410,7 +431,8 @@
                 data[i].paymentDate=moment(data[i].paymentDate).format('L');
                 data[i].paymentNoWithoutPrefix=data[i].paymentNo;
 
-                data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
+                var paymentNum=$filter('numberFixedLen')(data[i].paymentNo,$scope.lenPrefixPayment);
+                data[i].paymentNo=$scope.paymentPrefix+paymentNum;
                 //debugger;
                 var insertedCurrency=data[i].currency;
                 var insertedrate=1;
@@ -598,7 +620,8 @@
             data[i].paymentDate=moment(data[i].paymentDate).format('L');
             data[i].paymentNoWithoutPrefix=data[i].paymentNo;
 
-            data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
+            var paymentNum=$filter('numberFixedLen')(data[i].paymentNo,$scope.lenPrefixPayment);
+            data[i].paymentNo=$scope.paymentPrefix+paymentNum;
             //debugger;
             var insertedCurrency=data[i].currency;
             var insertedrate=1;
@@ -665,7 +688,8 @@
             data[i].paymentDate=moment(data[i].paymentDate).format('L');
             data[i].paymentNoWithoutPrefix=data[i].paymentNo;
 
-            data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
+            var paymentNum=$filter('numberFixedLen')(data[i].paymentNo,$scope.lenPrefixPayment);
+            data[i].paymentNo=$scope.paymentPrefix+paymentNum;
             //debugger;
             var insertedCurrency=data[i].currency;
             var insertedrate=1;
@@ -705,7 +729,8 @@
             data[i].paymentDate=moment(data[i].paymentDate).format('L');
             data[i].paymentNoWithoutPrefix=data[i].paymentNo;
 
-            data[i].paymentNo=$scope.paymentPrefix+data[i].paymentNo;
+            var paymentNum=$filter('numberFixedLen')(data[i].paymentNo,$scope.lenPrefixPayment);
+            data[i].paymentNo=$scope.paymentPrefix+paymentNum;
             //debugger;
             var insertedCurrency=data[i].currency;
             var insertedrate=1;
@@ -782,20 +807,23 @@
       $scope.prefixInvoice="";
       $scope.lenPrefixInvoice=0;
 
-      $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_InvoiceAttributes","InvoicePrefix").success(function(data) {
-        var invoicePrefix=data[0];
-        $scope.prefixInvoice=invoicePrefix!=""?invoicePrefix.RecordFieldData:"";
+      //$charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_InvoiceAttributes","InvoicePrefix").success(function(data) {
+      //  var invoicePrefix=data[0];
+      //  $scope.prefixInvoice=invoicePrefix!=""?invoicePrefix.RecordFieldData:"";
+        $scope.prefixInvoice=localStorage.getItem("invoicePrefix");
       //debugger;
-      }).error(function(data) {
-        console.log(data);
-        $scope.prefixInvoice="";
-      })
-      $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_InvoiceAttributes","PrefixLength").success(function(data) {
-        var prefixLength=data[0];
-        $scope.lenPrefixInvoice=prefixLength!=0? parseInt(prefixLength.RecordFieldData):0;
-      }).error(function(data) {
-        console.log(data);
-      })
+      //}).error(function(data) {
+      //  console.log(data);
+      //  $scope.prefixInvoice="";
+      //})
+      //$charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_InvoiceAttributes","PrefixLength").success(function(data) {
+      //  var prefixLength=data[0];
+      //  $scope.lenPrefixInvoice=prefixLength!=0? parseInt(prefixLength.RecordFieldData):0;
+        var prefixLength=localStorage.getItem("prefixLength");
+        $scope.lenPrefixInvoice=prefixLength!=0? parseInt(prefixLength):0;
+      //}).error(function(data) {
+      //  console.log(data);
+      //})
 
       $scope.loadInvoiceByCustomerId = function (customerId)
       {
@@ -813,7 +841,7 @@
             var obj=data[i];
 
             var invoiceNum=$filter('numberFixedLen')(obj.invoiceNo,$scope.lenPrefixInvoice);
-            obj.invoiceNo=$scope.prefixInvoice+'-'+invoiceNum;
+            obj.invoiceNo=$scope.prefixInvoice+invoiceNum;
 
             var balance= parseInt(obj.invoiceAmount)-parseInt(obj.paidAmount);
             totbalance+=balance;
@@ -879,6 +907,7 @@
       $scope.cancelorder = function (editedprofile) {
 
         var paymentNumber=editedprofile.paymentNo.substr($scope.paymentPrefix.length);
+        paymentNumber=parseInt(paymentNumber);
         console.log(paymentNumber);
         $charge.payment().cancel(paymentNumber).success(function(data){
           console.log(data);
@@ -1074,7 +1103,9 @@
         $scope.items = [];
         skip=0;
         $scope.loading = true;
+        $scope.listLoaded = false;
         $scope.hideSearchMore=false;
+        vm.searchMoreInit = true;
         $scope.more();
       }
 
@@ -1213,7 +1244,7 @@
               obj.invoiceNo_withoutPrefix=obj.invoiceNo;
 
               var invoiceNum=$filter('numberFixedLen')(obj.invoiceNo,$scope.lenPrefixInvoice);
-              obj.invoiceNo=$scope.prefixInvoice+'-'+invoiceNum;
+              obj.invoiceNo=$scope.prefixInvoice+invoiceNum;
 
               obj.invoiceAmount=parseFloat(obj.invoiceAmount)*$scope.currencyRate;
               obj.paidAmount=parseFloat(obj.paidAmount)*$scope.currencyRate;
