@@ -1,13 +1,21 @@
+<meta name="updatedBy" content="GihanHerath">
+<meta name="modifiedDate" content="24-10-2016">
+<meta name="version" content="6.0.0.6">
+<meta name="app" content="payment">
+<meta name="view" content="read-view.html">
+
 <div id="payment-read" class="compact page-layout blank" layout="row">
-    <div class="invoice-read-container">
+    <div class="invoice-read-container" flex>
 
         <!-- INVOICE -->
-        <div class="card md-whiteframe-8dp">
+        <div class="card md-whiteframe-8dp" layout="column" layout-align="center center">
+
+          <div class="inv-outline" md-whiteframe="2dp" layout="column">
 
             <div class="inv-read-header">
                 <div class="invoice-date">{{vm.selectedPayment.paymentDate | parseDate | date: 'dd/MM/yyyy'}}</div>
 
-                <div layout="row" layout-align="space-between stretch">
+                <div layout="row" layout-align="space-between stretch" style="display: flex;">
                     <div class="client" flex="30">
                         <div class="invoice-number" layout="row" layout-align="start center">
                             <span class="title">PAYMENT NO : </span>
@@ -44,19 +52,30 @@
 
                     <div flex></div>
 
-                    <div class="issuer md-accent-bg" layout="row" layout-align="start center">
-                        <div class="logo" layout="row" layout-align="center center">
+                  <div class="issuer" ng-class="{ 'md-accent-bg': companyLogo == ''}" layout="row" layout-align="start center">
+                    <table>
+                      <tr>
+                        <td>
+                          <div class="set-logo-wrap" ng-if="companyLogo != ''">
+                            <div class="set-img">
+                              <img ng-src="{{companyLogo}}" alt="" />
+                            </div>
+                          </div>
+                          <div class="logo" layout="row" layout-align="center center" ng-if="companyLogo == ''" >
                             <span>{{companyName| limitTo:1}}</span>
-                        </div>
-
-                        <div class="info">
-                            <div class="title">{{companyName}}</div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="info">
+                            <div class="">{{companyName}}</div>
                             <div class="address">{{companyAddress}}</div>
                             <div class="phone">{{companyPhone}}</div>
                             <div class="email">{{companyEmail}}</div>
-                            <!--<div class="website">{{companyWebSite}}</div>-->
-                        </div>
-                    </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
                 </div>
             </div>
 
@@ -65,28 +84,23 @@
                 <table class="simple invoice-table-footer">
                     <tbody>
                         <tr class="subtotal">
-                            <td></td>
                             <td>CURRENCY</td>
                             <td>{{vm.selectedPayment.currency}}</td>
                         </tr>
                         <tr class="additionalcharge">
-                            <td></td>
                             <td>CURRENCY RATE</td>
                             <td>{{vm.selectedPayment.rate}}</td>
                         </tr>
                         <tr class="discount">
-                            <td></td>
                             <td>PAYMENT METHOD</td>
                             <td>{{vm.selectedPayment.paymentMethod}}</td>
                         </tr>
-                        <tr class="tax">
-                            <td></td>
-                            <td>BANK CHARGES</td>
-                            <td>{{vm.selectedPayment.bankCharges | isoCurrency:vm.selectedPayment.currency}}</td>
-                        </tr>
+                        <!--<tr class="tax">-->
+                            <!--<td>BANK CHARGES</td>-->
+                            <!--<td>{{vm.selectedPayment.bankCharges | isoCurrency:vm.selectedPayment.currency}}</td>-->
+                        <!--</tr>-->
                         <tr class="total">
-                          <td></td>
-                          <td>PAYMENT AMOUNT</td>
+                          <td>TOTAL</td>
                           <td>{{vm.selectedPayment.amount | isoCurrency:vm.selectedPayment.currency}}</td>
                         </tr>
                     </tbody>
@@ -96,6 +110,8 @@
                 <div>{{vm.selectedPayment.note}}</div>
               </div>
             </div>
+
+            <div flex></div>
 
             <div class="inv-read-footer">
                 <div class="note">Please pay within 7 days. Thank you for your business.</div>
@@ -112,6 +128,8 @@
                     </div>
                 </div>
             </div>
+
+          </div>
         </div>
         <!-- / INVOICE -->
 

@@ -1,3 +1,15 @@
+<meta name="updatedBy" content="GihanHerath">
+<meta name="modifiedDate" content="24-10-2016">
+<meta name="version" content="6.0.0.6">
+<meta name="app" content="payment">
+<meta name="view" content="payment.html">
+
+<meta name="updatedBy" content="suvethan">
+<meta name="modifiedDate" content="24-10-2016">
+<meta name="version" content="6.0.0.1">
+<meta name="app" content="dashboard">
+<meta name="view" content="dashboard.html">
+
 <div id="payment" class="page-layout carded left-sidenav" layout="row" ng-switch="vm.appInnerState">
 
     <!-- TOP BACKGROUND -->
@@ -295,7 +307,7 @@
                                        md-search-text="vm.searchText"
                                        md-items="item in vm.querySearch(vm.searchText)"
                                        md-item-text="item.display"
-                                       md-floating-label="Customer"
+                                       md-floating-label="Profile"
                                        md-min-length="" style="height: 65px;">
                         <md-item-template>
                           <span md-highlight-text="vm.searchText">{{item.display+" : "+item.value.othername}}</span>
@@ -432,11 +444,11 @@
                       <label>Other</label>
                     </div>
 
-                    <div layout-gt-sm="row">
+                    <div layout-gt-sm="row" ng-hide="true">
                       <div layout-gt-sm="row">
                         <md-input-container class="md-block p-l-50" flex-gt-sm>
                           <label>Bank Charges</label>
-                          <input ng-required="false" minlength="null" md-maxlength="null" style="width: 180px;" type="number" name="bankCharges" min="0" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" ng-model="content.bankCharges">
+                          <input ng-required="false" minlength="null" md-maxlength="null" style="width: 180px;" type="number" ng-init="content.bankCharges=0" name="bankCharges" min="0" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" ng-model="content.bankCharges">
                         </md-input-container>
                       </div>
                     </div>
