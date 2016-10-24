@@ -1,168 +1,219 @@
-body{
-  font-family: 'Roboto'!important;
+.inv-outline {
+  font-family: Roboto;
+  font-size: 14px;
 }
-.card{
-  padding: 0px;
+.flex{
+  flex: 1;
 }
-.invoice-date{
+.inv-outline .inv-read-header .invoice-date {
   font-size: 14px;
   color: rgba(0, 0, 0, 0.54);
-  margin-bottom: 32px;
+  margin-bottom: 50px;
 }
-.client, .issuer{
+.inv-outline .inv-read-header .client{
   width: 50%;
-  float: left;
+  display: inline-block;
 }
-.issuer{
-  background-color: rgb(3,155,229);
-  color: #fff;
-  padding: 45px 0;
-  margin-right: -88px;
+.inv-outline .inv-read-header .client md-select {
+  margin: 10px 0;
 }
-.issuer .info{
-  padding: 0 16px;
-  width: 200px;
-  float: left;
-  color: #ffffff;
-  margin-top: 1px;
-  line-height: 18px;
-}
-.inv-read-content{
-  width: 100%;
-}
-.title{
-  color: rgba(0, 0, 0, 0.54);
+.inv-outline .inv-read-header .client .invoice-number {
   font-size: 14px;
+  padding-bottom: 2px;
 }
-.client .info{
-  margin-top: 20px;
+.inv-outline .inv-read-header .client .invoice-number .title {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.54);
 }
-.client .info .title{
-  color: rgba(0, 0, 0, 0.54)!important;
+.inv-outline .inv-read-header .client .invoice-number .number {
+  padding-left: 0px !important;
 }
-.number, .date{
+.inv-outline .inv-read-header .client .invoice-type {
+  font-size: 18px;
+  padding-bottom: 2px;
+}
+.inv-outline .inv-read-header .client .invoice-type .title {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.54);
+}
+.inv-outline .inv-read-header .client .invoice-type .number {
   padding-left: 6px;
+}
+.inv-outline .inv-read-header .client .due-date {
   font-size: 14px;
+  font-weight: 500;
+  padding-bottom: 16px;
 }
-.invoice-number, .invoice-type{
-  margin-bottom: 5px;
-}
-.info{
-  font-size: 13px;
+.inv-outline .inv-read-header .client .due-date .title {
+  font-size: 14px;
+  font-weight: 500;
   color: rgba(0, 0, 0, 0.54);
-  line-height: 22px;
 }
-.info .title{
-  color: #ffffff;
+.inv-outline .inv-read-header .client .due-date .date {
+  padding-left: 6px;
+}
+.inv-outline .inv-read-header .client .info {
+  color: rgba(0, 0, 0, 0.54);
+  line-height: 18px;
+  padding-right: 70px;
+  margin-top: 10px;
   font-size: 13px;
 }
-.logo{
+.inv-outline .inv-read-header .issuer {
+  color: #ffffff!important;
+  background-color: rgb(3,155,229);
+  width: 50%;
+  display: inline-block;
+  position: relative;
+}
+.inv-outline .inv-read-header .issuer .set-img {
+  width: 150px;
+  height: 150px;
+  position: relative;
+}
+.inv-outline .inv-read-header .issuer .set-img img {
+  width: 150px;
+  height: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+}
+.inv-outline .inv-read-header .issuer .logo {
+  text-align: center;
+  color: #ffffff;
   width: 96px;
   height: 96px;
   font-size: 72px;
-  text-align: center;
   border-right: 1px solid rgba(255, 255, 255, 0.7);
-  float: left;
-  color:#fff;
 }
-table.simple{
+.inv-outline .inv-read-header .issuer .info {
+  font-size: 14px;
+  padding: 16px;
+  color: #ffffff;
+}
+.inv-outline .inv-read-header .issuer>table {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+.inv-outline .inv-read-header .issuer .new-invoice-issuer .info {
+  padding: 40px 20px;
+}
+.inv-outline .inv-read-content .invoice-table {
   width: 100%;
-  padding-top: 30px;
+  margin-top: 64px;
+  font-size: 14px !important;
 }
-table.simple thead tr th {
-  padding: 16px 8px;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.54);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  white-space: nowrap;
-  min-width: 120px;
-}
-table.simple thead tr th:first-child{
+.inv-outline .inv-read-content .invoice-table thead tr th {
   text-align: left;
+  color: rgba(0, 0, 0, 0.28);
+  padding-bottom: 7px;
+  font-weight: normal;
 }
-table.simple thead tr th:last-child{
+.inv-outline .inv-read-content .invoice-table thead tr th:first-child {
+  padding-left: 8px;
+}
+.inv-outline .inv-read-content .invoice-table thead tr th:last-child {
+  padding-right: 8px;
   text-align: right;
 }
-table.simple .subtotal, table.simple .additionalcharge, table.simple .discount, table.simple .tax{
-  font-size: 16px;
+.inv-outline .inv-read-content .invoice-table{
+  text-align: left;
+}
+.inv-outline .inv-read-content .invoice-table tbody tr td:first-child {
+  padding-left: 8px;
+}
+.inv-outline .inv-read-content .invoice-table tbody tr td:last-child {
+  padding-right: 8px;
+  text-align: right;
+}
+.inv-outline .inv-read-content .invoice-table .title {
+  font-size: 14px;
   font-weight: 500;
+}
+.inv-outline .inv-read-content .invoice-table .detail {
+  margin-top: 8px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.54);
+  max-width: 360px;
+}
+.inv-outline .inv-read-content .invoice-table-footer {
+  border-collapse: collapse;
+  margin: 32px 0 72px 0;
+  width: 100%;
+}
+.inv-outline .inv-read-content .invoice-table-footer tr:not(:last-child) {
+  background-color: rgba(0, 0, 0, 0.01);
+}
+.inv-outline .inv-read-content .invoice-table-footer tr td:first-child {
+  width: 400px;
+}
+.inv-outline .inv-read-content .invoice-table-footer tr td {
+  text-align: left;
+  font-size: 14px;
+  font-weight: 400  ;
   color: rgba(0, 0, 0, 0.54);
   border-bottom: none;
   padding: 4px 8px;
 }
-table.simple tr td{
-  color: rgba(0, 0, 0, 0.54);
-}
-table.simple tr td:last-child{
+.inv-outline .inv-read-content .invoice-table-footer tr td:last-child {
   text-align: right;
-  padding: 4px 8px;
 }
-table.invoice-table-footer .total td{
-  padding: 24px 8px;
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
-  font-size: 27px;
+.inv-outline .inv-read-content .invoice-table-footer tr.promotion td {
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.12);
+  font-size: 16px;
   font-weight: 300;
   color: black;
 }
-table.invoice-table-footer .total td:first-child{
-  width: 200px;
+.inv-outline .inv-read-content .invoice-table-footer tr.total td {
+  padding: 24px 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  font-size: 27px !important;
+  font-weight: 300;
+  color: black;
 }
-table.invoice-table-footer .total td:nth-child(2){
-  text-align: left;
+.inv-outline .inv-read-footer{
+  position: relative;
+  bottom: 20px;
 }
-table.invoice-table-footer .total td:last-child{
-  text-align: right;
-}
-.invoice-table{
-  text-align: left;
-}
-.invoice-table tr td{
-  color: #000!important;
-  text-align: left;
-  padding: 16px 8px;
-}
-.invoice-table tr td.text-right, .invoice-table thead th.text-right{
-  text-align: right;
-}
-.invoice-table tr td:last-child{
-  text-align: right;
-}
-
-.invoice-table-footer{
-  margin-top: 20px;
-  margin-bottom: 50px;
-  width: 100%;
-}
-.inv-read-footer .note {
-  font-size: 14px;
+.inv-outline .inv-read-footer .note {
+  font-size: 15px;
   font-weight: 500;
   margin-bottom: 24px;
 }
+.inv-outline .inv-read-footer .logo, .inv-outline .inv-read-footer .small-note {
+  -ms-flex: 0 1 auto;
+}
+.inv-outline .inv-read-footer .logo {
 
-.inv-read-footer .logo {
-  padding-top: 5px;
   width: 32px;
   min-width: 32px;
-  height: 26px;
+  height: 32px;
   font-size: 17px;
   font-weight: 500;
   margin-right: 24px;
   border-radius: 2px;
   overflow: hidden;
-  background-color: rgb(3,155,229);
-  color: rgba(255,255,255,1);
-}
-.inv-read-footer .logo div{
+  display: inline-block;
   text-align: center;
-  vertical-align: middle;
-  font-size: 17px;
-  font-weight: 500;
-  width: 16px;
-  margin: auto;
+  background-color: rgb(3,155,229);
 }
-.inv-read-footer .small-note{
+.inv-outline .inv-read-footer .logo>div {
+  margin-top: 5px;
+  color: #fff;
+}
+.inv-outline .inv-read-footer .small-note {
   font-size: 12px;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.54);
   line-height: 18px;
+  display: inline-block;
+  width: 92%;
 }

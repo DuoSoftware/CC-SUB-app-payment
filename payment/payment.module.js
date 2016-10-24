@@ -1,3 +1,10 @@
+////////////////////////////////
+// App : Payment
+// Owner  : Gihan Herath
+// Last changed date : 2016/10/24
+// Version : 6.0.0.6
+/////////////////////////////////
+
 (function ()
 {
     'use strict';

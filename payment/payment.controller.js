@@ -1,3 +1,11 @@
+////////////////////////////////
+// App : Payment
+// File : Payment Controller
+// Owner  : GihanHerath
+// Last changed date : 2016/10/24
+// Version : 6.0.0.6
+/////////////////////////////////
+
 (function ()
 {
     'use strict';
@@ -937,7 +945,7 @@
         var printContents = document.getElementById(divName).innerHTML;
         var popupWin = window.open('', '_blank', 'width=1800,height=700');
         popupWin.document.open();
-        popupWin.document.write('<html><head><link href="app/main/payment/views/read/print-view.css" rel="stylesheet" type="text/css"></head><body onload="window.print()">' + printContents + '</body></html>');
+        popupWin.document.write('<html><head><link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css"><link href="app/main/payment/views/read/print-view.css" rel="stylesheet" type="text/css"></head><body onload="window.print()">' + printContents + '</body></html>');
         popupWin.document.close();
       }
 
