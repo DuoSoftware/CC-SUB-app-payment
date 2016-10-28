@@ -2,8 +2,8 @@
 // App : Payment
 // File : Payment Controller
 // Owner  : GihanHerath
-// Last changed date : 2016/10/24
-// Version : 6.0.0.6
+// Last changed date : 2016/10/26
+// Version : 6.0.0.7
 /////////////////////////////////
 
 (function ()
@@ -298,6 +298,14 @@
         console.log(data);
       })
 
+      $charge.commondata().getDuobaseValuesByTableName("CTS_FooterAttributes").success(function(data) {
+        debugger;
+        $scope.FooterData=data;
+        $scope.FooterGreeting=data[0].RecordFieldData;
+        $scope.FooterDisclaimer=data[1].RecordFieldData!=""?atob(data[1].RecordFieldData):"";
+      }).error(function(data) {
+      })
+
       $scope.paymentPrefix="";
       $scope.lenPrefixPayment=0;
 
@@ -503,9 +511,10 @@
       //var autoElem = angular.element('#invoice-auto');
       $scope.searchMre=false;
       $scope.loadProfileByKeyword= function (keyword) {
-        debugger;
+        //debugger;
+        $scope.waitForSearchMoreKeyword=keyword;
         if(!$scope.searchMre) {
-          //debugger;
+          debugger;
           if ($scope.profilelist.length == 9) {
             if (keyword != undefined) {
               if (keyword.length == 3) {
@@ -540,6 +549,7 @@
                   },0);
                   if (data.length < take)
                     $scope.searchMre = true;
+                    $timeout.cancel($scope.waitForSearchMore);
                   //skip += take;
                   //$scope.loadPaging(keyword, rows, index, status, skip, take);
                 }).error(function (data) {
@@ -588,6 +598,7 @@
 
                   if (data.length < take)
                     $scope.searchMre = true;
+                    $timeout.cancel($scope.waitForSearchMore);
                 }).error(function (data) {
                   vm.isAutoDisabled = false;
                   setTimeout(function(){
@@ -617,7 +628,16 @@
       $scope.toggleProfileSearchMre= function (ev) {
         //debugger;
         if (ev.keyCode === 8) {
-          $scope.searchMre = false;
+          $timeout.cancel($scope.waitForSearchMore);
+          $scope.waitForSearchMore = $timeout(function myFunction() {
+            // do something
+            if($scope.searchMre)
+            {
+              $scope.searchMre = false;
+              $scope.loadProfileByKeyword($scope.waitForSearchMoreKeyword);
+            }
+          },1000);
+          //$scope.searchMre = false;
         }
       }
 
