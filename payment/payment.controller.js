@@ -515,7 +515,7 @@
         $scope.waitForSearchMoreKeyword=keyword;
         if(!$scope.searchMre) {
           debugger;
-          if ($scope.profilelist.length == 9) {
+          if ($scope.profilelist.length == 10) {
             if (keyword != undefined) {
               if (keyword.length == 3) {
                 vm.isAutoDisabled = true;
