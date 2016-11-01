@@ -2,8 +2,8 @@
 // App : Payment
 // File : Payment Controller
 // Owner  : GihanHerath
-// Last changed date : 2016/10/26
-// Version : 6.0.0.7
+// Last changed date : 2016/11/01
+// Version : 6.0.0.9
 /////////////////////////////////
 
 (function ()
@@ -515,7 +515,7 @@
         $scope.waitForSearchMoreKeyword=keyword;
         if(!$scope.searchMre) {
           debugger;
-          if ($scope.profilelist.length == 10) {
+          if ($scope.profilelist.length == $scope.searchFilterLength) {
             if (keyword != undefined) {
               if (keyword.length == 3) {
                 vm.isAutoDisabled = true;
@@ -1050,11 +1050,14 @@
         return results;
       }
       $scope.profilelist = [];
+      $scope.searchFilterLength=0;
 
       var skipprofiles=0;
       var takeprofiles=10;
 
       function loadAll() {
+
+        $scope.searchFilterLength=takeprofiles;
 
         $charge.profile().all(skipprofiles,takeprofiles,'asc').success(function(data){
           console.log(data);
@@ -1064,7 +1067,7 @@
 
             if(obj.status==0)
             {
-
+              $scope.searchFilterLength=$scope.searchFilterLength-1;
             }
             else if(obj.profile_type=='Business')
             {
