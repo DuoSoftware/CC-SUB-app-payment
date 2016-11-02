@@ -2,8 +2,8 @@
 // App : Payment
 // File : Payment Controller
 // Owner  : GihanHerath
-// Last changed date : 2016/11/01
-// Version : 6.0.0.9
+// Last changed date : 2016/11/02
+// Version : 6.0.0.10
 /////////////////////////////////
 
 (function ()
@@ -49,6 +49,7 @@
         vm.toggleStarred = toggleStarred;
         vm.toggleCheck = toggleCheck;
         vm.searchMoreInit = true;
+        vm.isLoaded = true;
 
         vm.loadByKeyword = $scope.loadByKeywordPayment;
 
@@ -1253,6 +1254,7 @@
 
       $scope.loadInvoice = function (customer)
       {
+        vm.isLoaded = false;
         if(customer!=null&&customer!=undefined)
         {
           var invoicenolist="";
@@ -1324,11 +1326,13 @@
 
               }
               $scope.invoicelist=data;
+              vm.isLoaded = true;
 
             }).error(function(subdata)
             {
               console.log(subdata);
               $scope.invoicelist=data;
+              vm.isLoaded = true;
             })
 
             //$scope.invoicelist=data;
@@ -1337,6 +1341,7 @@
           {
             console.log(data);
             $scope.invoicelist=[];
+            vm.isLoaded = true;
           })
         }
       }
@@ -1408,7 +1413,8 @@
         }
         else
         {
-          $charge.currency().calcCurrency($scope.BaseCurrency+"_"+preferredCurrency).success(function(data)
+          //$charge.currency().calcCurrency($scope.BaseCurrency+"_"+preferredCurrency).success(function(data)
+          $charge.currency().calcCurrency(1,$scope.BaseCurrency,preferredCurrency).success(function(data)
           {
             //debugger;
             //var el = document.createElement( 'html' );
@@ -1416,18 +1422,19 @@
             //
             //var element=el.getElementsByTagName( 'span' );
             //var results=element[0].innerHTML.split(" ");
-            var param=$scope.BaseCurrency+"_"+preferredCurrency;
-            var results=data.results;
-            var result = results[param];
+            //var param=$scope.BaseCurrency+"_"+preferredCurrency;
+            //var results=data.results;
+            //var result = results[param];
+            var result = data;
 
             $scope.currencyratelist.push({
               currency : preferredCurrency,
-              rate : result.val
+              rate : result
             });
             console.log($scope.currencyratelist);
 
             $scope.selectedCurrency = preferredCurrency;
-            $scope.currencyRate = parseFloat(result.val);
+            $scope.currencyRate = parseFloat(result);
 
             if($scope.currencyratelist.length>1)
             {

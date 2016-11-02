@@ -1,6 +1,6 @@
-<meta name="updatedBy" content="GihanHerath">
-<meta name="modifiedDate" content="24-10-2016">
-<meta name="version" content="6.0.0.6">
+<meta name="updatedBy" content="Kasun">
+<meta name="modifiedDate" content="1-11-2016">
+<meta name="version" content="6.0.0.7">
 <meta name="app" content="payment">
 <meta name="view" content="payment.html">
 
@@ -333,8 +333,6 @@
                     </div>
                   </div>
 
-                  <md-divider></md-divider>
-
                   <div class="body-content-wrap">
                     <!--</div>-->
 
@@ -342,53 +340,37 @@
                       <label>Invoice Details</label>
                     </div>
 
-                    <div layout="row" layout-wrap style="border-bottom: solid 1px #cccccc; margin-bottom: 5px; color: #aaa;font-size: 14px;text-align: center">
-                      <div flex="20" class="p-l-15">
-                        Invoice No:
-                      </div>
-                      <div flex="20" class="text-left" style="text-align: center">
-                        Invoice Amount
-                      </div>
-                      <div flex="20" class="text-left" style="text-align: center">
-                        Adjustment
-                      </div>
-                      <div flex="20" class="text-left" style="text-align: center">
-                        Paid Amount
-                      </div>
-                      <div flex="20" class="text-right" style="padding-right: 30px;text-align: center">
-                        Balance Payment
-                      </div>
+                    <div style="border-radius: 3px;" md-whiteframe="1dp">
+                      <div class="inv-list-header" layout="row" flex>
+                      <span flex="10">INVOICE NO</span>
+                      <span flex>INVOICE AMOUNT</span>
+                      <span flex>ADJUSTMENTS</span>
+                      <span flex>PAID AMOUNT</span>
+                      <span flex>BALANCE AMOUNT</span>
                     </div>
-                    <div>
-                      <md-list style="height:250px;overflow-y: scroll;">
-                        <md-list-item  ng-repeat="item in invoicelist"  style="outline:none;padding: 0;text-align: center">
-                          <md-card layout="row" class="md-card-wrap" layout-align="space-between center">
-                            <!--<div flex="30"><img src="{{item.business_contact_no}}" style="width:80px;margin-left: 10px;"/></div>-->
-                            <div flex="20" layout="column" layout-align="center left">
-                              <label class="md-card-label-wrap">{{item.invoiceNo}}</label>
-                            </div>
-                            <div flex="20" layout="column">
-                              <label class="md-card-label-wrap">{{item.invoiceAmount| isoCurrency:content.preferredcurrency}}</label>
-                            </div>
-                            <div flex="20" layout="column">
-                              <label class="md-card-label-wrap" ng-if="item.adjustmenttype=='0'">{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
+                      <md-content ms-scroll>
+                      <md-list flex class="carded-dashboard-list" style="height:250px;">
+                        <div layout="row" layout-align="center center" style="height: 100%;" ng-hide="vm.isLoaded">
+                          <img src="assets/images/142.gif" alt="" class="preloader-dot"/>
+                        </div>
+
+                        <md-list-item layout="row" ng-repeat="item in invoicelist" ng-click="null" style="text-align: right">
+                          <span flex="10" style="text-align: left">{{item.invoiceNo}}</span>
+                          <span flex>{{item.invoiceAmount| isoCurrency:content.preferredcurrency}}</span>
+                          <span flex>
+                            <label class="md-card-label-wrap" ng-if="item.adjustmenttype=='0'">{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
                               <label ng-if="item.adjustmenttype=='1'" class="md-card-label-wrap">-{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
                               <label ng-if="item.adjustmenttype=='2'" class="md-card-label-wrap">+{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
-                            </div>
-                            <div flex="20" layout="column">
-                              <label class="md-card-label-wrap">{{item.paidAmount| isoCurrency:content.preferredcurrency}}</label>
-                            </div>
-                            <div flex="20" layout="column">
-                              <label class="md-card-label-wrap">{{item.balancepayment| isoCurrency:content.preferredcurrency}}</label>
-                            </div>
-
-                          </md-card>
-                        </md-list-item >
+                          </span>
+                          <span flex>{{item.paidAmount| isoCurrency:content.preferredcurrency}}</span>
+                          <span flex>{{item.balancepayment| isoCurrency:content.preferredcurrency}}</span>
+                        </md-list-item>
                       </md-list>
-                    </div>
-                    <md-divider></md-divider>
+                    </md-content>
 
-                    <div layout-gt-sm="row" style="text-align: center;padding: 10px 0;border-bottom: solid 1px #cccccc;margin-bottom: 20px">
+                      <md-divider></md-divider>
+
+                      <div layout-gt-sm="row" style="text-align: center;padding: 10px 0;margin-bottom: 20px">
                       <div flex>
                         <label class="calc-detail-label">Total Balance Payments</label>
                       </div>
@@ -396,6 +378,7 @@
                         <label class="calc-detail-label">{{invoicelist[0].totalbalance| isoCurrency:content.preferredcurrency}}</label>
                       </div>
                       <!--<label style="font-size: 20px;font-weight: 600;padding-left: 100px; height: 30px">{{items[0].amount| currency}}</label>-->
+                    </div>
                     </div>
 
                     <!--<div class="body-content-wrap"> ng-click="addNewUser($event)"-->
@@ -430,7 +413,6 @@
                     </div>
                   </div>
 
-                  <md-divider></md-divider>
 
                   <div class="body-content-wrap">
 
