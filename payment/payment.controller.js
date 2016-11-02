@@ -3,7 +3,7 @@
 // File : Payment Controller
 // Owner  : GihanHerath
 // Last changed date : 2016/11/02
-// Version : 6.0.0.10
+// Version : 6.0.0.11
 /////////////////////////////////
 
 (function ()
@@ -1193,7 +1193,7 @@
             console.log(paymentobject);
             $charge.payment().store(paymentobject).success(function(data){
               console.log(data);
-              if(data.id!="")
+              if(data.error=="00000")
               {
                 notifications.toast("Successfully created the Payment Invoice with : "+data.id,"success");
                 //$mdToast.show({
@@ -1201,7 +1201,7 @@
                 //	hideDelay: 2000,
                 //	position: 'bottom right'
                 //});
-              }
+
               //$mdToast.show({
               //	template: '<md-toast class="md-toast-success" >Successfully added to Inventory!</md-toast>',
               //	hideDelay: 2000,
@@ -1215,6 +1215,14 @@
               $scope.refreshpage();
               toggleinnerView();
               //$window.location.href='#/paymentlist';
+              }
+              else if(data.error!="00000")
+              {
+                notifications.toast(data.error,"error");
+
+                console.log(data);
+                $scope.submitted=false;
+              }
 
             }).error(function(data){
               //debugger;
