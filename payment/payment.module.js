@@ -2,8 +2,8 @@
 // App : Payment
 // Owner  : Gihan Herath
 // Last changed date : 2016/11/02
-// Version : 6.0.0.11
-// Modified By : Kasun
+// Version : 6.0.0.13
+// Modified By : GihanHerath
 /////////////////////////////////
 
 (function ()
