@@ -6,6 +6,39 @@
     z-index: 9999;
   }
 
+  .carded-dashboard-list{
+    height: 200px;
+    max-height: 200px;
+    background: rgba(0,0,0,0.01);
+    md-list-item{
+      height: 48px;
+      min-height: 48px;
+      .md-list-item-inner{
+        text-align: right;
+      }
+      button{
+        height: 48px;
+        min-height: 48px;
+      }
+    }
+  }
+
+  .preloader-dot{
+    width: 40px;
+  }
+
+  .inv-list-header{
+    padding: 10px 16px;
+    background: #fafafa;
+    font-weight: 400;
+    color: #aaa;
+    font-size: 14px;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+    span:not(:first-child){
+      text-align: right;
+    }
+  }
+
   .bottom-fixed-bar{
     //position: absolute;
     //bottom: 0px;

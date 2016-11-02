@@ -1,8 +1,9 @@
 ////////////////////////////////
 // App : Payment
 // Owner  : Gihan Herath
-// Last changed date : 2016/11/01
-// Version : 6.0.0.8
+// Last changed date : 2016/11/02
+// Version : 6.0.0.10
+// Modified By : GihanHerath
 /////////////////////////////////
 
 (function ()
@@ -44,7 +45,7 @@
         msNavigationServiceProvider.saveItem('payment', {
             title    : 'payment',
             state    : 'app.payment',
-            weight   : 9
+            weight   : 4
         });
     }
 
