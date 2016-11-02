@@ -1,6 +1,6 @@
-<meta name="updatedBy" content="GihanHerath">
-<meta name="modifiedDate" content="26-10-2016">
-<meta name="version" content="6.0.0.6">
+<meta name="updatedBy" content="Kasun">
+<meta name="modifiedDate" content="2-11-2016">
+<meta name="version" content="6.0.0.7">
 <meta name="app" content="payment">
 <meta name="view" content="read-view.html">
 
@@ -16,21 +16,21 @@
                 <div class="invoice-date">{{vm.selectedPayment.paymentDate | parseDate | date: 'dd/MM/yyyy'}}</div>
 
                 <div layout="row" layout-align="space-between stretch" style="display: flex;">
-                    <div class="client" flex="30">
+                    <div class="client" flex>
                         <div class="invoice-number" layout="row" layout-align="start center">
-                            <span class="title">PAYMENT NO : </span>
-                            <span class="number">{{vm.selectedPayment.paymentNo}}</span>
+                            <span class="title" flex="30">PAYMENT NO </span>
+                            <span class="number">: {{vm.selectedPayment.paymentNo}}</span>
                         </div>
 
-                        <div class="invoice-type" layout="row" layout-align="start center">
-                             <span class="title">CUSTOMER : </span>
-                            <span class="number">{{vm.selectedPayment.customer}}</span>
+                        <div class="invoice-number" layout="row" layout-align="start center">
+                             <span class="title" flex="30">CUSTOMER </span>
+                            <span class="number">: {{vm.selectedPayment.customer}}</span>
                         </div>
 
                         <div class="due-date" layout="row" layout-align="start center">
-                            <span class="title">STATUS : </span>
-                            <span class="date" style="color: #05a3ec" ng-if="vm.selectedPayment.status=='Active'">{{vm.selectedPayment.status}}</span>
-                            <span class="date" style="color: #BD362F" ng-if="vm.selectedPayment.status=='Cancelled'">{{vm.selectedPayment.status}}</span>
+                            <span class="title" flex="30">STATUS </span>
+                            <span style="color: #05a3ec" ng-if="vm.selectedPayment.status=='Active'">: {{vm.selectedPayment.status}}</span>
+                            <span style="color: #BD362F" ng-if="vm.selectedPayment.status=='Cancelled'">: {{vm.selectedPayment.status}}</span>
                         </div>
 
                         <!--<md-button class="md-icon-button" aria-label="More" ng-hide="vm.selectedPayment.status=='Cancelled'">-->
@@ -49,8 +49,6 @@
                             <!--<div class="website">{{vm.selectedPayment.UserWebSite}}</div>-->
                         </div>
                     </div>
-
-                    <div flex></div>
 
                   <div class="issuer" ng-class="{ 'md-accent-bg': companyLogo == ''}" layout="row" layout-align="start center">
                     <table>
