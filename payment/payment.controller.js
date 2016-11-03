@@ -269,6 +269,10 @@
       $scope.content={};
       $scope.hideSearchMore=false;
 
+      $scope.getFirstName = function (val) {
+        return val.split(" ")[0];
+      };
+
       $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_GeneralAttributes","BaseCurrency").success(function(data) {
         $scope.BaseCurrency=data[0].RecordFieldData;
         console.log($scope.BaseCurrency);
