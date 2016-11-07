@@ -2,8 +2,8 @@
 // App : Payment
 // File : Payment Controller
 // Owner  : GihanHerath
-// Last changed date : 2016/11/02
-// Version : 6.0.0.11
+// Last changed date : 2016/11/04
+// Version : 6.0.0.12
 /////////////////////////////////
 
 (function ()
@@ -1149,7 +1149,7 @@
 
 
       $scope.submit = function () {
-        //if ($scope.editForm.$valid == true) {
+        if (vm.editForm.$valid == true) {
           //debugger;
           $scope.submitted=true;
           console.log("form validated");
@@ -1168,6 +1168,8 @@
               position: 'bottom right'
             });
             $scope.submitted=false;
+
+            vm.searchText="";
           }
           else
           {
@@ -1235,14 +1237,15 @@
             })
           }
 
-        //} else//This is done because the HTML simple validation might work and enter the submit, however the form can still be invalid
-        //{
-        //  $mdToast.show({
-        //    template: '<md-toast class="md-toast-error" >Please fill all the details- Payment method is empty!</md-toast>',
-        //    hideDelay: 2000,
-        //    position: 'bottom right'
-        //  });
-        //}
+        } else//This is done because the HTML simple validation might work and enter the submit, however the form can still be invalid
+        {
+          $mdToast.show({
+            template: '<md-toast class="md-toast-error" >Please fill all the details properly!</md-toast>',
+            hideDelay: 2000,
+            position: 'bottom right'
+          });
+          $scope.submitted=false;
+        }
 
         //$scope.submitted = true; // Disable the submit button until the form is submitted successfully to the database (ng-disabled)
 
