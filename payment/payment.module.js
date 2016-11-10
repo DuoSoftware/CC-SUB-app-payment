@@ -1,8 +1,8 @@
 ////////////////////////////////
 // App : Payment
 // Owner  : Gihan Herath
-// Last changed date : 2016/11/04
-// Version : 6.0.0.14
+// Last changed date : 2016/11/10
+// Version : 6.0.0.15
 // Modified By : GihanHerath
 /////////////////////////////////
 
@@ -31,11 +31,28 @@
                     }
                 },
                 resolve: {
-                    security: ['$q','mesentitlement', function($q,mesentitlement){
+                    security: ['$q','mesentitlement','$timeout','$rootScope','$state', function($q,mesentitlement,$timeout,$rootScope,$state){
                         var entitledStatesReturn = mesentitlement.stateDepResolver('payment');
 
                         if(entitledStatesReturn !== true){
                               return $q.reject("unauthorized");
+                        }
+                        else
+                        {
+                          //debugger;
+                          $timeout(function() {
+                            var firstLogin=localStorage.getItem("firstLogin");
+                            if(firstLogin==null ||firstLogin=="" || firstLogin==undefined) {
+                              console.log('Payment First Login null');
+                              //localStorage.removeItem('firstLogin');
+                              $state.go('app.settings', {}, {location: 'settings'});
+                              //return $q.reject("settings");
+                            }
+                            else
+                            {
+                              //localStorage.removeItem('firstLogin');
+                            }
+                          }, 50);
                         };
                     }]
                 },
