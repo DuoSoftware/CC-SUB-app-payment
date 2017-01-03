@@ -2,8 +2,8 @@
 // App : Payment
 // File : Payment Controller
 // Owner  : GihanHerath
-// Last changed date : 2016/11/04
-// Version : 6.0.0.12
+// Last changed date : 2017/01/02
+// Version : 6.0.0.13
 /////////////////////////////////
 
 (function ()
@@ -1162,11 +1162,11 @@
 
           if(selecteduser==null||selecteduser==""||$scope.content.paymentMethod==undefined)
           {
-            $mdToast.show({
-              template: '<md-toast class="md-toast-error" >Fill the necessary details!</md-toast>',
-              hideDelay: 2000,
-              position: 'bottom right'
-            });
+            //$mdToast.show({
+            //  template: '<md-toast class="md-toast-error" >Fill the necessary details!</md-toast>',
+            //  hideDelay: 2000,
+            //  position: 'top right'
+            //});
             $scope.submitted=false;
 
             vm.searchText="";
@@ -1239,11 +1239,11 @@
 
         } else//This is done because the HTML simple validation might work and enter the submit, however the form can still be invalid
         {
-          $mdToast.show({
-            template: '<md-toast class="md-toast-error" >Please fill all the details properly!</md-toast>',
-            hideDelay: 2000,
-            position: 'bottom right'
-          });
+          //$mdToast.show({
+          //  template: '<md-toast class="md-toast-error" >Please fill all the details properly!</md-toast>',
+          //  hideDelay: 2000,
+          //  position: 'bottom right'
+          //});
           $scope.submitted=false;
         }
 

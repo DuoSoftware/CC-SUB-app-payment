@@ -63,14 +63,14 @@
           {
             $scope.profilelist.push({
               display : obj.business_name,
-              value : {profilename : obj.business_name, profileId : obj.profileId, othername : obj.business_contact_name, profile_type : obj.profile_type}
+              value : {profilename : obj.business_name, profileId : obj.profileId, othername : obj.business_contact_name, profile_type : obj.profile_type,bill_addr : obj.bill_addr, category : obj.category, email : obj.email_addr}
             });
           }
           else if(obj.profile_type=='Individual')
           {
             $scope.profilelist.push({
               display : obj.first_name,
-              value : {profilename : obj.first_name, profileId : obj.profileId, othername : obj.last_name, profile_type : obj.profile_type}
+              value : {profilename : obj.first_name, profileId : obj.profileId, othername : obj.last_name, profile_type : obj.profile_type,bill_addr : obj.bill_addr, category : obj.category, email : obj.email_addr}
             });
           }
 
