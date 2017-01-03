@@ -1,6 +1,6 @@
 <meta name="updatedBy" content="GihanHerath">
-<meta name="modifiedDate" content="04-11-2016">
-<meta name="version" content="6.0.0.8">
+<meta name="modifiedDate" content="02-01-2017">
+<meta name="version" content="6.0.0.7">
 <meta name="app" content="payment">
 <meta name="view" content="payment.html">
 
@@ -404,9 +404,9 @@
                             <md-option value="Card">Credit/Debit Card</md-option>
                             <!--<md-option ng-repeat="profile in profilelist" ng-value="profile">{{profile.profilename}}</md-option>-->
                           </md-select>
-                          <div ng-messages="vm.editForm.paymentMethod.$error">
-                            <div ng-message="required">Please select the Payment Method!</div>
-                          </div>
+                          <!--<div ng-messages="vm.editForm.paymentMethod.$error">-->
+                            <!--<div ng-message="required">Please select the Payment Method!</div>-->
+                          <!--</div>-->
                         </md-input-container>
                         <md-input-container ng-show="content.paymentMethod=='Cheque'" class="md-block" flex-gt-sm>
                           <label>Cheque No</label>
