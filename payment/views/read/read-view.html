@@ -4,13 +4,14 @@
 <meta name="app" content="payment">
 <meta name="view" content="read-view.html">
 
+<md-progress-circular ng-hide="isReadLoaded" style="position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;opacity: 0.3;z-index: 9999"></md-progress-circular>
 <div id="payment-read" class="compact page-layout blank" layout="row">
     <div class="invoice-read-container" flex>
 
         <!-- INVOICE -->
         <div class="card md-whiteframe-8dp" layout="column" layout-align="center center">
 
-          <div class="inv-outline" md-whiteframe="2dp" layout="column">
+          <div class="inv-outline" md-whiteframe="2dp" layout="column" ng-class="{'page-setup-cover':isReadLoaded==false}">
 
             <div class="inv-read-header">
                 <div class="invoice-date">{{vm.selectedPayment.paymentDate | parseDate | date: 'dd/MM/yyyy'}}</div>
@@ -49,8 +50,7 @@
                             <!--<div class="website">{{vm.selectedPayment.UserWebSite}}</div>-->
                         </div>
                     </div>
-
-                  <div class="issuer" ng-class="{ 'md-accent-bg': companyLogo == ''}" layout="row" layout-align="start center">
+                    <div class="issuer" ng-class="{ 'md-accent-bg': companyLogo == ''}" layout="row" layout-align="start center" flex>
                     <table>
                       <tr>
                         <td>

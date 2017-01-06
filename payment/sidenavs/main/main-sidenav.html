@@ -34,21 +34,21 @@
 
         <md-button class="item" aria-label="inbox" ng-click="refreshpage()">
           <div layout="row" layout-align="start center">
-            <md-icon md-font-icon="icon-inbox" class="s16"></md-icon>
+            <img src="app/core/app_icons/payment_app_icon_black.png" class="sidenav-img-ico" alt=""/>
             <span class="title">All</span>
           </div>
         </md-button>
 
       <md-button class="item" aria-label="starred" ng-click="filterMainList('status','Active')">
         <div layout="row" layout-align="start center">
-          <md-icon md-font-icon="icon-star" class="s16"></md-icon>
+          <md-icon md-font-icon="icon-thumb-up" class="s16"></md-icon>
           <span class="title" flex>Active Payments</span>
         </div>
       </md-button>
 
         <md-button class="item" aria-label="starred" ng-click="filterMainList('status','Cancelled')">
             <div layout="row" layout-align="start center">
-                <md-icon md-font-icon="icon-star" class="s16"></md-icon>
+                <md-icon md-font-icon="icon-thumb-down" class="s16"></md-icon>
                 <span class="title" flex>Cancelled Payments</span>
             </div>
         </md-button>

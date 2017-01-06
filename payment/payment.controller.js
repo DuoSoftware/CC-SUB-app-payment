@@ -2,7 +2,7 @@
 // App : Payment
 // File : Payment Controller
 // Owner  : GihanHerath
-// Last changed date : 2017/01/02
+// Last changed date : 2017/01/04
 // Version : 6.0.0.13
 /////////////////////////////////
 
@@ -80,9 +80,11 @@
          *
          * @param product
          */
+        $scope.isReadLoaded = true;
         function selectPayment(payment)
         {
-            vm.selectedPayment = payment;
+          $scope.isReadLoaded = false;
+          vm.selectedPayment = payment;
             $scope.loadInvoiceByCustomerId(payment.guCustomerID);
 
             //var paymentNumber=payment.paymentNo.substr($scope.paymentPrefix.length);
@@ -105,9 +107,11 @@
                 vm.selectedPayment.UserContact=data[0].business_contact_no;
                 vm.selectedPayment.UserEmail=data[0].email_addr;
               }
+              $scope.isReadLoaded = true;
 
             }).error(function(data){
               console.log(data);
+              $scope.isReadLoaded = true;
             })
 
             $scope.showFilers=false;
@@ -713,8 +717,11 @@
       var filterList;
       $scope.filterMainList = function (filterBy,value){
         filterList = [];
+        vm.payments = [];
+        vm.searchMoreInit = true;
         var skipFilterList=0;
         var takeFilterList=50;
+        $scope.listLoaded = false;
         //debugger;
         $charge.payment().filter(filterBy, value, skipFilterList, takeFilterList, 'desc').success(function (data) {
           for(var i=0;i<data.length;i++)
@@ -753,6 +760,8 @@
         }).error(function (data) {
           vm.payments = [];
           vm.selectedPayment = null;
+          $scope.listLoaded = true;
+          vm.searchMoreInit = false;
         });
       }
 
@@ -790,16 +799,23 @@
             //tempList.push(data[i]);
           }
           skip += take;
-          $scope.loadFilterPaging(filterBy, value, skip, take);
+          $scope.loadFilterPaging(filterBy, value, skip, take,function () {
+            $scope.listLoaded = true;
+            vm.searchMoreInit = false;
+          });
         }).error(function (data) {
           if(filterList.length>0) {
             vm.payments = filterList;
             //$scope.openProduct(vm.products[0]);
+            $scope.listLoaded = true;
+            vm.searchMoreInit = false;
           }
           else
           {
             vm.payments=[];
             vm.selectedPayment=null;
+            $scope.listLoaded = true;
+            vm.searchMoreInit = false;
           }
         });
       }
@@ -970,7 +986,7 @@
         var printContents = document.getElementById(divName).innerHTML;
         var popupWin = window.open('', '_blank', 'width=1800,height=700');
         popupWin.document.open();
-        popupWin.document.write('<html><head><link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css"><link href="app/main/payment/views/read/print-view.css" rel="stylesheet" type="text/css"></head><body onload="window.print()">' + printContents + '</body></html>');
+        popupWin.document.write('<html><head><link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css"><link href="app/main/payment/views/read/print-view.css" rel="stylesheet" type="text/css"></head><body onload="window.print()">' + printContents + '<script src="views/read/jquery.min.js"></script><script>$(document).ready(function (){window.print()});</script></body></html>');
         popupWin.document.close();
       }
 
@@ -1165,7 +1181,7 @@
             //$mdToast.show({
             //  template: '<md-toast class="md-toast-error" >Fill the necessary details!</md-toast>',
             //  hideDelay: 2000,
-            //  position: 'top right'
+            //  position: 'bottom right'
             //});
             $scope.submitted=false;
 

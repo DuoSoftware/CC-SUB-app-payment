@@ -359,6 +359,7 @@
       $charge.document().sendMail(req).success(function(data) {
         var parsedData=JSON.parse(data);
         notifications.toast(parsedData.data.message, "success");
+        closeDialog();
       }).error(function (data) {
         var parsedData=JSON.parse(data);
         notifications.toast(parsedData.data.message, "error");
