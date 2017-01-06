@@ -1,8 +1,8 @@
 ////////////////////////////////
 // App : Payment
 // Owner  : Gihan Herath
-// Last changed date : 2017/01/02
-// Version : 6.0.0.17
+// Last changed date : 2017/01/04
+// Version : 6.0.0.18
 // Modified By : GihanHerath
 /////////////////////////////////
 
@@ -44,6 +44,7 @@
                             var firstLogin=localStorage.getItem("firstLogin");
                             if(firstLogin==null ||firstLogin=="" || firstLogin==undefined) {
                               console.log('Payment First Login null');
+                              $rootScope.firstLoginDitected = true;
                               //localStorage.removeItem('firstLogin');
                               $state.go('app.settings', {}, {location: 'settings'});
                               //return $q.reject("settings");

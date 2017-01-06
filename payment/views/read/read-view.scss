@@ -22,11 +22,36 @@
         overflow: hidden;
         background: #FFFFFF;
 
+        .inv-outline.page-setup-cover {
+          pointer-events: none;
+          height: 100%;
+          -webkit-filter: blur(5px);
+          -moz-filter: blur(5px);
+          -o-filter: blur(5px);
+          -ms-filter: blur(5px);
+          filter: blur(5px);
+          -webkit-transition: filter 0.5s;
+          -moz-transition: filter 0.5s;
+          -ms-transition: filter 0.5s;
+          -o-transition: filter 0.5s;
+          transition: filter 0.5s;
+        }
+
         .inv-outline {
-          padding: 20px;
+          padding: 20px!important;
           min-width: 830px;
           max-width: 830px;
           min-height: 1200px;
+          -webkit-filter: none;
+          -moz-filter: none;
+          -o-filter: none;
+          -ms-filter: none;
+          filter: none;
+          -webkit-transition: filter 0.5s;
+          -moz-transition: filter 0.5s;
+          -ms-transition: filter 0.5s;
+          -o-transition: filter 0.5s;
+          transition: filter 0.5s;
 
           .inv-read-header {
 
