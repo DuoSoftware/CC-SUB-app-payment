@@ -1255,7 +1255,9 @@
 
         } else//This is done because the HTML simple validation might work and enter the submit, however the form can still be invalid
         {
-          //$mdToast.show({
+            angular.element(document.querySelector('#paymentForm')).find('.ng-invalid:visible:first').focus();
+
+            //$mdToast.show({
           //  template: '<md-toast class="md-toast-error" >Please fill all the details properly!</md-toast>',
           //  hideDelay: 2000,
           //  position: 'bottom right'

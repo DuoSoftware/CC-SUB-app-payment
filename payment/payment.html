@@ -270,19 +270,14 @@
             <!-- / CONTENT TOOLBAR -->
 
             <!-- CONTENT WRAPPER -->
-            <div class="content-wrapper" ms-scroll flex>
+            <div class="content-wrapper" ms-scroll flex style="padding-bottom: 60px">
 
               <md-content>
-                <form name="vm.editForm" ng-submit="submit()">
+                <form name="vm.editForm" id="paymentForm" ng-submit="submit()" novalidate>
                   <!--<md-content flex layout-padding> style="height:600px;overflow-y: scroll;"-->
                   <div class="body-content-wrap">
 
-                    <div layout-gt-sm="row">
-                      <label>General Detail
-                      </label>
-                    </div>
-
-                    <div layout-gt-sm="row" class="rel">
+                    <div layout-gt-sm="row" class="rel" flex="50" style="margin-bottom: 50px">
                       <div layout="row" layout-align="center center" class="preloader-dot-auto" ng-show="vm.isAutoDisabled" >
                         <img src="assets/images/142.gif" alt=""/>
                       </div>
@@ -302,10 +297,14 @@
                                        md-items="item in vm.querySearch(vm.searchText)"
                                        md-item-text="item.display"
                                        md-floating-label="Profile"
-                                       md-min-length="" style="height: 65px;">
+                                       md-min-length=""
+                                       autocomplete-validator style="height: 65px;">
                         <md-item-template>
                           <span md-highlight-text="vm.searchText">{{item.display+" : "+item.value.othername}}</span>
                         </md-item-template>
+                          <div ng-messages="vm.editForm.autocompleteField.$error">
+                              <div ng-message="invalidInput" ng-if="!vm.editForm.autocompleteField.$error.required">Please select a valid profile</div>
+                          </div>
                       </md-autocomplete>
 
                     </div>
@@ -319,7 +318,6 @@
                       <md-input-container class="md-block p-l-50" flex-gt-sm>
                         <label>Currency</label>
                         <md-select ng-required="false" name="currency" ng-change="convertCurrency(content.preferredcurrency)" ng-model="content.preferredcurrency">
-                          <md-divider></md-divider>
                           <md-option ng-value="BaseCurrency">{{BaseCurrency}}</md-option>
                           <md-option ng-hide="currency==BaseCurrency" ng-repeat="currency in prefferedCurrencies" ng-value="currency">{{currency}}</md-option>
                         </md-select>
@@ -334,11 +332,6 @@
                   </div>
 
                   <div class="body-content-wrap">
-                    <!--</div>-->
-
-                    <div layout-gt-sm="row" style="margin-bottom: 20px;">
-                      <label>Invoice Details</label>
-                    </div>
 
                     <div style="border-radius: 3px;" md-whiteframe="1dp">
                       <div class="inv-list-header" layout="row" flex>
@@ -388,7 +381,7 @@
                         <label>Payment Amount</label>
                         <input ng-required="true" minlength="null" ng-maxlength="35" type="number" name="amount" min="0" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" style="text-align:right;" ng-model="content.amount">
                         <div ng-messages="vm.editForm.amount.$error">
-                          <div ng-message="maxlength">Amount cannot be longer than 35 characters</div>
+                          <div ng-message="maxlength">Amount must be 1-35 characters</div>
                         </div>
                       </md-input-container>
 
@@ -408,7 +401,7 @@
                             <!--<div ng-message="required">Please select the Payment Method!</div>-->
                           <!--</div>-->
                         </md-input-container>
-                        <md-input-container ng-show="content.paymentMethod=='Cheque'" class="md-block" flex-gt-sm>
+                        <md-input-container ng-show="content.paymentMethod=='Cheque'" class="md-block" flex-gt-sm style="margin-top: 30px">
                           <label>Cheque No</label>
                           <input ng-required="false" minlength="null" md-maxlength="null" type="" name="chequeNo" ng-pattern="" ng-model="content.chequeNo">
                         </md-input-container>
@@ -421,10 +414,6 @@
 
 
                   <div class="body-content-wrap">
-
-                    <div layout-gt-sm="row">
-                      <label>Other</label>
-                    </div>
 
                     <div layout-gt-sm="row" ng-hide="true">
                       <div layout-gt-sm="row">
@@ -440,19 +429,11 @@
                         <label>Notes</label>
                         <input ng-required="false" minlength="null" ng-maxlength="250" type="" name="note" ng-pattern="" ng-model="content.note">
                         <div ng-messages="vm.editForm.note.$error">
-                          <div ng-message="maxlength">Note cannot be longer than 250 characters</div>
+                          <div ng-message="maxlength">Note must be 1-250 characters</div>
                         </div>
                       </md-input-container>
                     </div>
 
-                  </div>
-                  <div layout="row" layout-align="space-between center" class="bottom-fixed-bar layout-align-space-between-center layout-row">
-                    <div layout="row"></div>
-
-                    <div layout="row" class="layout-row">
-                      <md-button ng-click="clearform();"">Clear</md-button>
-                      <md-button ng-disabled="submitted" type="submit" class="md-raised md-warn">Submit</md-button>
-                    </div>
                   </div>
 
 
@@ -472,6 +453,7 @@
 
                 </form>
               </md-content>
+
                 <!--<md-content style="width:100%;height: 100%" ms-scroll>-->
                   <!--<form name="editForm" ng-submit="submit()">-->
                     <!--<div class="section_padding" style="background-color: #E5ECEF">-->
@@ -853,10 +835,18 @@
                   <!--</form>-->
                 <!--</md-content>-->
             </div>
-            <!-- / CONTENT WRAPPER -->
+            <div layout="row" layout-align="space-between center" flex style="position:absolute;z-index:9999;bottom: 0;background-color: #ffffff;width: 100%;" md-whiteframe="8dp">
+                <div layout="row"></div>
 
+                <div layout="row" class="layout-row">
+                    <md-button ng-click="clearform();"">Clear</md-button>
+                    <md-button ng-disabled="submitted" type="submit" form="paymentForm" class="md-raised md-warn">Submit</md-button>
+                </div>
+            </div>
+            <!-- / CONTENT WRAPPER -->
         </div>
         <!-- / CONTENT CARD -->
+
     </div>
 
     <!-- / CENTER -->

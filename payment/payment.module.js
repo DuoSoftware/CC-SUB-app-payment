@@ -1,9 +1,9 @@
 ////////////////////////////////
 // App : Payment
 // Owner  : Gihan Herath
-// Last changed date : 2017/01/04
-// Version : 6.0.0.18
-// Modified By : GihanHerath
+// Last changed date : 2017/01/06
+// Version : 6.0.0.19
+// Modified By : Kasun
 /////////////////////////////////
 
 (function ()
