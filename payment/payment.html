@@ -459,12 +459,6 @@
                         <md-card-content md-whiteframe="1dp">
 
                             <div layout="row">
-                                <md-input-container flex="30">
-                                    <label>Payment Date</label>
-                                    <md-datepicker ng-model="content.paymentDate" ng-init="content.paymentDate=today;"></md-datepicker>
-                                </md-input-container>
-
-                                <div flex="5"></div>
                                 <div layout="row" flex="30">
                                     <div layout="row" layout-align="center center" class="preloader-dot-auto" ng-show="vm.isAutoDisabled" >
                                         <img src="assets/images/142.gif" alt=""/>
@@ -495,6 +489,13 @@
                                         </div>
                                     </md-autocomplete>
                                 </div>
+
+                                <div flex="5"></div>
+
+                                <md-input-container flex="30">
+                                    <label>Payment Date</label>
+                                    <md-datepicker ng-model="content.paymentDate" ng-init="content.paymentDate=today;"></md-datepicker>
+                                </md-input-container>
                             </div>
                             <div layout="column">
                                 <div md-whiteframe="1dp" flex>
