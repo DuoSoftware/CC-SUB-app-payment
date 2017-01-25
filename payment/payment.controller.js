@@ -1153,6 +1153,7 @@
       $scope.clearform = function (){
         vm.editForm.$setPristine();
         vm.editForm.$setUntouched();
+
         $scope.customer_supplier.customer="";
         //$scope.content.paymentDate=moment(new Date().toISOString()).format('LL');
         $scope.content.paymentDate=new Date();
@@ -1170,8 +1171,10 @@
         document.body.scrollTop = document.documentElement.scrollTop = 0;
         $scope.submitted=false;
         vm.isAutoDisabled = false;
+          $timeout(function () {
+              vm.isLoaded = true;
+          },0);
         $scope.searchMre = false;
-        vm.isLoaded = true;
       }
 
       $scope.refreshpage = function(){

@@ -456,7 +456,7 @@
                                 <md-icon md-font-icon="icon-cog"></md-icon> <h3>General Details</h3>
                             </div>
                         </md-card-title>
-                        <md-card-content>
+                        <md-card-content md-whiteframe="1dp">
 
                             <div layout="row">
                                 <md-input-container flex="30">
@@ -465,37 +465,6 @@
                                 </md-input-container>
 
                                 <div flex="5"></div>
-
-                                <md-input-container flex="30">
-                                    <label>Currency</label>
-                                    <md-select ng-required="false" name="currency" ng-change="convertCurrency(content.preferredcurrency)" ng-model="content.preferredcurrency">
-                                        <md-option ng-value="BaseCurrency">{{BaseCurrency}}</md-option>
-                                        <md-option ng-hide="currency==BaseCurrency" ng-repeat="currency in prefferedCurrencies" ng-value="currency">{{currency}}</md-option>
-                                    </md-select>
-                                </md-input-container>
-
-                                <div flex="5"></div>
-
-                                <div layout="row" layout-align="start center" flex="30" class="state-capsule">
-                                    <div layout="row">
-                                        <span>Currency Convert Rate</span>
-                                        <span>{{currencyRate}}</span>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </md-card-content>
-                    </md-card>
-
-                    <md-card flex class="input-block-gen">
-                        <md-card-title>
-                            <div layout="row" layout-align="start center">
-                                <md-icon md-font-icon="icon-account"></md-icon> <h3>Profile Details</h3>
-                            </div>
-                        </md-card-title>
-                        <md-card-content md-whiteframe="1dp">
-                            <div layout="row">
                                 <div layout="row" flex="30">
                                     <div layout="row" layout-align="center center" class="preloader-dot-auto" ng-show="vm.isAutoDisabled" >
                                         <img src="assets/images/142.gif" alt=""/>
@@ -546,21 +515,22 @@
                                         </div>
 
 
-                                            <div layout="row" class="payment-list-item" ng-repeat="item in invoicelist" ng-click="null">
-                                                <span flex="10" style="text-align: left">{{item.invoiceNo}}</span>
-                                                <span flex>{{item.invoiceAmount| isoCurrency:content.preferredcurrency}}</span>
+                                        <div layout="row" class="payment-list-item" ng-repeat="item in invoicelist" ng-if="invoicelist.length > 0 && customer_supplier.customer != null">
+                                            <span flex="10" style="text-align: left">{{item.invoiceNo}}</span>
+                                            <span flex>{{item.invoiceAmount| isoCurrency:content.preferredcurrency}}</span>
                                             <span flex>
                                                 <label ng-if="item.adjustmenttype=='0'">{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
                                                   <label ng-if="item.adjustmenttype=='1'">-{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
                                                   <label ng-if="item.adjustmenttype=='2'">+{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
                                             </span>
-                                                <span flex>{{item.paidAmount| isoCurrency:content.preferredcurrency}}</span>
-                                                <span flex>{{item.balancepayment| isoCurrency:content.preferredcurrency}}</span>
-                                            </div>
+                                            <span flex>{{item.paidAmount| isoCurrency:content.preferredcurrency}}</span>
+                                            <span flex>{{item.balancepayment| isoCurrency:content.preferredcurrency}}</span>
+                                        </div>
 
                                     </md-content>
                                 </div>
                             </div>
+
                         </md-card-content>
                         <md-card-actions>
                             <div layout="row" layout-align="start start" class="product-sub-block" style="padding-bottom: 0px">
@@ -583,6 +553,24 @@
                             </div>
                         </md-card-title>
                         <md-card-content>
+                            <div layout="row">
+                                <md-input-container flex="30">
+                                    <label>Currency</label>
+                                    <md-select ng-required="false" name="currency" ng-change="convertCurrency(content.preferredcurrency)" ng-model="content.preferredcurrency">
+                                        <md-option ng-value="BaseCurrency">{{BaseCurrency}}</md-option>
+                                        <md-option ng-hide="currency==BaseCurrency" ng-repeat="currency in prefferedCurrencies" ng-value="currency">{{currency}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                                <div flex="5"></div>
+
+                                <div layout="row" layout-align="start center" flex="30" class="state-capsule">
+                                    <div layout="row">
+                                        <span>Currency Convert Rate</span>
+                                        <span>{{currencyRate}}</span>
+                                    </div>
+                                </div>
+                            </div>
                             <div layout="row">
                                 <md-input-container flex="30">
                                     <label>Payment Amount</label>
