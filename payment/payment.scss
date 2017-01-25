@@ -113,10 +113,10 @@
           span{
             md-icon{
               font-size: 19px;
-              color: #ddd;
+              color: rgba(76, 76, 76, 0.37);
             }
             font-size: 13px;
-            color: #ddd;
+            color: rgba(76, 76, 76, 0.21);
           }
         }
         .payment-list-item{
@@ -187,7 +187,7 @@
     font-weight: 400;
     color: #aaa;
     font-size: 14px;
-    border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+   // border-bottom: solid 1px rgba(0, 0, 0, 0.12);
     span:not(:first-child){
       text-align: right;
     }
