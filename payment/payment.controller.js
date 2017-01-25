@@ -19,6 +19,7 @@
     {
         var vm = this;
 
+
         vm.appInnerState = "default";
         vm.pageTitle="Create New";
         vm.checked = [];
@@ -54,7 +55,7 @@
         vm.loadByKeyword = $scope.loadByKeywordPayment;
 
         $scope.showFilers=true;
-
+        $scope.currencySample='';
         //////////
 
         // Watch screen size to activate responsive read pane
@@ -255,9 +256,29 @@
                 vm.pageTitle="View Payments";
                 $scope.showFilers=false;
             }else{
-                vm.appInnerState = "default";
-                vm.pageTitle="Create New";
-                $scope.showFilers=true;
+                if(vm.editForm.$dirty ){
+                    var confirm = $mdDialog.confirm()
+                        .title('Are you sure?')
+                        .textContent('Fields have changed and you might have unsaved data. Are you sure you want to leave this page?')
+                        .ariaLabel('Are you sure?')
+                        .targetEvent()
+                        .ok('Yes')
+                        .cancel('Stay');
+
+                    $mdDialog.show(confirm).then(function() {
+                        vm.editForm.$pristine = false;
+                        vm.editForm.$dirty = false;
+                        $scope.clearform();
+                        vm.appInnerState = "default";
+                        vm.pageTitle="Create New";
+                        $scope.showFilers=true;
+                    }, function() {
+                    });
+                }else{
+                    vm.appInnerState = "default";
+                    vm.pageTitle="Create New";
+                    $scope.showFilers=true;
+                }
             }
         }
 
@@ -308,7 +329,7 @@
       })
 
       $charge.commondata().getDuobaseValuesByTableName("CTS_FooterAttributes").success(function(data) {
-        debugger;
+
         $scope.FooterData=data;
         $scope.FooterGreeting=data[0].RecordFieldData;
         $scope.FooterDisclaimer=data[1].RecordFieldData!=""?atob(data[1].RecordFieldData):"";
@@ -353,7 +374,7 @@
 
                 var paymentNum=$filter('numberFixedLen')(data[i].paymentNo,$scope.lenPrefixPayment);
                 data[i].paymentNo=$scope.paymentPrefix+paymentNum;
-                //debugger;
+                //
                 var insertedCurrency=data[i].currency;
                 var insertedrate=1;
                 if(data[i].rate!=null||data[i].rate!=""||data[i].rate!=undefined)
@@ -381,7 +402,7 @@
               vm.payments=$scope.items;
               $scope.listLoaded = true;
               vm.searchMoreInit = false;
-              debugger;
+
 
               $scope.loading = false;
               $scope.isLoading = false;
@@ -418,7 +439,7 @@
       var tempList;
       $scope.loadByKeywordPayment= function (keyword,length) {
         if($scope.items.length==100) {
-          //debugger;
+          //
           if(length==undefined)
           {
             keyword="undefined";
@@ -448,7 +469,7 @@
           }
           if (keyword.length == searchLength) {
             console.log(keyword);
-            //debugger;
+            //
             skipPaymentSearch = 0;
             takePaymentSearch = 100;
             tempList = [];
@@ -459,7 +480,7 @@
 
                 var paymentNum=$filter('numberFixedLen')(data[i].paymentNo,$scope.lenPrefixPayment);
                 data[i].paymentNo=$scope.paymentPrefix+paymentNum;
-                //debugger;
+                //
                 var insertedCurrency=data[i].currency;
                 var insertedrate=1;
                 if(data[i].rate!=null||data[i].rate!=""||data[i].rate!=undefined)
@@ -520,10 +541,10 @@
       //var autoElem = angular.element('#invoice-auto');
       $scope.searchMre=false;
       $scope.loadProfileByKeyword= function (keyword) {
-        //debugger;
+        //
         $scope.waitForSearchMoreKeyword=keyword;
         if(!$scope.searchMre) {
-          debugger;
+
           if ($scope.profilelist.length == $scope.searchFilterLength) {
             if (keyword != undefined) {
               if (keyword.length == 3) {
@@ -567,14 +588,14 @@
                     document.querySelector('#acProfileIdPayment').focus();
                   },0);
                   //autoElem.empty();
-                  //debugger;
+                  //
                   //vm.products = [];
                   //vm.selectedProduct = null;
                 });
               }
               else if(keyword.length>3)
               {
-                //debugger;
+                //
                 skip = 0;
                 take = 10;
                 tempProfileList = [];
@@ -600,7 +621,7 @@
                   }
                   $scope.filteredUsers = tempProfileList;
                   vm.isAutoDisabled = false;
-                  //debugger;
+                  //
                   setTimeout(function(){
                     document.querySelector('#acProfileIdPayment').focus();
                   },0);
@@ -635,7 +656,7 @@
 
 
       $scope.toggleProfileSearchMre= function (ev) {
-        //debugger;
+        //
         if (ev.keyCode === 8) {
           $timeout.cancel($scope.waitForSearchMore);
           $scope.waitForSearchMore = $timeout(function myFunction() {
@@ -660,7 +681,7 @@
 
             var paymentNum=$filter('numberFixedLen')(data[i].paymentNo,$scope.lenPrefixPayment);
             data[i].paymentNo=$scope.paymentPrefix+paymentNum;
-            //debugger;
+            //
             var insertedCurrency=data[i].currency;
             var insertedrate=1;
             if(data[i].rate!=null||data[i].rate!=""||data[i].rate!=undefined)
@@ -701,7 +722,7 @@
 
       $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_CompanyAttributes","CompanyLogo").success(function(data)
       {
-        //debugger;
+        //
         console.log(data);
         $scope.logourl=data[0].RecordFieldData;
 
@@ -722,7 +743,7 @@
         var skipFilterList=0;
         var takeFilterList=50;
         $scope.listLoaded = false;
-        //debugger;
+        //
         $charge.payment().filter(filterBy, value, skipFilterList, takeFilterList, 'desc').success(function (data) {
           for(var i=0;i<data.length;i++)
           {
@@ -731,7 +752,7 @@
 
             var paymentNum=$filter('numberFixedLen')(data[i].paymentNo,$scope.lenPrefixPayment);
             data[i].paymentNo=$scope.paymentPrefix+paymentNum;
-            //debugger;
+            //
             var insertedCurrency=data[i].currency;
             var insertedrate=1;
             if(data[i].rate!=null||data[i].rate!=""||data[i].rate!=undefined)
@@ -774,7 +795,7 @@
 
             var paymentNum=$filter('numberFixedLen')(data[i].paymentNo,$scope.lenPrefixPayment);
             data[i].paymentNo=$scope.paymentPrefix+paymentNum;
-            //debugger;
+            //
             var insertedCurrency=data[i].currency;
             var insertedrate=1;
             if(data[i].rate!=null||data[i].rate!=""||data[i].rate!=undefined)
@@ -823,7 +844,7 @@
       $scope.editlistitem = function (item) {
 
         $scope.editOff = true;
-        //debugger;
+        //
         $scope.DivClassName = 'flex-40';
 
         for (var i = 0; i < $scope.items.length; i++) {
@@ -861,7 +882,7 @@
       //  var invoicePrefix=data[0];
       //  $scope.prefixInvoice=invoicePrefix!=""?invoicePrefix.RecordFieldData:"";
         $scope.prefixInvoice=localStorage.getItem("invoicePrefix");
-      //debugger;
+      //
       //}).error(function(data) {
       //  console.log(data);
       //  $scope.prefixInvoice="";
@@ -877,7 +898,7 @@
 
       $scope.loadInvoiceByCustomerId = function (customerId)
       {
-        //debugger;
+        //
         $scope.invoicePrintlist=[];
 
         var cusId=customerId;
@@ -912,7 +933,7 @@
       {
         $charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_CompanyAttributes","CompanyLogo").success(function(data)
         {
-          //debugger;
+          //
           console.log(data);
           $scope.logourl=data[0].RecordFieldData;
 
@@ -1004,7 +1025,7 @@
           },
           fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
         })
-        debugger;
+
 
       }
 
@@ -1130,8 +1151,8 @@
       //$scope.content.preferredcurrency=$scope.BaseCurrency;
 
       $scope.clearform = function (){
-        //$scope.editForm.$setPristine();
-        //$scope.editForm.$setUntouched();
+        vm.editForm.$setPristine();
+        vm.editForm.$setUntouched();
         $scope.customer_supplier.customer="";
         //$scope.content.paymentDate=moment(new Date().toISOString()).format('LL');
         $scope.content.paymentDate=new Date();
@@ -1150,6 +1171,7 @@
         $scope.submitted=false;
         vm.isAutoDisabled = false;
         $scope.searchMre = false;
+        vm.isLoaded = true;
       }
 
       $scope.refreshpage = function(){
@@ -1166,7 +1188,7 @@
 
       $scope.submit = function () {
         if (vm.editForm.$valid == true) {
-          //debugger;
+          //
           $scope.submitted=true;
           console.log("form validated");
           var productitems=[];
@@ -1247,7 +1269,7 @@
               }
 
             }).error(function(data){
-              //debugger;
+              //
               console.log(data);
               $scope.submitted=false;
             })
@@ -1401,7 +1423,7 @@
 
       $scope.convertCurrency = function(preferredCurrency)
       {
-        debugger;
+
         if($scope.BaseCurrency==preferredCurrency)
         {
           $scope.selectedCurrency = $scope.BaseCurrency;
@@ -1449,7 +1471,7 @@
           //$charge.currency().calcCurrency($scope.BaseCurrency+"_"+preferredCurrency).success(function(data)
           $charge.currency().calcCurrency(1,$scope.BaseCurrency,preferredCurrency).success(function(data)
           {
-            //debugger;
+            //
             //var el = document.createElement( 'html' );
             //el.innerHTML = data;
             //
@@ -1524,31 +1546,31 @@
       //
       ////this function fetches a random text and adds it to array
       //$scope.more = function(){
-      //  //debugger;
+      //  //
       //  //$scope.spinnerInvoice=true;
       //  $charge.invoice().all(skip,take,"desc").success(function(data) {
-      //    //debugger;
+      //    //
       //    if(data.length<=take)
       //      $scope.lastSet=true;
       //      data.forEach(function(inv){
-      //        //debugger;
+      //        //
       //        var accountID=inv.guAccountID;
       //        var invoiceDate=moment(inv.invoiceDate).format('LL');
-      //        //debugger;
+      //        //
       //
       //        var user = $scope.getUserByID(accountID);
-      //        //debugger;
+      //        //
       //        //while(user != undefined)
       //        //{
-      //        //debugger;
+      //        //
       //        var invoice={};
-      //        //debugger;
+      //        //
       //        if(user!=null) {
       //          invoice.person_name = user.profilename;
       //          invoice.othername=user.othername;
       //          invoice.email=user.email;
       //        }
-      //        //debugger;
+      //        //
       //        invoice.invoice_type = inv.invoiceType;
       //
       //        invoice.code=inv.invoiceNo;
@@ -1569,9 +1591,9 @@
       //
       //      });
       //
-      //      //debugger;
+      //      //
       //      for (var i = 0; i < $scope.invoices.length; i++) {
-      //        //debugger;
+      //        //
       //        if ($scope.invoices[i].status == "Paid") {
       //          $scope.invoices[i].StatusColor = "green";
       //        } else if ($scope.invoices[i].status == "Partial Paid") {
@@ -1587,10 +1609,10 @@
       //      }
       //    vm.invoices=$scope.invoices;
       //    vm.selectedInvoice = vm.invoices[0];
-      //      //debugger;
+      //      //
       //      //skip += take;
       //  }).error(function(data) {
-      //    //debugger;
+      //    //
       //    $scope.lastSet=true;
       //  })
       //};
@@ -1598,7 +1620,7 @@
       //
       //$charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_InvoiceAttributes","InvoicePrefix").success(function(data) {
       //  invoicePrefix=data[0];
-      //  //debugger;
+      //  //
       //}).error(function(data) {
       //  console.log(data);
       //})
@@ -1613,17 +1635,17 @@
       //
       //
       //$scope.loadmore = function(take){
-      //  debugger;
+      //
       //  $scope.spinnerInvoice=true;
       //  $charge.invoice().all(skip,take,"desc").success(function(data) {
-      //    //debugger;
+      //    //
       //    if(data.length<take)
       //      $scope.lastSet=true;
       //    data.forEach(function(inv){
-      //      //debugger;
+      //      //
       //      var accountID=inv.guAccountID;
       //      var invoiceDate=moment(inv.invoiceDate).format('LL');
-      //      //debugger;
+      //      //
       //
       //      var user = $scope.getUserByID(accountID);
       //      var invoice={};
@@ -1664,7 +1686,7 @@
       //
       //  }).error(function(data) {
       //    //response=data;
-      //    //debugger;
+      //    //
       //    var da=$scope.invoices;
       //    $scope.lastSet=true;
       //    $scope.spinnerInvoice=false;
@@ -1726,13 +1748,13 @@
       //$scope.editOff = true;
       //$scope.openInvoiceLst = function(invoice)
       //{
-      //  //debugger;
+      //  //
       //  //all event false
       //  $scope.spinnerInvoice=true;
       //
       //  $charge.invoice().getByID(invoice.code).success(function(data) {
       //
-      //    //debugger;
+      //    //
       //    console.log(data);
       //    $scope.invProducts=[];
       //    var invoiceDetails=data[0].invoiceDetails;
@@ -1754,7 +1776,7 @@
       //    $scope.selectedInvoice.discAmt=data[0].discAmt*exchangeRate;
       //    $scope.selectedInvoice.invoiceNo=prefixInvoice;
       //    //$scope.selectedInvoice.code=parseFloat($scope.selectedInvoice.code);
-      //    //debugger;
+      //    //
       //    $scope.selectedInvoice.additionalcharge=data[0].additionalcharge*exchangeRate;
       //    $scope.selectedInvoice.invoiceAmount=data[0].invoiceAmount*exchangeRate;
       //    $scope.selectedInvoice.tax=data[0].tax*exchangeRate;
@@ -1763,9 +1785,9 @@
       //    $scope.selectedInvoice.currency=data[0].currency;
       //    $scope.selectedInvoice.rate=exchangeRate;
       //
-      //    //debugger;
+      //    //
       //    invoiceDetails.forEach(function(inv){
-      //      //debugger;
+      //      //
       //      //productName=$scope.getProductByID(inv.guItemID);
       //      var currentProduct = $filter('filter')($scope.invProductList, { productId: inv.guItemID })[0];
       //      $scope.invProducts.push({
@@ -1775,7 +1797,7 @@
       //        amount: inv.totalPrice*exchangeRate
       //      });
       //    });
-      //    //debugger;
+      //    //
       //
       //
       //    $scope.viewCount=1;
@@ -1804,7 +1826,7 @@
       //
       //$scope.loadAllProducts=function()
       //{
-      //  //debugger;
+      //  //
       //  $scope.spinnerInvoice=true;
       //  var product=$productHandler.getClient().LoadProduct().onComplete(function(data)
       //  {
@@ -1818,7 +1840,7 @@
       //
       //$scope.getUserByID=function(id)
       //{
-      //  //debugger;
+      //  //
       //  var users=$scope.users;
       //  var profileID=id;
       //  var currentUser={};
@@ -1829,7 +1851,7 @@
       //
       //$scope.getProductByID=function(id)
       //{
-      //  //debugger;
+      //  //
       //  var count=0;
       //  var isAvailable=false;
       //  var products=$scope.invProductList;
@@ -1850,20 +1872,20 @@
       //  var productName = products.map(function(product){
       //    if(product.productId==productID) {
       //      isAvailable=true;
-      //      //debugger;
+      //      //
       //      return product;
       //    }
       //    if(!isAvailable)
       //      count++;
       //
       //  });
-      //  //debugger;
+      //  //
       //  return productName[count].product_name;
       //}
       //
       //$scope.GetAddress=function(name)
       //{
-      //  //debugger;
+      //  //
       //  var users=$scope.users;
       //  var addr;
       //  var selectedName=name;

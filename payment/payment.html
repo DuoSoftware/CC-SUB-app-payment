@@ -12,7 +12,6 @@
 
     <!-- SIDENAV -->
     <md-sidenav class="sidenav" md-is-locked-open="$mdMedia('gt-md')" md-component-id="main-sidenav"
-
                 ng-include="'app/main/payment/sidenavs/main/main-sidenav.html'" ms-scroll ms-sidenav-helper>
     </md-sidenav>
     <!-- / SIDENAV -->
@@ -158,8 +157,6 @@
 
     <!-- CENTER -->
     <div ng-switch-when="add" class="center" layout="column" flex>
-        <!-- CONTENT HEADER -->
-        <!-- / CONTENT HEADER -->
 
         <!-- CONTENT CARD -->
         <div class="content-card" layout="column" flex>
@@ -270,189 +267,373 @@
             <!-- / CONTENT TOOLBAR -->
 
             <!-- CONTENT WRAPPER -->
-            <div class="content-wrapper" ms-scroll flex style="padding-bottom: 60px">
+            <md-content class="content-wrapper" ms-scroll flex>
 
-              <md-content>
-                <form name="vm.editForm" id="paymentForm" ng-submit="submit()" novalidate>
-                  <!--<md-content flex layout-padding> style="height:600px;overflow-y: scroll;"-->
-                  <div class="body-content-wrap">
+                    <!--<form name="vm.editForm" id="paymentForm" ng-submit="submit()" novalidate>-->
+                      <!--&lt;!&ndash;<md-content flex layout-padding> style="height:600px;overflow-y: scroll;"&ndash;&gt;-->
+                      <!--<div class="body-content-wrap">-->
 
-                    <div layout-gt-sm="row" class="rel" flex="50" style="margin-bottom: 50px">
-                      <div layout="row" layout-align="center center" class="preloader-dot-auto" ng-show="vm.isAutoDisabled" >
-                        <img src="assets/images/142.gif" alt=""/>
-                      </div>
-                      <md-autocomplete flex
-                                       md-input-id="acProfileIdPayment"
-                                       ng-keydown="toggleProfileSearchMre($event)"
-                                       ng-required="true"
-                                       md-select-on-match
-                                       ng-keypress="enter($event)"
-                                       ng-disabled="vm.isAutoDisabled"
-                                       md-input-name="autocompleteField"
-                                       md-no-cache="vm.noCache"
-                                       md-selected-item="customer_supplier.customer"
-                                       md-selected-item-change="loadInvoice(customer_supplier.customer)"
-                                       md-search-text-change="loadProfileByKeyword(vm.searchText)"
-                                       md-search-text="vm.searchText"
-                                       md-items="item in vm.querySearch(vm.searchText)"
-                                       md-item-text="item.display"
-                                       md-floating-label="Profile"
-                                       md-min-length=""
-                                       autocomplete-validator style="height: 65px;">
-                        <md-item-template>
-                          <span md-highlight-text="vm.searchText">{{item.display+" : "+item.value.othername}}</span>
-                        </md-item-template>
-                          <div ng-messages="vm.editForm.autocompleteField.$error">
-                              <div ng-message="invalidInput" ng-if="!vm.editForm.autocompleteField.$error.required">Please select a valid profile</div>
-                          </div>
-                      </md-autocomplete>
-
-                    </div>
-
-                    <div layout-gt-sm="row">
-                      <div class="md-block p-l-50" style="padding-top: 13px;" flex-gt-sm>
-                        <!--<label>Payment Date</label>-->
-                        <md-datepicker ng-model="content.paymentDate" ng-init="content.paymentDate=today;" style="width: 300px;" placeholder="Payment Date" label="Payment Date">
-                        </md-datepicker>
-                      </div>
-                      <md-input-container class="md-block p-l-50" flex-gt-sm>
-                        <label>Currency</label>
-                        <md-select ng-required="false" name="currency" ng-change="convertCurrency(content.preferredcurrency)" ng-model="content.preferredcurrency">
-                          <md-option ng-value="BaseCurrency">{{BaseCurrency}}</md-option>
-                          <md-option ng-hide="currency==BaseCurrency" ng-repeat="currency in prefferedCurrencies" ng-value="currency">{{currency}}</md-option>
-                        </md-select>
-                      </md-input-container>
-                      <div hide-xs hide-sm flex-gt-sm="5">
-                      </div>
-                      <md-input-container class="md-block" flex-gt-sm>
-                        <label>Currency Convert Rate</label>
-                        <input ng-required="false" minlength="null" md-maxlength="null" type="" name="rate" min="" ng-pattern="" ng-disabled="true" ng-model="currencyRate">
-                      </md-input-container>
-                    </div>
-                  </div>
-
-                  <div class="body-content-wrap">
-
-                    <div style="border-radius: 3px;" md-whiteframe="1dp">
-                      <div class="inv-list-header" layout="row" flex>
-                      <span flex="10">INVOICE NO</span>
-                      <span flex>INVOICE AMOUNT</span>
-                      <span flex>ADJUSTMENTS</span>
-                      <span flex>PAID AMOUNT</span>
-                      <span flex>BALANCE AMOUNT</span>
-                    </div>
-                      <md-content ms-scroll>
-                      <md-list flex class="carded-dashboard-list" style="height:250px;">
-                        <div layout="row" layout-align="center center" style="height: 100%;" ng-hide="vm.isLoaded">
-                          <img src="assets/images/142.gif" alt="" class="preloader-dot"/>
-                        </div>
-
-                        <md-list-item layout="row" ng-repeat="item in invoicelist" ng-click="null" style="text-align: right">
-                          <span flex="10" style="text-align: left">{{item.invoiceNo}}</span>
-                          <span flex>{{item.invoiceAmount| isoCurrency:content.preferredcurrency}}</span>
-                          <span flex>
-                            <label class="md-card-label-wrap" ng-if="item.adjustmenttype=='0'">{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
-                              <label ng-if="item.adjustmenttype=='1'" class="md-card-label-wrap">-{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
-                              <label ng-if="item.adjustmenttype=='2'" class="md-card-label-wrap">+{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
-                          </span>
-                          <span flex>{{item.paidAmount| isoCurrency:content.preferredcurrency}}</span>
-                          <span flex>{{item.balancepayment| isoCurrency:content.preferredcurrency}}</span>
-                        </md-list-item>
-                      </md-list>
-                    </md-content>
-
-                      <md-divider></md-divider>
-
-                      <div layout-gt-sm="row" style="text-align: center;padding: 10px 0;margin-bottom: 20px">
-                      <div flex>
-                        <label class="calc-detail-label">Total Balance Payments</label>
-                      </div>
-                      <div flex style="font-weight: 400">
-                        <label class="calc-detail-label">{{invoicelist[0].totalbalance| isoCurrency:content.preferredcurrency}}</label>
-                      </div>
-                      <!--<label style="font-size: 20px;font-weight: 600;padding-left: 100px; height: 30px">{{items[0].amount| currency}}</label>-->
-                    </div>
-                    </div>
-
-                    <!--<div class="body-content-wrap"> ng-click="addNewUser($event)"-->
-
-                    <div layout-gt-sm="row">
-                      <md-input-container class="md-block" flex>
-                        <label>Payment Amount</label>
-                        <input ng-required="true" minlength="null" ng-maxlength="35" type="number" name="amount" min="0" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" style="text-align:right;" ng-model="content.amount">
-                        <div ng-messages="vm.editForm.amount.$error">
-                          <div ng-message="maxlength">Amount must be 1-35 characters</div>
-                        </div>
-                      </md-input-container>
-
-                      <div flex="10"></div>
-
-                      <div flex>
-                        <md-input-container class="md-block p-l-50" flex-gt-sm>
-                          <label>Payment Method</label>
-                          <md-select ng-required="true" name="paymentMethod" ng-model="content.paymentMethod">
-                            <md-divider></md-divider>
-                            <md-option value="Cash">Cash</md-option>
-                            <md-option value="Cheque">Cheque</md-option>
-                            <md-option value="Card">Credit/Debit Card</md-option>
-                            <!--<md-option ng-repeat="profile in profilelist" ng-value="profile">{{profile.profilename}}</md-option>-->
-                          </md-select>
-                          <!--<div ng-messages="vm.editForm.paymentMethod.$error">-->
-                            <!--<div ng-message="required">Please select the Payment Method!</div>-->
+                        <!--<div layout-gt-sm="row" class="rel" flex="50" style="margin-bottom: 50px">-->
+                          <!--<div layout="row" layout-align="center center" class="preloader-dot-auto" ng-show="vm.isAutoDisabled" >-->
+                            <!--<img src="assets/images/142.gif" alt=""/>-->
                           <!--</div>-->
-                        </md-input-container>
-                        <md-input-container ng-show="content.paymentMethod=='Cheque'" class="md-block" flex-gt-sm style="margin-top: 30px">
-                          <label>Cheque No</label>
-                          <input ng-required="false" minlength="null" md-maxlength="null" type="" name="chequeNo" ng-pattern="" ng-model="content.chequeNo">
-                        </md-input-container>
-                        <!--<div ng-if="content.paymentMethod=='Card'">-->
-                        <!--<div ng-init="addCardPayment($event, content.amount)"></div>-->
+                          <!--<md-autocomplete flex-->
+                                           <!--md-input-id="acProfileIdPayment"-->
+                                           <!--ng-keydown="toggleProfileSearchMre($event)"-->
+                                           <!--ng-required="true"-->
+                                           <!--md-select-on-match-->
+                                           <!--ng-keypress="enter($event)"-->
+                                           <!--ng-disabled="vm.isAutoDisabled"-->
+                                           <!--md-input-name="autocompleteField"-->
+                                           <!--md-no-cache="vm.noCache"-->
+                                           <!--md-selected-item="customer_supplier.customer"-->
+                                           <!--md-selected-item-change="loadInvoice(customer_supplier.customer)"-->
+                                           <!--md-search-text-change="loadProfileByKeyword(vm.searchText)"-->
+                                           <!--md-search-text="vm.searchText"-->
+                                           <!--md-items="item in vm.querySearch(vm.searchText)"-->
+                                           <!--md-item-text="item.display"-->
+                                           <!--md-floating-label="Profile"-->
+                                           <!--md-min-length=""-->
+                                           <!--autocomplete-validator style="height: 65px;">-->
+                            <!--<md-item-template>-->
+                              <!--<span md-highlight-text="vm.searchText">{{item.display+" : "+item.value.othername}}</span>-->
+                            <!--</md-item-template>-->
+                              <!--<div ng-messages="vm.editForm.autocompleteField.$error">-->
+                                  <!--<div ng-message="invalidInput" ng-if="!vm.editForm.autocompleteField.$error.required">Please select a valid profile</div>-->
+                              <!--</div>-->
+                          <!--</md-autocomplete>-->
+
                         <!--</div>-->
-                      </div>
-                    </div>
-                  </div>
+
+                        <!--<div layout-gt-sm="row">-->
+                          <!--<div class="md-block p-l-50" style="padding-top: 13px;" flex-gt-sm>-->
+                            <!--&lt;!&ndash;<label>Payment Date</label>&ndash;&gt;-->
+                            <!--<md-datepicker ng-model="content.paymentDate" ng-init="content.paymentDate=today;" style="width: 300px;" placeholder="Payment Date" label="Payment Date">-->
+                            <!--</md-datepicker>-->
+                          <!--</div>-->
+                          <!--<md-input-container class="md-block p-l-50" flex-gt-sm>-->
+                            <!--<label>Currency</label>-->
+                            <!--<md-select ng-required="false" name="currency" ng-change="convertCurrency(content.preferredcurrency)" ng-model="content.preferredcurrency">-->
+                              <!--<md-option ng-value="BaseCurrency">{{BaseCurrency}}</md-option>-->
+                              <!--<md-option ng-hide="currency==BaseCurrency" ng-repeat="currency in prefferedCurrencies" ng-value="currency">{{currency}}</md-option>-->
+                            <!--</md-select>-->
+                          <!--</md-input-container>-->
+                          <!--<div hide-xs hide-sm flex-gt-sm="5">-->
+                          <!--</div>-->
+                          <!--<md-input-container class="md-block" flex-gt-sm>-->
+                            <!--<label>Currency Convert Rate</label>-->
+                            <!--<input ng-required="false" minlength="null" md-maxlength="null" type="" name="rate" min="" ng-pattern="" ng-disabled="true" ng-model="currencyRate">-->
+                          <!--</md-input-container>-->
+                        <!--</div>-->
+                      <!--</div>-->
+
+                      <!--<div class="body-content-wrap">-->
+
+                        <!--<div style="border-radius: 3px;" md-whiteframe="1dp">-->
+                          <!--<div class="inv-list-header" layout="row" flex>-->
+                          <!--<span flex="10">INVOICE NO</span>-->
+                          <!--<span flex>INVOICE AMOUNT</span>-->
+                          <!--<span flex>ADJUSTMENTS</span>-->
+                          <!--<span flex>PAID AMOUNT</span>-->
+                          <!--<span flex>BALANCE AMOUNT</span>-->
+                        <!--</div>-->
+                          <!--<md-content ms-scroll>-->
+                          <!--<md-list flex class="carded-dashboard-list" style="height:250px;">-->
+                            <!--<div layout="row" layout-align="center center" style="height: 100%;" ng-hide="vm.isLoaded">-->
+                              <!--<img src="assets/images/142.gif" alt="" class="preloader-dot"/>-->
+                            <!--</div>-->
+
+                            <!--<md-list-item layout="row" ng-repeat="item in invoicelist" ng-click="null" style="text-align: right">-->
+                              <!--<span flex="10" style="text-align: left">{{item.invoiceNo}}</span>-->
+                              <!--<span flex>{{item.invoiceAmount| isoCurrency:content.preferredcurrency}}</span>-->
+                              <!--<span flex>-->
+                                <!--<label class="md-card-label-wrap" ng-if="item.adjustmenttype=='0'">{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>-->
+                                  <!--<label ng-if="item.adjustmenttype=='1'" class="md-card-label-wrap">-{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>-->
+                                  <!--<label ng-if="item.adjustmenttype=='2'" class="md-card-label-wrap">+{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>-->
+                              <!--</span>-->
+                              <!--<span flex>{{item.paidAmount| isoCurrency:content.preferredcurrency}}</span>-->
+                              <!--<span flex>{{item.balancepayment| isoCurrency:content.preferredcurrency}}</span>-->
+                            <!--</md-list-item>-->
+                          <!--</md-list>-->
+                        <!--</md-content>-->
+
+                          <!--<md-divider></md-divider>-->
+
+                          <!--<div layout-gt-sm="row" style="text-align: center;padding: 10px 0;margin-bottom: 20px">-->
+                          <!--<div flex>-->
+                            <!--<label class="calc-detail-label">Total Balance Payments</label>-->
+                          <!--</div>-->
+                          <!--<div flex style="font-weight: 400">-->
+                            <!--<label class="calc-detail-label">{{invoicelist[0].totalbalance| isoCurrency:content.preferredcurrency}}</label>-->
+                          <!--</div>-->
+                          <!--&lt;!&ndash;<label style="font-size: 20px;font-weight: 600;padding-left: 100px; height: 30px">{{items[0].amount| currency}}</label>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--</div>-->
+
+                        <!--&lt;!&ndash;<div class="body-content-wrap"> ng-click="addNewUser($event)"&ndash;&gt;-->
+
+                        <!--<div layout-gt-sm="row">-->
+                          <!--<md-input-container class="md-block" flex>-->
+                            <!--<label>Payment Amount</label>-->
+                            <!--<input ng-required="true" minlength="null" ng-maxlength="35" type="number" name="amount" min="0" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" style="text-align:right;" ng-model="content.amount">-->
+                            <!--<div ng-messages="vm.editForm.amount.$error">-->
+                              <!--<div ng-message="maxlength">Amount must be 1-35 characters</div>-->
+                            <!--</div>-->
+                          <!--</md-input-container>-->
+
+                          <!--<div flex="10"></div>-->
+
+                          <!--<div flex>-->
+                            <!--<md-input-container class="md-block p-l-50" flex-gt-sm>-->
+                              <!--<label>Payment Method</label>-->
+                              <!--<md-select ng-required="true" name="paymentMethod" ng-model="content.paymentMethod">-->
+                                <!--<md-divider></md-divider>-->
+                                <!--<md-option value="Cash">Cash</md-option>-->
+                                <!--<md-option value="Cheque">Cheque</md-option>-->
+                                <!--<md-option value="Card">Credit/Debit Card</md-option>-->
+                                <!--&lt;!&ndash;<md-option ng-repeat="profile in profilelist" ng-value="profile">{{profile.profilename}}</md-option>&ndash;&gt;-->
+                              <!--</md-select>-->
+                              <!--&lt;!&ndash;<div ng-messages="vm.editForm.paymentMethod.$error">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<div ng-message="required">Please select the Payment Method!</div>&ndash;&gt;-->
+                              <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--</md-input-container>-->
+                            <!--<md-input-container ng-show="content.paymentMethod=='Cheque'" class="md-block" flex-gt-sm style="margin-top: 30px">-->
+                              <!--<label>Cheque No</label>-->
+                              <!--<input ng-required="false" minlength="null" md-maxlength="null" type="" name="chequeNo" ng-pattern="" ng-model="content.chequeNo">-->
+                            <!--</md-input-container>-->
+                            <!--&lt;!&ndash;<div ng-if="content.paymentMethod=='Card'">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div ng-init="addCardPayment($event, content.amount)"></div>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                          <!--</div>-->
+                        <!--</div>-->
+                      <!--</div>-->
 
 
-                  <div class="body-content-wrap">
+                      <!--<div class="body-content-wrap">-->
 
-                    <div layout-gt-sm="row" ng-hide="true">
-                      <div layout-gt-sm="row">
-                        <md-input-container class="md-block p-l-50" flex-gt-sm>
-                          <label>Bank Charges</label>
-                          <input ng-required="false" minlength="null" md-maxlength="null" style="width: 180px;" type="number" ng-init="content.bankCharges=0" name="bankCharges" min="0" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" ng-model="content.bankCharges">
-                        </md-input-container>
-                      </div>
-                    </div>
+                        <!--<div layout-gt-sm="row" ng-hide="true">-->
+                          <!--<div layout-gt-sm="row">-->
+                            <!--<md-input-container class="md-block p-l-50" flex-gt-sm>-->
+                              <!--<label>Bank Charges</label>-->
+                              <!--<input ng-required="false" minlength="null" md-maxlength="null" style="width: 180px;" type="number" ng-init="content.bankCharges=0" name="bankCharges" min="0" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" ng-model="content.bankCharges">-->
+                            <!--</md-input-container>-->
+                          <!--</div>-->
+                        <!--</div>-->
 
-                    <div layout="row" flex>
-                      <md-input-container class="md-block" flex>
-                        <label>Notes</label>
-                        <input ng-required="false" minlength="null" ng-maxlength="250" type="" name="note" ng-pattern="" ng-model="content.note">
-                        <div ng-messages="vm.editForm.note.$error">
-                          <div ng-message="maxlength">Note must be 1-250 characters</div>
-                        </div>
-                      </md-input-container>
-                    </div>
+                        <!--<div layout="row" flex>-->
+                          <!--<md-input-container class="md-block" flex>-->
+                            <!--<label>Notes</label>-->
+                            <!--<input ng-required="false" minlength="null" ng-maxlength="250" type="" name="note" ng-pattern="" ng-model="content.note">-->
+                            <!--<div ng-messages="vm.editForm.note.$error">-->
+                              <!--<div ng-message="maxlength">Note must be 1-250 characters</div>-->
+                            <!--</div>-->
+                          <!--</md-input-container>-->
+                        <!--</div>-->
 
-                  </div>
-
-
-                  <!--</md-content>-->
-
-                  <!--<div class="form-footer-btn-wrap">-->
-                  <!--<div layout-gt-sm="row" class="p-0">-->
-                  <!--&lt;!&ndash;<a flex="50" class="md-raise btn btn-cancel" ng-click="returntolist()">cancel&ndash;&gt;-->
-                  <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                  <!--&lt;!&ndash;<a flex="50" class="md-raise btn btn-submit" type="submit" ng-click="showListBottomSheet()">submit&ndash;&gt;-->
-                  <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                  <!--<md-button flex="50" class="md-raise btn btn-cancel" ng-click="clearform();" type="button">CLEAR</md-button>-->
-                  <!--<md-button flex="50" class="md-raise btn btn-submit" ng-disabled="submitted" type="submit">SUBMIT</md-button>-->
-                  <!--</div>-->
-                  <!--</div>-->
+                      <!--</div>-->
 
 
+                      <!--&lt;!&ndash;</md-content>&ndash;&gt;-->
+
+                      <!--&lt;!&ndash;<div class="form-footer-btn-wrap">&ndash;&gt;-->
+                      <!--&lt;!&ndash;<div layout-gt-sm="row" class="p-0">&ndash;&gt;-->
+                      <!--&lt;!&ndash;&lt;!&ndash;<a flex="50" class="md-raise btn btn-cancel" ng-click="returntolist()">cancel&ndash;&gt;&ndash;&gt;-->
+                      <!--&lt;!&ndash;&lt;!&ndash;</a>&ndash;&gt;&ndash;&gt;-->
+                      <!--&lt;!&ndash;&lt;!&ndash;<a flex="50" class="md-raise btn btn-submit" type="submit" ng-click="showListBottomSheet()">submit&ndash;&gt;&ndash;&gt;-->
+                      <!--&lt;!&ndash;&lt;!&ndash;</a>&ndash;&gt;&ndash;&gt;-->
+                      <!--&lt;!&ndash;<md-button flex="50" class="md-raise btn btn-cancel" ng-click="clearform();" type="button">CLEAR</md-button>&ndash;&gt;-->
+                      <!--&lt;!&ndash;<md-button flex="50" class="md-raise btn btn-submit" ng-disabled="submitted" type="submit">SUBMIT</md-button>&ndash;&gt;-->
+                      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+
+                    <!--</form>-->
+                <form name="vm.editForm" id="paymentForm" ng-submit="submit()" novalidate>
+                    <!--CREATE NEW INVOICE _ CARDED=================================================-->
+                    <md-card flex class="input-block-gen">
+                        <md-card-title>
+                            <div layout="row" layout-align="start center">
+                                <md-icon md-font-icon="icon-cog"></md-icon> <h3>General Details</h3>
+                            </div>
+                        </md-card-title>
+                        <md-card-content>
+
+                            <div layout="row">
+                                <md-input-container flex="30">
+                                    <label>Payment Date</label>
+                                    <md-datepicker ng-model="content.paymentDate" ng-init="content.paymentDate=today;"></md-datepicker>
+                                </md-input-container>
+
+                                <div flex="5"></div>
+
+                                <md-input-container flex="30">
+                                    <label>Currency</label>
+                                    <md-select ng-required="false" name="currency" ng-change="convertCurrency(content.preferredcurrency)" ng-model="content.preferredcurrency">
+                                        <md-option ng-value="BaseCurrency">{{BaseCurrency}}</md-option>
+                                        <md-option ng-hide="currency==BaseCurrency" ng-repeat="currency in prefferedCurrencies" ng-value="currency">{{currency}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                                <div flex="5"></div>
+
+                                <div layout="row" layout-align="start center" flex="30" class="state-capsule">
+                                    <div layout="row">
+                                        <span>Currency Convert Rate</span>
+                                        <span>{{currencyRate}}</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </md-card-content>
+                    </md-card>
+
+                    <md-card flex class="input-block-gen">
+                        <md-card-title>
+                            <div layout="row" layout-align="start center">
+                                <md-icon md-font-icon="icon-account"></md-icon> <h3>Profile Details</h3>
+                            </div>
+                        </md-card-title>
+                        <md-card-content md-whiteframe="1dp">
+                            <div layout="row">
+                                <div layout="row" flex="30">
+                                    <div layout="row" layout-align="center center" class="preloader-dot-auto" ng-show="vm.isAutoDisabled" >
+                                        <img src="assets/images/142.gif" alt=""/>
+                                    </div>
+                                    <md-autocomplete flex
+                                                     md-input-id="acProfileIdPayment"
+                                                     ng-keydown="toggleProfileSearchMre($event)"
+                                                     ng-required="true"
+                                                     md-select-on-match
+                                                     ng-keypress="enter($event)"
+                                                     ng-disabled="vm.isAutoDisabled"
+                                                     md-input-name="autocompleteField"
+                                                     md-no-cache="vm.noCache"
+                                                     md-selected-item="customer_supplier.customer"
+                                                     md-selected-item-change="loadInvoice(customer_supplier.customer)"
+                                                     md-search-text-change="loadProfileByKeyword(vm.searchText)"
+                                                     md-search-text="vm.searchText"
+                                                     md-items="item in vm.querySearch(vm.searchText)"
+                                                     md-item-text="item.display"
+                                                     md-floating-label="Profile"
+                                                     md-min-length=""
+                                                     autocomplete-validator>
+                                        <md-item-template>
+                                            <span md-highlight-text="vm.searchText">{{item.display+" : "+item.value.othername}}</span>
+                                        </md-item-template>
+                                        <div ng-messages="vm.editForm.autocompleteField.$error">
+                                            <div ng-message="invalidInput" ng-if="!vm.editForm.autocompleteField.$error.required">Please select a valid profile</div>
+                                        </div>
+                                    </md-autocomplete>
+                                </div>
+                            </div>
+                            <div layout="column">
+                                <div md-whiteframe="1dp" flex>
+                                    <div class="inv-list-header" layout="row" flex>
+                                        <span flex="10">INVOICE NO</span>
+                                        <span flex>INVOICE AMOUNT</span>
+                                        <span flex>ADJUSTMENTS</span>
+                                        <span flex>PAID AMOUNT</span>
+                                        <span flex>BALANCE AMOUNT</span>
+                                    </div>
+                                    <md-content ms-scroll class="payment-list-body" flex>
+                                        <div layout="row" layout-align="center center" class="state-checker" ng-if="!vm.isLoaded">
+                                            <img src="assets/images/142.gif" alt="" class="preloader-dot"/>
+                                        </div>
+
+                                        <div layout="row" layout-align="center center" style="height: 100%;" class="state-checker" ng-if="customer_supplier.customer == '' || customer_supplier.customer == null || customer_supplier.customer == undefined">
+                                            <span><md-icon md-font-icon="icon-information"></md-icon> No profile has been selected yet</span>
+                                        </div>
+
+
+                                            <div layout="row" class="payment-list-item" ng-repeat="item in invoicelist" ng-click="null">
+                                                <span flex="10" style="text-align: left">{{item.invoiceNo}}</span>
+                                                <span flex>{{item.invoiceAmount| isoCurrency:content.preferredcurrency}}</span>
+                                            <span flex>
+                                                <label ng-if="item.adjustmenttype=='0'">{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
+                                                  <label ng-if="item.adjustmenttype=='1'">-{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
+                                                  <label ng-if="item.adjustmenttype=='2'">+{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
+                                            </span>
+                                                <span flex>{{item.paidAmount| isoCurrency:content.preferredcurrency}}</span>
+                                                <span flex>{{item.balancepayment| isoCurrency:content.preferredcurrency}}</span>
+                                            </div>
+
+                                    </md-content>
+                                </div>
+                            </div>
+                        </md-card-content>
+                        <md-card-actions>
+                            <div layout="row" layout-align="start start" class="product-sub-block" style="padding-bottom: 0px">
+                                <div layout="column" flex></div>
+                                <div layout="column" flex>
+                                    <div layout="row" layout-align="space-between center" class="total sub-pricing-info" style="padding: 10px 0">
+                                        <span>Total Balance Payments</span>
+                                        <span class="li-connector" flex></span>
+                                        <span ng-init="invoicelist[0].totalbalance = 0">{{invoicelist[0].totalbalance| isoCurrency:content.preferredcurrency}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </md-card-actions>
+                    </md-card>
+
+                    <md-card flex class="input-block-gen">
+                        <md-card-title>
+                            <div layout="row" layout-align="start center">
+                                <md-icon md-font-icon="icon-credit-card-multiple"></md-icon> <h3>Payment Details</h3>
+                            </div>
+                        </md-card-title>
+                        <md-card-content>
+                            <div layout="row">
+                                <md-input-container flex="30">
+                                    <label>Payment Amount</label>
+                                    <input ng-required="true" minlength="null" ng-maxlength="35" type="number" name="amount" min="0" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" ng-model="content.amount">
+                                    <div ng-messages="vm.editForm.amount.$error">
+                                        <div ng-message="maxlength">Amount must be between 1-35 characters</div>
+                                    </div>
+                                </md-input-container>
+
+                                <div flex="5"></div>
+
+                                <md-input-container flex="30" >
+                                    <label>Payment Method</label>
+                                    <md-select ng-required="true" name="paymentMethod" ng-model="content.paymentMethod">
+                                        <md-option value="Cash">Cash</md-option>
+                                        <md-option value="Cheque">Cheque</md-option>
+                                        <md-option value="Card">Credit/Debit card</md-option>
+                                        <!--<md-option ng-repeat="profile in profilelist" ng-value="profile">{{profile.profilename}}</md-option>-->
+                                    </md-select>
+                                </md-input-container>
+
+                                <div flex="5"></div>
+
+                                <md-input-container ng-show="content.paymentMethod=='Cheque'" flex="30">
+                                    <label>Cheque No</label>
+                                    <input ng-required="false" minlength="null" md-maxlength="null" type="" name="chequeNo" ng-pattern="" ng-model="content.chequeNo">
+                                </md-input-container>
+                            </div>
+                        </md-card-content>
+                    </md-card>
+
+                    <md-card flex class="input-block-gen">
+                        <md-card-title>
+                            <div layout="row" layout-align="start center">
+                                <md-icon md-font-icon="icon-note"></md-icon> <h3>Other</h3>
+                            </div>
+                        </md-card-title>
+                        <md-card-content>
+                            <div layout="row">
+                                <md-input-container flex>
+                                    <label>Notes</label>
+                                    <input ng-required="false" minlength="null" ng-maxlength="250" name="note" ng-model="content.note">
+                                    <div ng-messages="vm.editForm.note.$error">
+                                        <div ng-message="maxlength">Note must be between 1-250 characters</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </md-card-content>
+                    </md-card>
+                    <!--CREATE NEW INVOICE _ CARDED=================================================-->
                 </form>
-              </md-content>
 
                 <!--<md-content style="width:100%;height: 100%" ms-scroll>-->
                   <!--<form name="editForm" ng-submit="submit()">-->
@@ -834,7 +1015,7 @@
                     <!--</div>-->
                   <!--</form>-->
                 <!--</md-content>-->
-            </div>
+            </md-content>
             <div layout="row" layout-align="space-between center" flex style="position:absolute;z-index:9999;bottom: 0;background-color: #ffffff;width: 100%;" md-whiteframe="8dp">
                 <div layout="row"></div>
 
@@ -848,7 +1029,6 @@
         <!-- / CONTENT CARD -->
 
     </div>
-
     <!-- / CENTER -->
 
 </div>
