@@ -1151,8 +1151,8 @@
       //$scope.content.preferredcurrency=$scope.BaseCurrency;
 
       $scope.clearform = function (){
-        vm.editForm.$setPristine();
-        vm.editForm.$setUntouched();
+          adjustmentAdd.$setPristine();
+          adjustmentAdd.$setUntouched();
 
         $scope.customer_supplier.customer="";
         //$scope.content.paymentDate=moment(new Date().toISOString()).format('LL');
@@ -1534,6 +1534,67 @@
         }
 
       }
+
+      $scope.sortBy = function(propertyName,status,property) {
+
+        vm.payments=$filter('orderBy')(vm.payments, propertyName, $scope.reverse)
+        $scope.reverse =!$scope.reverse;
+        if(status!=null) {
+          if(property=='ID')
+          {
+            $scope.showId = status;
+            $scope.showCust = false;
+            $scope.showDate = false;
+            $scope.showAmount = false;
+            $scope.showMethod = false;
+            $scope.showStat = false;
+          }
+          if(property=='Customer')
+          {
+            $scope.showId = false;
+            $scope.showCust = status;
+            $scope.showDate = false;
+            $scope.showAmount = false;
+            $scope.showMethod = false;
+            $scope.showStat = false;
+          }
+          if(property=='Date')
+          {
+            $scope.showId = false;
+            $scope.showCust = false;
+            $scope.showDate = status;
+            $scope.showAmount = false;
+            $scope.showMethod = false;
+            $scope.showStat = false;
+          }
+          if(property=='Amount')
+          {
+            $scope.showId = false;
+            $scope.showCust = false;
+            $scope.showDate = false;
+            $scope.showAmount = status;
+            $scope.showMethod = false;
+            $scope.showStat = false;
+          }
+          if(property=='Method')
+          {
+            $scope.showId = false;
+            $scope.showCust = false;
+            $scope.showDate = false;
+            $scope.showAmount = false;
+            $scope.showMethod = status;
+            $scope.showStat = false;
+          }
+          if(property=='Status')
+          {
+            $scope.showId = false;
+            $scope.showCust = false;
+            $scope.showDate = false;
+            $scope.showAmount = false;
+            $scope.showStat = status;
+          }
+        }
+      };
 
 
 

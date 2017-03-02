@@ -85,30 +85,102 @@
               <div class="info" flex layout="row" style="height: 40px">
 
                 <!--<div class="prodMainInfo" layout="column" layout-align="center start" style="width: 190px;">-->
-                <div class="promoMainInfo" layout="column" layout-align="center strat" flex>
-                  Payment ID
+                <div class="productName" layout="column" layout-align="center start" flex>
+                  <div layout="row">
+                    <span layout="column" layout-align="center center">Payment ID</span>
+                    <div layout="column" layout="center center">
+                      <md-button ng-hide="showId" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('paymentNo',true,'ID')">
+                        <md-icon class="sort_btn_icon merged" md-font-icon="icon-chevron-up"></md-icon>
+                        <md-icon md-font-icon="icon-chevron-down"></md-icon>
+                      </md-button>
+                      <md-button ng-show="showId" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('paymentNo',null,'ID')">
+                        <md-icon ng-if="reverse==true" class="sort_btn_icon" md-font-icon="icon-chevron-up"></md-icon>
+                        <md-icon ng-if="reverse==false" md-font-icon="icon-chevron-down"></md-icon>
+                      </md-button>
+                    </div>
+                  </div>
                 </div>
 
-                <div class="date" class="prodMainInfo topMargin" flex layout="column" layout-align="center start">
-                  Customer
+                <div class="productName" layout="column" layout-align="center start" flex>
+                  <div layout="row">
+                    <span layout="column" layout-align="center center">Customer</span>
+                    <div layout="column" layout="center center">
+                      <md-button ng-hide="showCust" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('customer',true,'Customer')">
+                        <md-icon class="sort_btn_icon merged" md-font-icon="icon-chevron-up"></md-icon>
+                        <md-icon md-font-icon="icon-chevron-down"></md-icon>
+                      </md-button>
+                      <md-button ng-show="showCust" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('customer',null,'Customer')">
+                        <md-icon ng-if="reverse==true" class="sort_btn_icon" md-font-icon="icon-chevron-up"></md-icon>
+                        <md-icon ng-if="reverse==false" md-font-icon="icon-chevron-down"></md-icon>
+                      </md-button>
+                    </div>
+                  </div>
                 </div>
 
-                <div class="date" flex layout="column" layout-align="center start">
-                  Date
+                <div class="productName" layout="column" layout-align="center start" flex>
+                  <div layout="row">
+                    <span layout="column" layout-align="center center">Date</span>
+                    <div layout="column" layout="center center">
+                      <md-button ng-hide="showDate" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('paymentDate',true,'Date')">
+                        <md-icon class="sort_btn_icon merged" md-font-icon="icon-chevron-up"></md-icon>
+                        <md-icon md-font-icon="icon-chevron-down"></md-icon>
+                      </md-button>
+                      <md-button ng-show="showDate" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('paymentDate',null,'Date')">
+                        <md-icon ng-if="reverse==true" class="sort_btn_icon" md-font-icon="icon-chevron-up"></md-icon>
+                        <md-icon ng-if="reverse==false" md-font-icon="icon-chevron-down"></md-icon>
+                      </md-button>
+                    </div>
+                  </div>
                 </div>
 
-                <div class="date" flex layout="column" layout-align="center end">
-                  Amount
+                <div class="productName" layout="column" layout-align="center end" flex>
+                  <div layout="row" style="position:relative;right: -15px">
+                    <span layout="column" layout-align="center center">Amount</span>
+                    <div layout="column" layout="center center">
+                      <md-button ng-hide="showAmount" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('amount',true,'Amount')">
+                        <md-icon class="sort_btn_icon merged" md-font-icon="icon-chevron-up"></md-icon>
+                        <md-icon md-font-icon="icon-chevron-down"></md-icon>
+                      </md-button>
+                      <md-button ng-show="showAmount" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('amount',null,'Amount')">
+                        <md-icon ng-if="reverse==true" class="sort_btn_icon" md-font-icon="icon-chevron-up"></md-icon>
+                        <md-icon ng-if="reverse==false" md-font-icon="icon-chevron-down"></md-icon>
+                      </md-button>
+                    </div>
+                  </div>
                 </div>
 
-                <div flex="10"></div>
+                <div flex="5"></div>
 
-                <div class="date" flex="10" layout="column" layout-align="center start">
-                  Method
+                <div class="productName" layout="row" layout-align="start center" flex>
+                  <div layout="row">
+                    <span layout="column" layout-align="center center">Method</span>
+                    <div layout="column" layout="center center">
+                      <md-button ng-hide="showMethod" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('paymentMethod',true,'Method')">
+                        <md-icon class="sort_btn_icon merged" md-font-icon="icon-chevron-up"></md-icon>
+                        <md-icon md-font-icon="icon-chevron-down"></md-icon>
+                      </md-button>
+                      <md-button ng-show="showMethod" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('paymentMethod',null,'Metohd')">
+                        <md-icon ng-if="reverse==true" class="sort_btn_icon" md-font-icon="icon-chevron-up"></md-icon>
+                        <md-icon ng-if="reverse==false" md-font-icon="icon-chevron-down"></md-icon>
+                      </md-button>
+                    </div>
+                  </div>
                 </div>
 
-                <div class="date" class="prodMainInfo topMargin" flex="10" layout="column" layout-align="center end">
-                  Status
+                <div class="productName" layout="column" layout-align="center center" flex="10">
+                  <div layout="row" layout-align="center center" style="position:relative;right: -20px">
+                    <span layout="column" layout-align="center center">Status</span>
+                    <div layout="column" layout="center center">
+                      <md-button ng-hide="showStat" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('invoiceStatus',true,'Status')">
+                        <md-icon class="sort_btn_icon merged" md-font-icon="icon-chevron-up"></md-icon>
+                        <md-icon md-font-icon="icon-chevron-down"></md-icon>
+                      </md-button>
+                      <md-button ng-show="showStat" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('invoiceStatus',null,'Status')">
+                        <md-icon ng-if="reverse==true" class="sort_btn_icon" md-font-icon="icon-chevron-up"></md-icon>
+                        <md-icon ng-if="reverse==false" md-font-icon="icon-chevron-down"></md-icon>
+                      </md-button>
+                    </div>
+                  </div>
                 </div>
 
               </div>
@@ -498,7 +570,7 @@
                                 </md-input-container>
                             </div>
                             <div layout="column">
-                                <div md-whiteframe="1dp" flex>
+                                <div style="border: solid 1px #eee;border-radius: 3px;" flex>
                                     <div class="inv-list-header" layout="row" flex>
                                         <span flex="10">Invoice No</span>
                                         <span flex>Invoice Amount</span>

@@ -5,17 +5,15 @@
 <meta name="app" content="payment">
 <meta name="view" content="list-view.html">
 
-<div class="invoice-list-item" ng-repeat="payment in vm.payments | filter: vm.search | filter: global.search"
+<div class="invoice-list-item" layout="row" layout-align="start center" ng-repeat="payment in vm.payments | filter: vm.search | filter: global.search"
      md-ink-ripple
      ng-click="vm.selectPayment(payment)"
      ng-class="{'starred': payment.starred, 'selected': vm.selectedPayment === payment, 'checked': vm.isChecked(payment)}">
 
-  <div layout="row" layout-align="start center">
+  <div layout="row" layout-align="start center" flex>
     <div class="info" flex layout="row">
       <div class="invoiceMainInfo" layout="column" layout-align="center start">
-        <span>
-          {{payment.paymentNo}}
-        </span>
+        <span>{{payment.paymentNo}}</span>
       </div>
     </div>
 
@@ -32,15 +30,15 @@
       <!-- <span class="totaldue"><i>{{}}</i></span> -->
     </div>
 
-    <div flex="10"></div>
+    <div flex="5"></div>
 
-    <div flex="10" class="date" layout="column" layout-align="center start">
+    <div flex class="date" layout="column" layout-align="center start">
       <span>{{payment.paymentMethod}}</span>
     </div>
 
     <div flex="10" class="status" layout="column" layout-align="center end">
-      <span class="pill paid" ng-if="payment.status=='Active'">{{payment.status}}</span>
-      <span class="pill unpaid" ng-if="payment.status=='Cancelled'">{{payment.status}}</span>
+      <span class="pill paid" ng-if="payment.status=='Active'" layout="row" layout-align="center center">{{payment.status}}</span>
+      <span class="pill unpaid" ng-if="payment.status=='Cancelled'" layout="row" layout-align="center center">{{payment.status}}</span>
     </div>
   </div>
 </div>

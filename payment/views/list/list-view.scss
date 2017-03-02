@@ -6,164 +6,192 @@
     color: #bbbbbb;
     padding: 5px 16px;
   }
+  .sort_btn{
+    padding: 0;
+    margin: 0;
+    height: 35px;
+    width: 35px;
+    md-icon{
+      color: #cccccc;
+      font-size: 14px;
+    }
+    .merged{
+      height: 10px;
+    }
+  }
 
-    .invoice-list-pane {
+  .invoice-list-pane {
 
-        .invoice-list-item {
-            position: relative;
-            padding: 8px 16px!important;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-            cursor: pointer;
+    .invoice-list-item {
+      position: relative;
+      padding: 5px 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+      height: 52px;
 
-            &.read {
+      &.read {
 
-            }
+      }
 
-            &.unread {
-                background: #FFFFFF;
+      &.unread {
+        background: #FFFFFF;
 
-                .info {
+        .info {
 
-                    .subject,
-                    .message {
-                        font-weight: 500;
-                    }
-                }
-            }
+          .subject,
+          .message {
+            font-weight: 500;
+          }
+        }
+      }
 
-            &.selected {
-                background: #E3F2FD;
-            }
+      &.selected {
+        background: #E3F2FD;
+      }
 
-            &.checked {
-                background: #FFF8E1;
-            }
+      &.checked {
+        background: #FFF8E1;
+      }
 
-            .info {
-                overflow: hidden;
-                width: 0;
-                margin: 0px!important;
+      .info {
+        overflow: hidden;
+        width: 0;
+        margin: 0px;
 
-                .clientCygil{
-                    .listMedia {
-                        min-width: 70px;
-                        width: 70px;
-                        height: 70px;
-                        line-height: 70px;
-                    }
-
-                    .has-attachment {
-                        margin-left: 8px;
-                        transform: rotate(90deg);
-                    }
-                }
-
-                .invoiceMainInfo {
-                    color:#05a3ec;
-                    font-size: 16px!important;
-                    font-weight: 400!important;
-                    padding-left: 0px!important;
-                    padding-bottom: 0px!important;
-
-                    .invoiceType {
-                        font-size: 13px;
-                        font-weight:400;
-                        color:#979797;
-                    }
-                }
-
-                .prodCost{
-                    font-size:28px;
-                    font-weight:300;
-                    color:rgb(3,155,229);
-                }
-
-                .message {
-                    color: rgba(0, 0, 0, 0.54);
-                }
-            }
-
-          .date{
-            width:100px;
-            text-align:center;
-            height: auto !important;
-            color:#3f3f3f;
-
-            span:nth-child(1){
-              //font-size: 20px;
-              //height: 23px;
-              font-size: 16px!important;
-              height: 23px;
-              color: #777;
-            }
-
-            span:nth-child(2){
-              font-size:14px;
-              font-weight:700;
-            }
-
-            span:nth-child(3){
-              font-size:15px;
-            }
+        .clientCygil{
+          .listMedia {
+            min-width: 50px;
+            width: 50px;
+            height: 50px;
+            line-height: 70px;
           }
 
-            .client{
-                width:150px;
-                height:auto;
-                text-align:center;
-                font-size:14px;
-                color:#707070;
-            }
-
-            .status{
-                width:60px;
-                height:auto;
-
-                .pill{
-                  width: 65px!important;
-                  height: auto;
-                  border-radius: 3px;
-                  color: #fff;
-                  font-weight: 500;
-                  text-align: center;
-                  padding-top: 5px;
-                  padding-bottom: 5px;
-                  font-size: 12px;
-                }
-
-                .unpaid{
-                    background-color:orange!important;
-                    border:1px solid orange!important;
-                }
-
-                .partial{
-                    background-color:#ff9800;
-                    border:1px solid #ffb445;
-                }
-
-                .paid{
-                    background-color:rgb(83, 206, 83)!important;
-                    border:1px solid rgb(83, 206, 83)!important;
-                }
-            }
-
-            .value{
-                min-width:180px;
-                height:auto;
-
-                .ammount{
-                    font-size:18px;
-                    color:#3f3f3f;
-                    i{
-                        font-size:8px;
-                        margin-bottom:14px;
-                    }
-                }
-            }
-
-            .time {
-                margin: 0 8px;
-            }
+          .has-attachment {
+            margin-left: 8px;
+            transform: rotate(90deg);
+          }
         }
+
+        .invoiceMainInfo {
+          color:#05a3ec;
+          font-size: 14px;
+          font-weight: 300;
+          //padding-left: 16px;
+          //padding-bottom: 8px;
+
+          .invoiceType {
+            font-size: 12px;
+            font-weight:400;
+            color:#b3b3b3;
+            text-transform: capitalize;
+          }
+        }
+
+        .prodCost{
+          font-size:28px;
+          font-weight:300;
+          color:rgb(3,155,229);
+        }
+
+        .message {
+          color: rgba(0, 0, 0, 0.54);
+        }
+      }
+
+      .invoiceMainInfo{
+        width:110px;
+        height:55px;
+        text-align:center;
+        color:#3f3f3f;
+        font-size: 14px;
+
+        span:nth-child(1){
+          //font-size: 20px;
+          //height: 23px;
+          font-size: 14px!important;
+          font-weight: 400;
+          height: 23px;
+          color: rgb(3,155,229);
+          text-transform: uppercase;
+        }
+
+        span:nth-child(2){
+          font-size:12px;
+          font-weight:700;
+        }
+
+        span:nth-child(3){
+          font-size:14px;
+        }
+      }
+
+      .client{
+        width:150px;
+        height:auto;
+        text-align:center;
+        font-size:14px;
+        color:#707070;
+      }
+
+      .status{
+        width:60px;
+        height:auto;
+
+        .pill{
+          width:80px;
+          height:25px;
+          border-radius:15px;
+          color:#fff;
+          //font-weight:500;
+          text-align:center;
+          padding-top:5px;
+          padding-bottom:5px;
+        }
+
+        .unpaid{
+          background-color: #ffefd8;
+          border: 1px solid #ffe4bd;
+          color:#ff7522;
+        }
+
+        .paid{
+          background-color: #d6ffd3;
+          border: 1px solid #a7ffa5;
+          color: #31b136;
+        }
+
+        .partially-paid{
+          background-color: rgb(218, 236, 255);
+          border: 1px solid #afe5ff;
+          color: #039be5;
+          font-size: 12px;
+        }
+
+        .void{
+          background-color: #fafafa;
+          border: 1px solid #f1f1f1;
+          color: rgba(121, 121, 121, 0.5);
+          text-transform: capitalize;;
+        }
+      }
+
+      .value{
+        min-width:180px;
+        height:auto;
+
+        .ammount{
+          font-size:18px;
+          color:#3f3f3f;
+          i{
+            font-size:8px;
+            margin-bottom:14px;
+          }
+        }
+      }
+
+      .time {
+        margin: 0 8px;
+      }
     }
+  }
 }
