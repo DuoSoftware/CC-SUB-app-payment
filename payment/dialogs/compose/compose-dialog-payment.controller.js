@@ -335,7 +335,9 @@
 
 
 
-    $scope.sendMail= function () {
+	  $scope.hideSendButton = false;
+	  $scope.sendMail= function () {
+    	$scope.hideSendButton = true;
       $scope.cc=[];
       $scope.to=[];
       for(var i=0;i<$scope.recipients.length;i++)
@@ -360,10 +362,12 @@
         var parsedData=JSON.parse(data);
         notifications.toast(parsedData.data.message, "success");
         closeDialog();
-      }).error(function (data) {
+		  $scope.hideSendButton = false;
+	  }).error(function (data) {
         var parsedData=JSON.parse(data);
         notifications.toast(parsedData.data.message, "error");
-      });
+		  $scope.hideSendButton = false;
+	  });
     }
   }
 })();

@@ -1,1094 +1,148 @@
-<meta name="updatedBy" content="GihanHerath">
-<meta name="modifiedDate" content="04-01-2017">
-<meta name="version" content="6.0.0.9">
-<meta name="app" content="payment">
-<meta name="view" content="payment.html">
-
 <div id="payment" class="page-layout carded left-sidenav" layout="row" ng-switch="vm.appInnerState">
 
     <!-- TOP BACKGROUND -->
     <div class="top-bg md-accent-bg"></div>
     <!-- / TOP BACKGROUND -->
 
-    <!-- SIDENAV -->
-    <md-sidenav class="sidenav" md-is-locked-open="$mdMedia('gt-md')" md-component-id="main-sidenav"
-                ng-include="'app/main/payment/sidenavs/main/main-sidenav.html'" ms-scroll ms-sidenav-helper>
-    </md-sidenav>
-    <!-- / SIDENAV -->
-
     <!-- CENTER -->
     <div ng-switch-when="default" class="center" layout="column" flex>
-        <!-- CONTENT HEADER -->
-        <div class="header" layout="row" layout-align="start center" ng-if="vm.activeInvoicePaneIndex === 0">
-
-            <div class="search-wrapper md-whiteframe-4dp" layout="row" layout-align="start center" flex>
-                <md-button class="md-icon-button sidenav-toggle" ng-click="vm.toggleSidenav('main-sidenav')" hide-gt-md
-                           aria-label="Toggle Sidenav">
-                    <md-icon class="icon" md-font-icon="icon-menu"></md-icon>
-                </md-button>
-
-                <div class="search" flex layout="row" layout-align="start center">
-                    <md-icon md-font-icon="icon-magnify" class="icon s24"></md-icon>
-                    <input flex ng-model="vm.search" ng-change="loadByKeywordPayment(vm.search,3)" type="text" placeholder="Search for payment">
+        <!-- CONTENT HEADER- V NAV-->
+        <div layout="column" layout-align="start start">
+            <div class="v-header" layout="column" flex fill-width>
+                <div class="title" layout="column" layout-align="center start">
+                    <div class="logo" layout="row" layout-align="start center">
+                        <span class="logo-icon">
+                          <img src="app/core/app_icons/payment_app_icon.png" alt=""/>
+                        </span>
+                        <span class="logo-text">Receipt</span>
+                    </div>
+                </div>
+                <div layout="row">
+                    <div class="search-wrapper md-whiteframe-4dp" layout="row" layout-align="start center" flex ng-class="{'op-5':vm.activePaymentPaneIndex == 1}">
+                        <div class="search" flex layout="row" layout-align="start center">
+                            <md-icon md-font-icon="icon-magnify" class="icon s24"></md-icon>
+                            <input ng-disabled="vm.activePaymentPaneIndex == 1" flex ng-model="vm.search" type="text" ng-keypress="searchKeyPress($event,vm.search,vm.search.length)" ng-change="loadByKeywordPlan(vm.search,3)" placeholder="Search for Plans">
+                        </div>
+                    </div>
+                    <!--<md-button class="md-raised md-accent main-app-create" layout="row" layout-align="center center" aria-label="compose" ng-disabled="vm.activePaymentPaneIndex == 1" ng-click="vm.addInvoice()" ng-if="!inpageReadPaneEdit"><span class="fs-18 mr-10">+</span> NEW-->
+                    <!--</md-button>-->
                 </div>
             </div>
-
         </div>
         <!-- / CONTENT HEADER -->
 
-        <!-- CONTENT CARD -->
-        <div class="content-card" layout="column" flex>
+        <div layout="row" flex>
+            <!-- CONTENT CARD -->
+            <div class="content-card" layout="column" ng-class="{'flex-30':showInpageReadpane}" flex>
 
-            <!-- INVOICE VIEW PANE TOOLBAR -->
-            <div class="toolbar" layout="row" layout-align="space-between center" ng-if="vm.activeInvoicePaneIndex === 1">
-                <md-button class="md-icon-button"
-                           ng-click="vm.closeReadPane()"
-                           aria-label="Back">
-                    <md-icon md-font-icon="icon-keyboard-backspace"></md-icon>
-                </md-button>
-
-              <div class="actions">
-                <md-menu>
-                  <md-button aria-label="More" class="md-icon-button" ng-click="$mdOpenMenu($event)">
-                    <md-icon md-font-icon="icon-dots-vertical"></md-icon>
-                    <md-tooltip>Payment Action</md-tooltip>
-                  </md-button>
-
-                  <md-menu-content width="3">
-                    <md-menu-item>
-                      <md-button aria-label="Print" ng-click="printDiv('payment-read')">
-                        <md-icon md-font-icon="icon-floppy"></md-icon>
-                        <span>Print</span>
-                      </md-button>
-                    </md-menu-item>
-                    <md-menu-item>
-                      <md-button aria-label="Email" ng-click="emailPayment($event,'payment-read')">
-                        <md-icon md-font-icon="icon-email"></md-icon>
-                        <span>Email</span>
-                      </md-button>
-                    </md-menu-item>
-                    <md-menu-item>
-                      <md-button aria-label="Delete" ng-disabled="vm.selectedPayment.status=='Cancelled'" ng-click="showCancelPaymentConfirm($event,vm.selectedPayment)">
-                        <md-icon md-font-icon="icon-delete"></md-icon>
-                        <span>Cancel Payment</span>
-                      </md-button>
-                    </md-menu-item>
-                  </md-menu-content>
-                </md-menu>
-              </div>
-            </div>
-            <!-- / INVOICE VIEW PANE TOOLBAR -->
-
-          <!-- CONTENT TOOLBAR -->
-          <div class="toolbar list-header" layout="row" layout-align="space-between center" ng-if="vm.activeInvoicePaneIndex === 0">
-            <div layout="row" flex layout-align="start center" style="padding-left: 0px;">
-              <div class="info" flex layout="row" style="height: 40px">
-
-                <!--<div class="prodMainInfo" layout="column" layout-align="center start" style="width: 190px;">-->
-                <div class="productName" layout="column" layout-align="center start" flex>
-                  <div layout="row">
-                    <span layout="column" layout-align="center center">Payment ID</span>
-                    <div layout="column" layout="center center">
-                      <md-button ng-hide="showId" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('paymentNo',true,'ID')">
-                        <md-icon class="sort_btn_icon merged" md-font-icon="icon-chevron-up"></md-icon>
-                        <md-icon md-font-icon="icon-chevron-down"></md-icon>
-                      </md-button>
-                      <md-button ng-show="showId" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('paymentNo',null,'ID')">
-                        <md-icon ng-if="reverse==true" class="sort_btn_icon" md-font-icon="icon-chevron-up"></md-icon>
-                        <md-icon ng-if="reverse==false" md-font-icon="icon-chevron-down"></md-icon>
-                      </md-button>
-                    </div>
-                  </div>
+                <!-- CONTENT TOOLBAR -->
+                <div class="toolbar list-header" layout="row" layout-align="space-between center" ng-if="vm.activePaymentPaneIndex === 0">
+                    <div ng-include="'app/main/payment/views/list/list-header.html'" layout="row" flex layout-align="start center"></div>
                 </div>
-
-                <div class="productName" layout="column" layout-align="center start" flex>
-                  <div layout="row">
-                    <span layout="column" layout-align="center center">Customer</span>
-                    <div layout="column" layout="center center">
-                      <md-button ng-hide="showCust" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('customer',true,'Customer')">
-                        <md-icon class="sort_btn_icon merged" md-font-icon="icon-chevron-up"></md-icon>
-                        <md-icon md-font-icon="icon-chevron-down"></md-icon>
-                      </md-button>
-                      <md-button ng-show="showCust" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('customer',null,'Customer')">
-                        <md-icon ng-if="reverse==true" class="sort_btn_icon" md-font-icon="icon-chevron-up"></md-icon>
-                        <md-icon ng-if="reverse==false" md-font-icon="icon-chevron-down"></md-icon>
-                      </md-button>
-                    </div>
-                  </div>
+                <div class="toolbar" layout="row" layout-align="end center" ng-if="vm.activePaymentPaneIndex === 1">
+                    <md-button class="md-icon-button" style="margin-right: -10px"
+                               ng-click="vm.addInvoice()"
+                               aria-label="Back">
+                        <md-icon md-font-icon="icon-close"></md-icon>
+                    </md-button>
                 </div>
+                <!-- / CONTENT TOOLBAR -->
 
-                <div class="productName" layout="column" layout-align="center start" flex>
-                  <div layout="row">
-                    <span layout="column" layout-align="center center">Date</span>
-                    <div layout="column" layout="center center">
-                      <md-button ng-hide="showDate" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('paymentDate',true,'Date')">
-                        <md-icon class="sort_btn_icon merged" md-font-icon="icon-chevron-up"></md-icon>
-                        <md-icon md-font-icon="icon-chevron-down"></md-icon>
-                      </md-button>
-                      <md-button ng-show="showDate" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('paymentDate',null,'Date')">
-                        <md-icon ng-if="reverse==true" class="sort_btn_icon" md-font-icon="icon-chevron-up"></md-icon>
-                        <md-icon ng-if="reverse==false" md-font-icon="icon-chevron-down"></md-icon>
-                      </md-button>
-                    </div>
-                  </div>
+                <!-- CONTENT WRAPPER -->
+                <div class="content-wrapper" layout="row" flex>
+                    <md-tabs md-selected="vm.activePaymentPaneIndex" class="content-tabs fixed-tab" md-dynamic-height="{{vm.dynamicHeight}}" flex>
+                        <!-- INVOICE LIST PANE -->
+                        <md-tab>
+                            <md-tab-label>Plans List Pane</md-tab-label>
+                            <md-tab-body>
+                                <div layout="row">
+                                    <div flex class="content main-list-pane"
+                                         ng-include="'app/main/payment/views/list/list-view.html'" ms-scroll>
+                                    </div>
+                                </div>
+
+                            </md-tab-body>
+                        </md-tab>
+                        <!-- / INVOICE LIST PANE -->
+
+                        <!-- INVOICE DISPLAY PANE -->
+                        <md-tab>
+                            <md-tab-label>Plans Display Pane</md-tab-label>
+                            <md-tab-body>
+                                <div class="content plan-display-pane mb-50"
+                                     ng-include="'app/main/payment/views/read/read-view.html'" ms-scroll>
+                                </div>
+                                <div md-whiteframe="8dp" layout="row" layout-align="space-between center" class="bottom-fixed-bar fixed">
+                                    <div layout="row"></div>
+
+                                    <div layout="row" class="layout-row">
+                                        <md-button ng-click="clearform()">Clear</md-button>
+                                        <md-button ng-disabled="vm.submitted" type="submit" form="paymentForm" class="md-raised md-accent">Save</md-button>
+                                    </div>
+                                </div>
+                            </md-tab-body>
+                        </md-tab>
+                        <!-- / INVOICE DISPLAY PANE -->
+                    </md-tabs>
                 </div>
-
-                <div class="productName" layout="column" layout-align="center end" flex>
-                  <div layout="row" style="position:relative;right: -15px">
-                    <span layout="column" layout-align="center center">Amount</span>
-                    <div layout="column" layout="center center">
-                      <md-button ng-hide="showAmount" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('amount',true,'Amount')">
-                        <md-icon class="sort_btn_icon merged" md-font-icon="icon-chevron-up"></md-icon>
-                        <md-icon md-font-icon="icon-chevron-down"></md-icon>
-                      </md-button>
-                      <md-button ng-show="showAmount" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('amount',null,'Amount')">
-                        <md-icon ng-if="reverse==true" class="sort_btn_icon" md-font-icon="icon-chevron-up"></md-icon>
-                        <md-icon ng-if="reverse==false" md-font-icon="icon-chevron-down"></md-icon>
-                      </md-button>
-                    </div>
-                  </div>
-                </div>
-
-                <div flex="5"></div>
-
-                <div class="productName" layout="row" layout-align="start center" flex>
-                  <div layout="row">
-                    <span layout="column" layout-align="center center">Method</span>
-                    <div layout="column" layout="center center">
-                      <md-button ng-hide="showMethod" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('paymentMethod',true,'Method')">
-                        <md-icon class="sort_btn_icon merged" md-font-icon="icon-chevron-up"></md-icon>
-                        <md-icon md-font-icon="icon-chevron-down"></md-icon>
-                      </md-button>
-                      <md-button ng-show="showMethod" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('paymentMethod',null,'Metohd')">
-                        <md-icon ng-if="reverse==true" class="sort_btn_icon" md-font-icon="icon-chevron-up"></md-icon>
-                        <md-icon ng-if="reverse==false" md-font-icon="icon-chevron-down"></md-icon>
-                      </md-button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="productName" layout="column" layout-align="center center" flex="10">
-                  <div layout="row" layout-align="center center" style="position:relative;right: -20px">
-                    <span layout="column" layout-align="center center">Status</span>
-                    <div layout="column" layout="center center">
-                      <md-button ng-hide="showStat" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('invoiceStatus',true,'Status')">
-                        <md-icon class="sort_btn_icon merged" md-font-icon="icon-chevron-up"></md-icon>
-                        <md-icon md-font-icon="icon-chevron-down"></md-icon>
-                      </md-button>
-                      <md-button ng-show="showStat" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('invoiceStatus',null,'Status')">
-                        <md-icon ng-if="reverse==true" class="sort_btn_icon" md-font-icon="icon-chevron-up"></md-icon>
-                        <md-icon ng-if="reverse==false" md-font-icon="icon-chevron-down"></md-icon>
-                      </md-button>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-          <!-- / CONTENT TOOLBAR -->
-
-            <!-- CONTENT WRAPPER -->
-            <div class="content-wrapper" layout="row" flex>
-
-                <md-tabs md-selected="vm.activeInvoicePaneIndex" class="invoice-tabs" md-dynamic-height="{{vm.dynamicHeight}}" flex>
-                    <!-- INVOICE LIST PANE -->
-                    <md-tab>
-                        <md-tab-label>Payment List Pane</md-tab-label>
-                        <md-tab-body>
-                          <div class="preloader" layout="row" layout-sm="column" layout-align="space-around" ng-hide="listLoaded">
-                            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-                          </div>
-                            <div class="content invoice-list-pane"
-                                 ng-include="'app/main/payment/views/list/list-view.html'" ms-scroll>
-                            </div>
-                        </md-tab-body>
-                    </md-tab>
-                    <!-- / INVOICE LIST PANE -->
-
-                    <!-- INVOICE DISPLAY PANE -->
-                    <md-tab>
-                        <md-tab-label>Payment Display Pane</md-tab-label>
-                        <md-tab-body>
-                            <div class="content invoice-display-pane"
-                                 ng-include="'app/main/payment/views/read/read-view.html'" ms-scroll>
-                            </div>
-                        </md-tab-body>
-                    </md-tab>
-                    <!-- / INVOICE DISPLAY PANE -->
-                </md-tabs>
+                <!-- / CONTENT WRAPPER -->
 
             </div>
-            <!-- / CONTENT WRAPPER -->
 
+            <div flex class="inpage-readpane" layout="column" md-whiteframe="4dp" ng-if="showInpageReadpane">
+                <div layout="row" layout-align="space-between center" class="inpage-readpane-toolbar">
+                    <h3 class="group-sub-head" layout="row" layout-align="start center">Plan Info</h3>
+                    <div layout="row">
+                        <md-menu>
+                            <md-button aria-label="More" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                                <md-icon md-font-icon="icon-menu"></md-icon>
+                                <md-tooltip>Payment Action</md-tooltip>
+                            </md-button>
+
+                            <md-menu-content width="3">
+                                <md-menu-item>
+                                    <md-button aria-label="Print" ng-click="printDiv('paymentPreview')">
+                                        <md-icon md-font-icon="icon-floppy"></md-icon>
+                                        <span>Print</span>
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button aria-label="Email" ng-click="emailPayment($event,'paymentPreview')">
+                                        <md-icon md-font-icon="icon-email"></md-icon>
+                                        <span>Email</span>
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button aria-label="Delete" ng-disabled="vm.selectedPayment.status=='Cancelled'" ng-click="showCancelPaymentConfirm($event,vm.selectedPayment)">
+                                        <md-icon md-font-icon="icon-delete"></md-icon>
+                                        <span>Cancel Payment</span>
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                        <md-button class="md-icon-button" ng-click="switchInfoPane('close',vm.selectedPlan)">
+                            <md-icon md-font-icon="icon-close"></md-icon>
+                            <md-tooltip>Close</md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+                <div class="preloader animate-fade-in-out" ng-show="!isReadLoaded" style="top: 35px;">
+                    <md-progress-circular></md-progress-circular>
+                </div>
+                <md-content flex ms-scroll layout="column" layout-align="start center" class="inpage-readpane-body">
+                    <div id="paymentPreview" md-whiteframe="1dp" style="width: 700px"></div>
+                </md-content>
+
+                <div layout="row" layout-align="end center" md-whiteframe="8dp" class="bottom-fixed-bar absolute" ng-if="inpageReadPaneEdit">
+                    <div layout="row"></div>
+                    <div layout="row" class="layout-row">
+                        <md-button ng-click="editPlan(tempEditPlan)">Reset</md-button>
+                        <md-button ng-disabled="vm.submitted" type="submit" form="editPlanForm" class="md-raised md-accent">Update</md-button>
+                    </div>
+                </div>
+            </div>
+            <!-- / CONTENT CARD -->
         </div>
-        <!-- / CONTENT CARD -->
-    </div>
-
-    <!-- / CENTER -->
-
-    <!-- CENTER -->
-    <div ng-switch-when="add" class="center" layout="column" flex>
-
-        <!-- CONTENT CARD -->
-        <div class="content-card" layout="column" flex>
-
-            <!-- INVOICE VIEW PANE TOOLBAR -->
-           <div class="toolbar" layout="row" layout-align="space-between center" ng-if="vm.activeInvoicePaneIndex === 1">
-                <md-button class="md-icon-button"
-                           ng-click="vm.closeReadPane()"
-                           aria-label="Back">
-                    <md-icon md-font-icon="icon-keyboard-backspace"></md-icon>
-                </md-button>
-            </div>
-            <!-- / INVOICE VIEW PANE TOOLBAR -->
-
-            <!-- CONTENT TOOLBAR -->
-            <!--<div class="toolbar" layout="row" layout-align="space-between center" ng-if="vm.activeInvoicePaneIndex === 0">-->
-
-                <!--<div layout="row" layout-align="start center">-->
-                    <!--<md-checkbox class="no-label" aria-label="{{vm.allChecked?'Uncheck All':'Check All'}}"-->
-                                 <!--ng-checked="vm.allChecked" ng-click="vm.checkAll()"></md-checkbox>-->
-                    <!--<md-menu>-->
-                        <!--<md-button class="md-icon-button"-->
-                                   <!--ng-click="$mdOpenMenu($event)"-->
-                                   <!--aria-label="Filters">-->
-                            <!--<md-icon md-font-icon="icon-menu-down"></md-icon>-->
-                        <!--</md-button>-->
-                        <!--<md-menu-content width="3">-->
-                            <!--<md-menu-item>-->
-                                <!--<md-button aria-label="All">-->
-                                    <!--All-->
-                                <!--</md-button>-->
-                            <!--</md-menu-item>-->
-                            <!--<md-menu-item>-->
-                                <!--<md-button aria-label="None">None-->
-                                <!--</md-button>-->
-                            <!--</md-menu-item>-->
-                            <!--<md-menu-item>-->
-                                <!--<md-button aria-label="Starred">Starred-->
-                                <!--</md-button>-->
-                            <!--</md-menu-item>-->
-                            <!--<md-menu-item>-->
-                                <!--<md-button aria-label="Unstarred">Unstarred-->
-                                <!--</md-button>-->
-                            <!--</md-menu-item>-->
-                        <!--</md-menu-content>-->
-                    <!--</md-menu>-->
-
-                    <!--<div class="divider-vertical" hide show-gt-sm></div>-->
-
-                    <!--<md-button class="md-icon-button" aria-label="Archive" hide show-gt-sm>-->
-                        <!--<md-icon md-font-icon="icon-archive"></md-icon>-->
-                        <!--<md-tooltip><span>Archive</span></md-tooltip>-->
-                    <!--</md-button>-->
-
-                    <!--<md-button class="md-icon-button" aria-label="Clear" hide show-gt-sm>-->
-                        <!--<md-icon md-font-icon="icon-alert-octagon"></md-icon>-->
-                        <!--<md-tooltip><span>Clear</span></md-tooltip>-->
-                    <!--</md-button>-->
-
-                    <!--<md-button class="md-icon-button" aria-label="Delete" hide show-gt-sm>-->
-                        <!--<md-icon md-font-icon="icon-delete"></md-icon>-->
-                        <!--<md-tooltip><span>Delete</span></md-tooltip>-->
-                    <!--</md-button>-->
-
-
-                    <!--<md-menu hide-gt-sm>-->
-                        <!--<md-button class="md-icon-button"-->
-                                   <!--ng-click="$mdOpenMenu($event)">-->
-                            <!--<md-icon md-font-icon="icon-dots-vertical"></md-icon>-->
-                        <!--</md-button>-->
-                        <!--<md-menu-content width="3">-->
-                            <!--<md-menu-item>-->
-                                <!--<md-button aria-label="Archive">-->
-                                    <!--<md-icon md-font-icon="icon-archive"></md-icon>-->
-                                    <!--<span>Archive</span>-->
-                                <!--</md-button>-->
-                            <!--</md-menu-item>-->
-                            <!--<md-menu-item>-->
-                                <!--<md-button aria-label="Clear">-->
-                                    <!--<md-icon md-font-icon="icon-alert-octagon"></md-icon>-->
-                                    <!--<span>Clear</span>-->
-                                <!--</md-button>-->
-                            <!--</md-menu-item>-->
-                            <!--<md-menu-item>-->
-                                <!--<md-button aria-label="Delete">-->
-                                    <!--<md-icon md-font-icon="icon-delete"></md-icon>-->
-                                    <!--<span>Delete</span>-->
-                                <!--</md-button>-->
-                            <!--</md-menu-item>-->
-                        <!--</md-menu-content>-->
-                    <!--</md-menu>-->
-                <!--</div>-->
-
-                <!--<div layout="row" layout-align="start center">-->
-                    <!--<span class="page-info" hide-sm>1 - 100 of 980</span>-->
-
-                    <!--<md-button class="md-icon-button arrow" aria-label="Previous">-->
-                        <!--<md-icon md-font-icon="icon-chevron-left"></md-icon>-->
-                        <!--<md-tooltip><span>Previous</span></md-tooltip>-->
-                    <!--</md-button>-->
-
-                    <!--<md-button class="md-icon-button arrow" aria-label="Next">-->
-                        <!--<md-icon md-font-icon="icon-chevron-right"></md-icon>-->
-                        <!--<md-tooltip><span>Next</span></md-tooltip>-->
-                    <!--</md-button>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!-- / CONTENT TOOLBAR -->
-
-            <!-- CONTENT WRAPPER -->
-            <md-content class="content-wrapper" ms-scroll flex>
-
-                    <!--<form name="vm.editForm" id="paymentForm" ng-submit="submit()" novalidate>-->
-                      <!--&lt;!&ndash;<md-content flex layout-padding> style="height:600px;overflow-y: scroll;"&ndash;&gt;-->
-                      <!--<div class="body-content-wrap">-->
-
-                        <!--<div layout-gt-sm="row" class="rel" flex="50" style="margin-bottom: 50px">-->
-                          <!--<div layout="row" layout-align="center center" class="preloader-dot-auto" ng-show="vm.isAutoDisabled" >-->
-                            <!--<img src="assets/images/142.gif" alt=""/>-->
-                          <!--</div>-->
-                          <!--<md-autocomplete flex-->
-                                           <!--md-input-id="acProfileIdPayment"-->
-                                           <!--ng-keydown="toggleProfileSearchMre($event)"-->
-                                           <!--ng-required="true"-->
-                                           <!--md-select-on-match-->
-                                           <!--ng-keypress="enter($event)"-->
-                                           <!--ng-disabled="vm.isAutoDisabled"-->
-                                           <!--md-input-name="autocompleteField"-->
-                                           <!--md-no-cache="vm.noCache"-->
-                                           <!--md-selected-item="customer_supplier.customer"-->
-                                           <!--md-selected-item-change="loadInvoice(customer_supplier.customer)"-->
-                                           <!--md-search-text-change="loadProfileByKeyword(vm.searchText)"-->
-                                           <!--md-search-text="vm.searchText"-->
-                                           <!--md-items="item in vm.querySearch(vm.searchText)"-->
-                                           <!--md-item-text="item.display"-->
-                                           <!--md-floating-label="Profile"-->
-                                           <!--md-min-length=""-->
-                                           <!--autocomplete-validator style="height: 65px;">-->
-                            <!--<md-item-template>-->
-                              <!--<span md-highlight-text="vm.searchText">{{item.display+" : "+item.value.othername}}</span>-->
-                            <!--</md-item-template>-->
-                              <!--<div ng-messages="vm.editForm.autocompleteField.$error">-->
-                                  <!--<div ng-message="invalidInput" ng-if="!vm.editForm.autocompleteField.$error.required">Please select a valid profile</div>-->
-                              <!--</div>-->
-                          <!--</md-autocomplete>-->
-
-                        <!--</div>-->
-
-                        <!--<div layout-gt-sm="row">-->
-                          <!--<div class="md-block p-l-50" style="padding-top: 13px;" flex-gt-sm>-->
-                            <!--&lt;!&ndash;<label>Payment Date</label>&ndash;&gt;-->
-                            <!--<md-datepicker ng-model="content.paymentDate" ng-init="content.paymentDate=today;" style="width: 300px;" placeholder="Payment Date" label="Payment Date">-->
-                            <!--</md-datepicker>-->
-                          <!--</div>-->
-                          <!--<md-input-container class="md-block p-l-50" flex-gt-sm>-->
-                            <!--<label>Currency</label>-->
-                            <!--<md-select ng-required="false" name="currency" ng-change="convertCurrency(content.preferredcurrency)" ng-model="content.preferredcurrency">-->
-                              <!--<md-option ng-value="BaseCurrency">{{BaseCurrency}}</md-option>-->
-                              <!--<md-option ng-hide="currency==BaseCurrency" ng-repeat="currency in prefferedCurrencies" ng-value="currency">{{currency}}</md-option>-->
-                            <!--</md-select>-->
-                          <!--</md-input-container>-->
-                          <!--<div hide-xs hide-sm flex-gt-sm="5">-->
-                          <!--</div>-->
-                          <!--<md-input-container class="md-block" flex-gt-sm>-->
-                            <!--<label>Currency Convert Rate</label>-->
-                            <!--<input ng-required="false" minlength="null" md-maxlength="null" type="" name="rate" min="" ng-pattern="" ng-disabled="true" ng-model="currencyRate">-->
-                          <!--</md-input-container>-->
-                        <!--</div>-->
-                      <!--</div>-->
-
-                      <!--<div class="body-content-wrap">-->
-
-                        <!--<div style="border-radius: 3px;" md-whiteframe="1dp">-->
-                          <!--<div class="inv-list-header" layout="row" flex>-->
-                          <!--<span flex="10">INVOICE NO</span>-->
-                          <!--<span flex>INVOICE AMOUNT</span>-->
-                          <!--<span flex>ADJUSTMENTS</span>-->
-                          <!--<span flex>PAID AMOUNT</span>-->
-                          <!--<span flex>BALANCE AMOUNT</span>-->
-                        <!--</div>-->
-                          <!--<md-content ms-scroll>-->
-                          <!--<md-list flex class="carded-dashboard-list" style="height:250px;">-->
-                            <!--<div layout="row" layout-align="center center" style="height: 100%;" ng-hide="vm.isLoaded">-->
-                              <!--<img src="assets/images/142.gif" alt="" class="preloader-dot"/>-->
-                            <!--</div>-->
-
-                            <!--<md-list-item layout="row" ng-repeat="item in invoicelist" ng-click="null" style="text-align: right">-->
-                              <!--<span flex="10" style="text-align: left">{{item.invoiceNo}}</span>-->
-                              <!--<span flex>{{item.invoiceAmount| isoCurrency:content.preferredcurrency}}</span>-->
-                              <!--<span flex>-->
-                                <!--<label class="md-card-label-wrap" ng-if="item.adjustmenttype=='0'">{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>-->
-                                  <!--<label ng-if="item.adjustmenttype=='1'" class="md-card-label-wrap">-{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>-->
-                                  <!--<label ng-if="item.adjustmenttype=='2'" class="md-card-label-wrap">+{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>-->
-                              <!--</span>-->
-                              <!--<span flex>{{item.paidAmount| isoCurrency:content.preferredcurrency}}</span>-->
-                              <!--<span flex>{{item.balancepayment| isoCurrency:content.preferredcurrency}}</span>-->
-                            <!--</md-list-item>-->
-                          <!--</md-list>-->
-                        <!--</md-content>-->
-
-                          <!--<md-divider></md-divider>-->
-
-                          <!--<div layout-gt-sm="row" style="text-align: center;padding: 10px 0;margin-bottom: 20px">-->
-                          <!--<div flex>-->
-                            <!--<label class="calc-detail-label">Total Balance Payments</label>-->
-                          <!--</div>-->
-                          <!--<div flex style="font-weight: 400">-->
-                            <!--<label class="calc-detail-label">{{invoicelist[0].totalbalance| isoCurrency:content.preferredcurrency}}</label>-->
-                          <!--</div>-->
-                          <!--&lt;!&ndash;<label style="font-size: 20px;font-weight: 600;padding-left: 100px; height: 30px">{{items[0].amount| currency}}</label>&ndash;&gt;-->
-                        <!--</div>-->
-                        <!--</div>-->
-
-                        <!--&lt;!&ndash;<div class="body-content-wrap"> ng-click="addNewUser($event)"&ndash;&gt;-->
-
-                        <!--<div layout-gt-sm="row">-->
-                          <!--<md-input-container class="md-block" flex>-->
-                            <!--<label>Payment Amount</label>-->
-                            <!--<input ng-required="true" minlength="null" ng-maxlength="35" type="number" name="amount" min="0" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" style="text-align:right;" ng-model="content.amount">-->
-                            <!--<div ng-messages="vm.editForm.amount.$error">-->
-                              <!--<div ng-message="maxlength">Amount must be 1-35 characters</div>-->
-                            <!--</div>-->
-                          <!--</md-input-container>-->
-
-                          <!--<div flex="10"></div>-->
-
-                          <!--<div flex>-->
-                            <!--<md-input-container class="md-block p-l-50" flex-gt-sm>-->
-                              <!--<label>Payment Method</label>-->
-                              <!--<md-select ng-required="true" name="paymentMethod" ng-model="content.paymentMethod">-->
-                                <!--<md-divider></md-divider>-->
-                                <!--<md-option value="Cash">Cash</md-option>-->
-                                <!--<md-option value="Cheque">Cheque</md-option>-->
-                                <!--<md-option value="Card">Credit/Debit Card</md-option>-->
-                                <!--&lt;!&ndash;<md-option ng-repeat="profile in profilelist" ng-value="profile">{{profile.profilename}}</md-option>&ndash;&gt;-->
-                              <!--</md-select>-->
-                              <!--&lt;!&ndash;<div ng-messages="vm.editForm.paymentMethod.$error">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<div ng-message="required">Please select the Payment Method!</div>&ndash;&gt;-->
-                              <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                            <!--</md-input-container>-->
-                            <!--<md-input-container ng-show="content.paymentMethod=='Cheque'" class="md-block" flex-gt-sm style="margin-top: 30px">-->
-                              <!--<label>Cheque No</label>-->
-                              <!--<input ng-required="false" minlength="null" md-maxlength="null" type="" name="chequeNo" ng-pattern="" ng-model="content.chequeNo">-->
-                            <!--</md-input-container>-->
-                            <!--&lt;!&ndash;<div ng-if="content.paymentMethod=='Card'">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<div ng-init="addCardPayment($event, content.amount)"></div>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                          <!--</div>-->
-                        <!--</div>-->
-                      <!--</div>-->
-
-
-                      <!--<div class="body-content-wrap">-->
-
-                        <!--<div layout-gt-sm="row" ng-hide="true">-->
-                          <!--<div layout-gt-sm="row">-->
-                            <!--<md-input-container class="md-block p-l-50" flex-gt-sm>-->
-                              <!--<label>Bank Charges</label>-->
-                              <!--<input ng-required="false" minlength="null" md-maxlength="null" style="width: 180px;" type="number" ng-init="content.bankCharges=0" name="bankCharges" min="0" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" ng-model="content.bankCharges">-->
-                            <!--</md-input-container>-->
-                          <!--</div>-->
-                        <!--</div>-->
-
-                        <!--<div layout="row" flex>-->
-                          <!--<md-input-container class="md-block" flex>-->
-                            <!--<label>Notes</label>-->
-                            <!--<input ng-required="false" minlength="null" ng-maxlength="250" type="" name="note" ng-pattern="" ng-model="content.note">-->
-                            <!--<div ng-messages="vm.editForm.note.$error">-->
-                              <!--<div ng-message="maxlength">Note must be 1-250 characters</div>-->
-                            <!--</div>-->
-                          <!--</md-input-container>-->
-                        <!--</div>-->
-
-                      <!--</div>-->
-
-
-                      <!--&lt;!&ndash;</md-content>&ndash;&gt;-->
-
-                      <!--&lt;!&ndash;<div class="form-footer-btn-wrap">&ndash;&gt;-->
-                      <!--&lt;!&ndash;<div layout-gt-sm="row" class="p-0">&ndash;&gt;-->
-                      <!--&lt;!&ndash;&lt;!&ndash;<a flex="50" class="md-raise btn btn-cancel" ng-click="returntolist()">cancel&ndash;&gt;&ndash;&gt;-->
-                      <!--&lt;!&ndash;&lt;!&ndash;</a>&ndash;&gt;&ndash;&gt;-->
-                      <!--&lt;!&ndash;&lt;!&ndash;<a flex="50" class="md-raise btn btn-submit" type="submit" ng-click="showListBottomSheet()">submit&ndash;&gt;&ndash;&gt;-->
-                      <!--&lt;!&ndash;&lt;!&ndash;</a>&ndash;&gt;&ndash;&gt;-->
-                      <!--&lt;!&ndash;<md-button flex="50" class="md-raise btn btn-cancel" ng-click="clearform();" type="button">CLEAR</md-button>&ndash;&gt;-->
-                      <!--&lt;!&ndash;<md-button flex="50" class="md-raise btn btn-submit" ng-disabled="submitted" type="submit">SUBMIT</md-button>&ndash;&gt;-->
-                      <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                      <!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-
-                    <!--</form>-->
-                <form name="vm.editForm" id="paymentForm" ng-submit="submit()" novalidate>
-                    <!--CREATE NEW INVOICE _ CARDED=================================================-->
-                    <md-card flex class="input-block-gen">
-                        <md-card-title>
-                            <div layout="row" layout-align="start center">
-                                <md-icon md-font-icon="icon-cog"></md-icon> <h3>General Details</h3>
-                            </div>
-                        </md-card-title>
-                        <md-card-content md-whiteframe="1dp">
-
-                            <div layout="row">
-                                <div layout="row" flex="30">
-                                    <div layout="row" layout-align="center center" class="preloader-dot-auto" ng-show="vm.isAutoDisabled" >
-                                        <img src="assets/images/142.gif" alt=""/>
-                                    </div>
-                                    <md-autocomplete flex
-                                                     md-input-id="acProfileIdPayment"
-                                                     ng-keydown="toggleProfileSearchMre($event)"
-                                                     ng-required="true"
-                                                     md-select-on-match
-                                                     ng-keypress="enter($event)"
-                                                     ng-disabled="vm.isAutoDisabled"
-                                                     md-input-name="autocompleteField"
-                                                     md-no-cache="vm.noCache"
-                                                     md-selected-item="customer_supplier.customer"
-                                                     md-selected-item-change="loadInvoice(customer_supplier.customer)"
-                                                     md-search-text-change="loadProfileByKeyword(vm.searchText)"
-                                                     md-search-text="vm.searchText"
-                                                     md-items="item in vm.querySearch(vm.searchText)"
-                                                     md-item-text="item.display"
-                                                     md-floating-label="Name"
-                                                     md-min-length=""
-                                                     autocomplete-validator>
-                                        <md-item-template>
-                                            <span md-highlight-text="vm.searchText">{{item.display+" : "+item.value.othername}}</span>
-                                        </md-item-template>
-                                        <div ng-messages="vm.editForm.autocompleteField.$error">
-                                            <div ng-message="invalidInput" ng-if="!vm.editForm.autocompleteField.$error.required">Please select a valid profile</div>
-                                        </div>
-                                    </md-autocomplete>
-                                </div>
-
-                                <div flex="5"></div>
-
-                                <md-input-container flex="30">
-                                    <label>Payment Date</label>
-                                    <md-datepicker ng-model="content.paymentDate" ng-init="content.paymentDate=today;"></md-datepicker>
-                                </md-input-container>
-                            </div>
-                            <div layout="column">
-                                <div style="border: solid 1px #eee;border-radius: 3px;" flex>
-                                    <div class="inv-list-header" layout="row" flex>
-                                        <span flex="10">Invoice No</span>
-                                        <span flex>Invoice Amount</span>
-                                        <span flex>Adjustments</span>
-                                        <span flex>Paid Amount</span>
-                                        <span flex>Balance Amount</span>
-                                    </div>
-                                    <md-content ms-scroll class="payment-list-body" flex>
-                                        <div layout="row" layout-align="center center" class="state-checker" ng-if="!vm.isLoaded">
-                                            <img src="assets/images/142.gif" alt="" class="preloader-dot"/>
-                                        </div>
-
-                                        <div layout="row" layout-align="center center" style="height: 100%;" class="state-checker" ng-if="customer_supplier.customer == '' || customer_supplier.customer == null || customer_supplier.customer == undefined">
-                                            <span><md-icon md-font-icon="icon-information-outline"></md-icon> No customer has been selected yet</span>
-                                        </div>
-
-
-                                        <div layout="row" class="payment-list-item" ng-repeat="item in invoicelist" ng-if="invoicelist.length > 0 && customer_supplier.customer != null">
-                                            <span flex="10" style="text-align: left">{{item.invoiceNo}}</span>
-                                            <span flex>{{item.invoiceAmount| isoCurrency:content.preferredcurrency}}</span>
-                                            <span flex>
-                                                <label ng-if="item.adjustmenttype=='0'">{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
-                                                  <label ng-if="item.adjustmenttype=='1'">-{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
-                                                  <label ng-if="item.adjustmenttype=='2'">+{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
-                                            </span>
-                                            <span flex>{{item.paidAmount| isoCurrency:content.preferredcurrency}}</span>
-                                            <span flex>{{item.balancepayment| isoCurrency:content.preferredcurrency}}</span>
-                                        </div>
-
-                                    </md-content>
-                                </div>
-                            </div>
-
-                        </md-card-content>
-                        <md-card-actions>
-                            <div layout="row" layout-align="start start" class="product-sub-block" style="padding-bottom: 0px">
-                                <div layout="column" flex></div>
-                                <div layout="column" flex>
-                                    <div layout="row" layout-align="space-between center" class="total sub-pricing-info" style="padding: 10px 0">
-                                        <span>Total Balance Payments</span>
-                                        <span class="li-connector" flex></span>
-                                        <span ng-init="invoicelist[0].totalbalance = 0">{{invoicelist[0].totalbalance| isoCurrency:content.preferredcurrency}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </md-card-actions>
-                    </md-card>
-
-                    <md-card flex class="input-block-gen">
-                        <md-card-title>
-                            <div layout="row" layout-align="start center">
-                                <md-icon md-font-icon="icon-credit-card-multiple"></md-icon> <h3>Payment Details</h3>
-                            </div>
-                        </md-card-title>
-                        <md-card-content>
-                            <div layout="row">
-                                <md-input-container flex="30">
-                                    <label>Currency</label>
-                                    <md-select ng-required="false" name="currency" ng-change="convertCurrency(content.preferredcurrency)" ng-model="content.preferredcurrency">
-                                        <md-option ng-value="BaseCurrency">{{BaseCurrency}}</md-option>
-                                        <md-option ng-hide="currency==BaseCurrency" ng-repeat="currency in prefferedCurrencies" ng-value="currency">{{currency}}</md-option>
-                                    </md-select>
-                                </md-input-container>
-
-                                <div flex="5"></div>
-
-                                <div layout="row" layout-align="start center" flex="30" class="state-capsule">
-                                    <div layout="row">
-                                        <span>Currency Convert Rate</span>
-                                        <span>{{currencyRate}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div layout="row">
-                                <md-input-container flex="30">
-                                    <label>Payment Amount</label>
-                                    <input ng-required="true" minlength="null" ng-maxlength="35" type="number" name="amount" min="0" step="0.01" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" ng-model="content.amount">
-                                    <div ng-messages="vm.editForm.amount.$error">
-                                        <div ng-message="maxlength">Amount must be between 1-35 characters</div>
-                                    </div>
-                                </md-input-container>
-
-                                <div flex="5"></div>
-
-                                <md-input-container flex="30" >
-                                    <label>Payment Method</label>
-                                    <md-select ng-required="true" name="paymentMethod" ng-model="content.paymentMethod">
-                                        <md-option value="Cash">Cash</md-option>
-                                        <md-option value="Cheque">Cheque</md-option>
-                                        <md-option value="Card">Credit/Debit card</md-option>
-                                        <!--<md-option ng-repeat="profile in profilelist" ng-value="profile">{{profile.profilename}}</md-option>-->
-                                    </md-select>
-                                </md-input-container>
-
-                                <div flex="5"></div>
-
-                                <md-input-container ng-show="content.paymentMethod=='Cheque'" flex="30">
-                                    <label>Cheque No</label>
-                                    <input ng-required="false" minlength="null" md-maxlength="null" type="" name="chequeNo" ng-pattern="" ng-model="content.chequeNo">
-                                </md-input-container>
-                            </div>
-                        </md-card-content>
-                    </md-card>
-
-                    <md-card flex class="input-block-gen">
-                        <md-card-title>
-                            <div layout="row" layout-align="start center">
-                                <md-icon md-font-icon="icon-note"></md-icon> <h3>Other</h3>
-                            </div>
-                        </md-card-title>
-                        <md-card-content>
-                            <div layout="row">
-                                <md-input-container flex>
-                                    <label>Notes</label>
-                                    <input ng-required="false" minlength="null" ng-maxlength="250" name="note" ng-model="content.note">
-                                    <div ng-messages="vm.editForm.note.$error">
-                                        <div ng-message="maxlength">Note must be between 1-250 characters</div>
-                                    </div>
-                                </md-input-container>
-                            </div>
-                        </md-card-content>
-                    </md-card>
-                    <!--CREATE NEW INVOICE _ CARDED=================================================-->
-                </form>
-
-                <!--<md-content style="width:100%;height: 100%" ms-scroll>-->
-                  <!--<form name="editForm" ng-submit="submit()">-->
-                    <!--<div class="section_padding" style="background-color: #E5ECEF">-->
-                      <!--<div layout="row">-->
-                        <!--<div layout="column">-->
-                          <!--<div layout="row">-->
-                            <!--<div class="md-block" style="width: 300px">-->
-                              <!--<md-date-picker model="content.invoiceDate" label="Invoice Date"/>-->
-                            <!--</div>-->
-                          <!--</div>-->
-                          <!--<div layout="row">-->
-
-                            <!--<md-input-container>-->
-                              <!--<label>Category</label>-->
-                              <!--<md-select ng-required="false" name="receivedStore" ng-model="content.category" ng-change="FilterUsers(content.category)"  style="width: 300px;">-->
-                                <!--<md-divider></md-divider>-->
-                                <!--<md-option ng-repeat="value in categories" ng-value="value">{{value}}</md-option>-->
-                              <!--</md-select>-->
-                            <!--</md-input-container>-->
-                          <!--</div>-->
-                          <!--<div layout="row">-->
-                            <!--<!--<md-input-container class="md-block">-->
-                            <!--<!--<label>Name</label>-->
-                            <!--<!--<md-select ng-required="true" name="profilename" ng-change="GetAddr(content.profile)" ng-model="content.profile" style="width: 300px;">-->
-                            <!--<!--<md-divider></md-divider>-->
-                            <!--<!--<md-option ng-repeat="users in filteredUsers" ng-value="users">{{users.profilename}}</md-option>-->
-                            <!--<!--</md-select>-->
-                            <!--<!--</md-input-container>-->
-                            <!--<md-autocomplete flex-->
-                                             <!--ng-required="true"-->
-                                             <!--md-select-on-match-->
-                                             <!--ng-keypress="enter($event)"-->
-                                             <!--ng-disabled="ctrl.isDisabled"-->
-                                             <!--md-input-name="acName"-->
-                                             <!--md-no-cache="ctrl.noCache"-->
-                                             <!--md-selected-item="content.profile"-->
-                                             <!--md-search-text="ctrl.searchProfile"-->
-                                             <!--md-selected-item-change="GetAddr(content.profile,0)"-->
-                                             <!--md-search-text-change="GetAddr(ctrl.searchProfile,1)"-->
-                                             <!--md-items="item in queryProfile(ctrl.searchProfile)"-->
-                                             <!--md-item-text="item.profilename"-->
-                                             <!--md-floating-label="Name"-->
-                                             <!--md-min-length="" style="height: 55px;">-->
-                              <!--<md-not-found>No items.</md-not-found>-->
-                              <!--<md-item-template>-->
-                                <!--<span md-highlight-text="ctrl.searchText">{{item.profilename+" "+item.othername}}</span>-->
-                              <!--</md-item-template>-->
-                            <!--</md-autocomplete>-->
-                          <!--</div>-->
-                          <!--<!--<hr/>-->
-                          <!--<div layout="row">-->
-                            <!--<p class="p-word-wrap-spec font-Lato">{{content.bill_addr}}</p>-->
-                            <!--<!--<label style="margin-left: 150px">No 53, Lorenz Street,</label>-->
-                          <!--</div>-->
-                          <!--<div layout="row" class="p-t-20">-->
-                            <!--<md-autocomplete flex-->
-                                             <!--md-select-on-match-->
-                                             <!--ng-keypress="enter($event)"-->
-                                             <!--ng-disabled="ctrl.isDisabled"-->
-                                             <!--md-input-name="acQuotation"-->
-                                             <!--md-no-cache="ctrl.noCacheq"-->
-                                             <!--md-selected-item="quotationDet"-->
-                                             <!--md-search-text="ctrl.searchQuotation"-->
-                                             <!--md-selected-item-change="getQuotationDetails(quotationDet)"-->
-                                             <!--md-items="item in queryQuotation(ctrl.searchQuotation)"-->
-                                             <!--md-item-text="item.code"-->
-                                             <!--md-floating-label="Quotation"-->
-                                             <!--md-min-length="" style="height: 55px;">-->
-                              <!--<md-not-found>No items.</md-not-found>-->
-                              <!--<md-item-template>-->
-                                <!--<span md-highlight-text="ctrl.searchText">{{item.code}}</span>-->
-                              <!--</md-item-template>-->
-                            <!--</md-autocomplete>-->
-                          <!--</div>-->
-                          <!--<div layout="row" class="p-t-20">-->
-
-                          <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="md-block" flex="25">-->
-                          <!--<!--space keeper-->
-                        <!--</div>-->
-                        <!--<div layout="column">-->
-                          <!--<div layout="row">-->
-                            <!--<!--<div class="md-block" style="width: 300px;height: 94px">-->
-                            <!--<!--<!--<md-input-container class="md-block">-->
-                            <!--<!--<!--<label style="margin-left: 176px;color: dimgray;">Invoice No :2345</label>-->
-                            <!--<!--<!--</md-input-container>-->
-                            <!--<!--</div>-->
-                            <!--<!--<div class="md-block" style="width: 300px">-->
-                            <!--<!--<md-input-container class="md-block" flex-gt-sm>-->
-                            <!--<!--<label>Due Date</label>-->
-                            <!--<!--<input minlength="null" md-maxlength="null" type="" name="Price" ng-model="content.dueDate">-->
-                            <!--<!--</md-input-container>-->
-                            <!--<!--</div>-->
-                            <!--<div class="md-block" style="width: 300px">-->
-                              <!--<md-date-picker model="content.dueDate" label="Due Date"/>-->
-                            <!--</div>-->
-                          <!--</div>-->
-                          <!--<div layout="row" style="margin-bottom: -22px">-->
-                            <!--<md-input-container class="md-block" flex="50">-->
-                              <!--<label>Currency</label>-->
-                              <!--<md-select ng-required="false"  name="prefferedCurrency" ng-model="content.preferredCurrency" ng-change="calcRate(content.invoiceType)">-->
-                                <!--<md-select-label>Currency</md-select-label>-->
-                                <!--<md-divider></md-divider>-->
-                                <!--<md-option ng-repeat="currencyType in prefferedCurrencies" ng-value="currencyType">{{currencyType}}</md-option>-->
-                              <!--</md-select>-->
-                            <!--</md-input-container>-->
-                            <!--<md-input-container class="md-block" flex="50">-->
-                              <!--<label>Rate</label>-->
-                              <!--<input disabled type="" min="1" step="{{step}}"  ng-model="exchangeRate">-->
-                            <!--</md-input-container>-->
-                          <!--</div>-->
-
-                          <!--<div layout="row">-->
-                            <!--<md-input-container class="md-block">-->
-                              <!--<label>Invoice Type</label>-->
-                              <!--<md-select ng-required="true"  name="invoiceType" ng-model="content.invoiceType" ng-change="customValidation(content.invoiceType)"  style="width: 300px;">-->
-                                <!--<md-select-label>Invoice Type</md-select-label>-->
-                                <!--<md-divider></md-divider>-->
-                                <!--<md-option ng-repeat="types in invoicetypes" ng-value="types">{{types}}</md-option>-->
-                              <!--</md-select>-->
-                            <!--</md-input-container>-->
-                          <!--</div>-->
-                          <!--<div layout="row" ng-show="content.invoiceType=='Installment' || content.invoiceType=='Recurring'" style="height: 70px">-->
-                            <!--<md-input-container class="md-block" >-->
-                              <!--<label>Frequency</label>-->
-                              <!--<md-select ng-required="content.isFrequency" name="frequency" ng-model="content.frequency" style="width: 300px;">-->
-                                <!--<md-divider></md-divider>-->
-                                <!--<md-option ng-repeat="value in frequencies" ng-value="value">{{value}}</md-option>-->
-                              <!--</md-select>-->
-                            <!--</md-input-container>-->
-
-                          <!--</div>-->
-                          <!--<div layout="row" ng-show="content.invoiceType=='Installment'" style="height: 70px">-->
-                            <!--<md-input-container class="md-block" >-->
-                              <!--<label>Occurences</label>-->
-                              <!--<input ng-required="content.isOccurence"  minlength="" style="width: 300px;" md-maxlength="" type="number" ng-model="content.occurrence">-->
-                            <!--</md-input-container>-->
-                          <!--</div>-->
-                          <!--<!--<div layout="row" ng-show="content.invoiceType=='Recurring' || content.invoicetype=='Installement'" style="height: 70px">-->
-                          <!--<!--<md-input-container class="md-block" >-->
-                          <!--<!--<label>Due Date</label>-->
-                          <!--<!--<input ng-required=""  minlength="" style="width: 300px;" md-maxlength="" type="" ng-model="content.dueDate">-->
-                          <!--<!--</md-input-container>-->
-                          <!--<!--</div>-->
-                        <!--</div>-->
-                      <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="section_padding">-->
-                      <!--<div layout-gt-sm="row" ng-repeat="row in rows" class="h-60">-->
-                        <!--<md-autocomplete-->
-                          <!--ng-required="true"-->
-                          <!--md-select-on-match-->
-                          <!--ng-keypress="enter($event)"-->
-                          <!--ng-disabled="ctrl.isDisabled"-->
-                          <!--md-input-name="autocompleteField"-->
-                          <!--md-no-cache="ctrl.noCache"-->
-                          <!--md-selected-item="row.product"-->
-                          <!--md-selected-item-change="validateProduct(row.product,$index)"-->
-                          <!--md-search-text-change="changeState()"-->
-                          <!--md-search-text="ctrl.searchText[$index]"-->
-                          <!--md-floating-label="Product"-->
-                          <!--md-items="prod in querySearch(ctrl.searchText[$index],$index)"-->
-                          <!--md-item-text="prod.code" style="min-width: 120px !important; width: 120px">-->
-                          <!--<md-not-found>-->
-                            <!--<!--No items.-->
-                            <!--<md-button ng-hide="lostfocus"-->
-                                       <!--style="line-height: 20px;font-size: 12px"-->
-                                       <!--ng-click="loadmoreproduct(ctrl.searchText,rows,$parent.$index,'true');" type="button">Search More-->
-                            <!--</md-button>-->
-                            <!--<label ng-show="last">No items.</label>-->
-                          <!--</md-not-found>-->
-                          <!--<md-item-template>-->
-                            <!--<span md-highlight-text="ctrl.searchText">{{prod.code}}</span>-->
-                          <!--</md-item-template>-->
-                        <!--</md-autocomplete>-->
-                        <!--<div class="md-block" flex="5">-->
-                          <!--<!--space keeper-->
-                        <!--</div>-->
-                        <!--<md-input-container class="md-block" flex-gt-sm>-->
-                          <!--<label>Quantity</label>-->
-                          <!--<input ng-required="true" style="width: 75px;" type="number" min="1" ng-blur="calcTotalTax(row,$index)" ng-model="row.qty">-->
-                        <!--</md-input-container>-->
-                        <!--<div class="md-block" flex="5">-->
-                          <!--<!--space keeper-->
-                        <!--</div>-->
-                        <!--<md-input-container class="md-block" flex-gt-sm>-->
-                          <!--<label>Tax</label>-->
-                          <!--<input disabled type=""  ng-model="row.taxDisplay">-->
-                        <!--</md-input-container>-->
-                        <!--<div class="md-block" flex="5">-->
-                          <!--<!--space keeper-->
-                        <!--</div>-->
-                        <!--<md-input-container class="md-block" flex-gt-sm>-->
-                          <!--<label>Promotion</label>-->
-                          <!--<input disabled  ng-model="row.promotion">-->
-                        <!--</md-input-container>-->
-                        <!--<div class="md-block" flex="5">-->
-                          <!--<!--space keeper-->
-                        <!--</div>-->
-                        <!--<md-input-container class="md-block" flex-gt-sm>-->
-                          <!--<label>Amount</label>-->
-                          <!--<input disabled type=""  ng-model="row.rowAmtDisplay">-->
-                        <!--</md-input-container>-->
-                        <!--<div class="add-new-row remove-row remove-btn-style">-->
-                          <!--<div class="icon" ng-click="removerow($index);">-->
-                            <!--<ng-md-icon class="add-row" icon="delete" >-->
-                            <!--</ng-md-icon>-->
-                          <!--</div>-->
-                          <!--<div class="text">-->
-                            <!--Remove-->
-                          <!--</div>-->
-                        <!--</div>-->
-                        <!--<!--<md-button aria-label="menu" class="md-fab md-mini" style="background-color:#339bb9;" ng-show="row.newProduct" ng-click="addrow(row);">-->
-                        <!--<!--<md-icon md-svg-src="../img/ic_add_24px.svg">-->
-                        <!--<!--</md-icon>-->
-                        <!--<!--<md-tooltip md-direction="left">Add Product</md-tooltip>-->
-                        <!--<!--</md-button>-->
-                        <!--<!--<md-button aria-label="menu" class="md-fab md-mini" style="background-color:#e64a19;" ng-hide="row.newProduct" ng-click="removerow($index);">-->
-                        <!--<!--<md-icon md-svg-src="../img/ic_remove_24px.svg">-->
-                        <!--<!--</md-icon>-->
-                        <!--<!--<!--#e64a19<ng-md-icon icon="mode_edit" style="margin-top: 18px;margin-right: 18px;fill:#B4B4B4" size="20px"></ng-md-icon>-->
-                        <!--<!--<md-tooltip md-direction="left">Remove Product</md-tooltip>-->
-                        <!--<!--</md-button>-->
-                      <!--</div>-->
-                      <!--<div layout="row">-->
-                        <!--<div class="add-new-row">-->
-                          <!--<div class="icon" ng-click="addrow();">-->
-                            <!--<ng-md-icon class="add-row" icon="add" >-->
-                            <!--</ng-md-icon>-->
-                          <!--</div>-->
-                          <!--<div class="text">-->
-                            <!--Add-->
-                          <!--</div>-->
-                        <!--</div>-->
-                      <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="section_padding" style="background-color: #E5ECEF">-->
-                      <!--<div layout="row">-->
-
-                        <!--<div flex>-->
-                          <!--<div layout="column">-->
-                            <!--<div layout="row" layout-align="end center" style="height: 65px;">-->
-                              <!--<h3 class="font-Lato">Sub Total</h3>-->
-                            <!--</div>-->
-                            <!--<div layout="row" layout-align="end center" style="height: 45px;margin-top:15px">-->
-                              <!--<!--<label class="font-Lato font-weight400">Additional Charges</label>-->
-                              <!--<label class="font-Lato font-weight400">Promotion</label>-->
-                            <!--</div>-->
-                            <!--<div layout="row" layout-align="end center" style="margin-top: 40px">-->
-                              <!--<!--<label class="font-Lato font-weight400">Discount</label>-->
-                              <!--<label class="font-Lato font-weight400">Tax</label>-->
-                            <!--</div>-->
-                            <!--<div layout="row" layout-align="end center" style="margin-top: 54px">-->
-                              <!--<!--<label class="font-Lato font-weight400">Tax</label>-->
-                              <!--<label class="font-Lato font-weight400">Additional Charges</label>-->
-                            <!--</div>-->
-                            <!--<div layout="row" layout-align="end center" style="margin-top: 45px">-->
-                              <!--<!--<label class="font-Lato font-weight400">Promotion</label>-->
-                              <!--<label class="font-Lato font-weight400">Discount</label>-->
-                            <!--</div>-->
-                          <!--</div>-->
-                        <!--</div>-->
-                        <!--<div flex style="margin-right: 45px">-->
-                          <!--<div layout="column">-->
-                            <!--<div layout="row" layout-align="end center" style="margin-top: 10px;margin-left: 125px;height: 45px;">-->
-                              <!--<text class="font-Lato font-weight400 font-size18">{{content.netamt | currency:" " : decimalPoint}}</text>-->
-                            <!--</div>-->
-                            <!--<div layout="row" layout-align="end center" style="margin-top: 35px;margin-left: 78px" >-->
-                              <!--<!--<md-input-container>-->
-                              <!--<!--<input  style="width: 125px;" min="0" ng-model="content.additionalcharge" aria-label="additionalcharge" type="number" ng-pattern="">-->
-                              <!--<!--</md-input-container>-->
-                              <!--<text class="font-Lato font-weight400 font-size18">{{content.PromoAmt | currency:" " :decimalPoint}}</text>-->
-                            <!--</div>-->
-                            <!--<div layout="row" layout-align="end center" style="margin-top: 50px;margin-left: 78px" >-->
-                              <!--<!--<md-input-container>-->
-                              <!--<!--<input  style="width: 125px;" min="0" ng-model="content.discount" type="number" aria-label="tax" ng-pattern="">-->
-                              <!--<!--</md-input-container>-->
-                              <!--<text class="font-Lato font-weight400 font-size18">{{content.taxAmt | currency:" " :decimalPoint}}</text>-->
-                            <!--</div>-->
-                            <!--<div layout="row" layout-align="end center" style="margin-top: 37px;margin-left: 125px;height: 45px;">-->
-                              <!--<!--<text class="font-Lato font-weight400 font-size18">{{content.taxAmt.toFixed(2)}}</text>-->
-                              <!--<md-input-container>-->
-                                <!--<input  style="width: 125px;" min="0" ng-model="content.additionalcharge" aria-label="additionalcharge" step="{{step}}" type="number" ng-pattern="">-->
-                              <!--</md-input-container>-->
-                            <!--</div>-->
-                            <!--<div layout="row" layout-align="end center" style="margin-top: 20px;margin-left: 125px;height: 45px;">-->
-                              <!--<!--<text class="font-Lato font-weight400 font-size18">{{content.PromoAmt.toFixed(2)}}</text>-->
-                              <!--<md-input-container>-->
-                                <!--<input  style="width: 125px;" min="0" ng-model="content.discount" type="number" step="{{step}}" aria-label="tax" ng-pattern="">-->
-                              <!--</md-input-container>-->
-                            <!--</div>-->
-                          <!--</div>-->
-                        <!--</div>-->
-                      <!--</div>-->
-                    <!--</div>-->
-                    <!--<div layout-gt-sm="row">-->
-                      <!--<div layout="column" flex="55">-->
-                        <!--<div class="section_padding">-->
-                          <!--<div layout-gt-sm="row">-->
-                            <!--<md-input-container class="input-validation-text">-->
-                              <!--<!--<label>Promotion Code</label>-->
-                              <!--<!--<md-select ng-required="true" name="promotioncode" ng-model="content.promotion" style="width: 300px;">-->
-                              <!--<!--<md-divider></md-divider>-->
-                              <!--<!--<md-option ng-repeat="value in promotions" ng-value="value">{{value.promotioncode}}</md-option>-->
-                              <!--<!--</md-select>-->
-                              <!--<label>Promotion Code</label>-->
-                              <!--<input style="width: 300px;" ng-blur="chkPromo(content.promocode)" minlength="null" md-maxlength="null" type="" name="promotioncode" ng-pattern="" ng-model="content.promocode">-->
-                            <!--</md-input-container>-->
-                          <!--</div>-->
-                        <!--</div>-->
-                      <!--</div>-->
-                      <!--<div layout="column" flex="45">-->
-                        <!--<div class="section_padding" style="background-color: #306BA9">-->
-                          <!--<div layout-gt-sm="row" style="float:right">-->
-                            <!--<text style="font-weight: 500;font-size: medium; color: rgba(202, 198, 198, 0.55);margin-left: 145px">NET TOTAL</text>-->
-                          <!--</div>-->
-                          <!--<div layout-gt-sm="row" style="float:right">-->
-                            <!--<text style="font-weight:900;font-size: xx-large;color: white;margin-left: 65px">{{(((content.additionalcharge + content.netamt + content.taxAmt) - content.discount)- content.PromoAmt) | currency:" " :decimalPoint}}</text>-->
-                          <!--</div>-->
-                        <!--</div>-->
-                      <!--</div>-->
-                    <!--</div>-->
-
-                    <!--<div class="section_padding h-50">-->
-                      <!--<div layout-gt-sm="row">-->
-                        <!--<md-input-container class="md-block" flex-gt-sm>-->
-                          <!--<label>Notes</label>-->
-                          <!--<input ng-required="false" minlength="null" md-maxlength="null" type="" name="ProductDesc" ng-pattern="" ng-model="content.notes">-->
-                        <!--</md-input-container>-->
-                      <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="section_padding">-->
-                      <!--<div layout-gt-sm="row">-->
-                        <!--<!--<md-checkbox  ng-model="content.advance" aria-label="active" style="margin-top: 0 !important" class="md-primary p-t-0" ng-true-value="true">-->
-                        <!--<!--Apply Advance-->
-                        <!--<!--</md-checkbox>-->
-                        <!--<!--<fieldset class="standard">-->
-                        <!--<!--<legend>Payment Options</legend>-->
-                        <!--<md-radio-group ng-model="content.status" ng-change="enablePayment(content.status)" layout="row" style="margin-top: 0 !important">-->
-                          <!--<md-radio-button value="credit" class="md-primary">Credit</md-radio-button>-->
-                          <!--<md-radio-button value="true" class="md-primary">Apply Advance</md-radio-button>-->
-                          <!--<md-radio-button value="false" class="md-primary"> Pay Now </md-radio-button>-->
-                        <!--</md-radio-group>-->
-                        <!--<!--</fieldset>-->
-                        <!--<div class="add-new hvr-pop" >-->
-                          <!--<i class="ti-eye" ng-click="returntolist()"></i>-->
-                          <!--<md-tooltip md-direction="left">View all invoices</md-tooltip>-->
-                        <!--</div>-->
-                      <!--</div>-->
-                      <!--<div class="md-block" flex="5">-->
-                        <!--<!--space keeper-->
-                      <!--</div>-->
-                      <!--<div layout-gt-sm="row" ng-hide="divEnabled">-->
-                        <!--<md-input-container class="md-block" flex-gt-sm>-->
-                          <!--<label>Payment Method</label>-->
-                          <!--<md-select ng-required="requiredStatus" ng-model="content.payMethod">-->
-                            <!--<md-option ng-repeat="value in paymentMethods" value="{{value}}">-->
-                              <!--{{value}}-->
-                            <!--</md-option>-->
-                          <!--</md-select>-->
-                        <!--</md-input-container>-->
-                        <!--<div hide-xs hide-sm flex-gt-sm="5">-->
-                        <!--</div>-->
-                        <!--<md-input-container class="md-block" flex-gt-sm>-->
-                          <!--<label>Amount</label>-->
-                          <!--<input ng-required="requiredStatus" minlength="0" md-maxlength="null" type="number" name="payAmt" ng-pattern="" ng-model="content.payAmt">-->
-                        <!--</md-input-container>-->
-                      <!--</div>-->
-                    <!--</div>-->
-                    <!--<div layout-gt-sm="row" ng-init="submitted=false">-->
-                      <!--<div class="md-raise btn btn-cancel p-t-0" flex-gt-sm style="background:#484848;height:66px">-->
-                        <!--<md-button style="width:100%;line-height: 66px;color: white;font-size: 20px" ng-click="clearFields();" type="button">Clear</md-button>-->
-                      <!--</div>-->
-                      <!--<div class="md-raise btn btn-submit p-t-0" flex-gt-sm style="background:#f4511e;height:66px">-->
-                        <!--<md-button style="width:100%; line-height: 66px;color: white;font-size: 20px" ng-disabled="submitted" type="submit">SUBMIT</md-button>-->
-                      <!--</div>-->
-                    <!--</div>-->
-                  <!--</form>-->
-                <!--</md-content>-->
-            </md-content>
-            <div layout="row" layout-align="space-between center" flex style="position:absolute;z-index:9999;bottom: 0;background-color: #ffffff;width: 100%;" md-whiteframe="8dp">
-                <div layout="row"></div>
-
-                <div layout="row" class="layout-row">
-                    <md-button ng-click="clearform();"">Clear</md-button>
-                    <md-button ng-disabled="submitted" type="submit" form="paymentForm" class="md-raised md-warn">Submit</md-button>
-                </div>
-            </div>
-            <!-- / CONTENT WRAPPER -->
-        </div>
-        <!-- / CONTENT CARD -->
-
     </div>
     <!-- / CENTER -->
 
