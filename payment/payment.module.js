@@ -1,9 +1,9 @@
 ////////////////////////////////
 // App : Payment
 // Owner  : Gihan Herath
-// Last changed date : 2017/01/04
-// Version : 6.0.0.18
-// Modified By : GihanHerath
+// Last changed date : 2017/10/09
+// Version : 6.1.0.2
+// Modified By : Kasun
 /////////////////////////////////
 
 (function ()
@@ -31,37 +31,31 @@
                     }
                 },
                 resolve: {
-                    security: ['$q','mesentitlement','$timeout','$rootScope','$state', function($q,mesentitlement,$timeout,$rootScope,$state){
-                        var entitledStatesReturn = mesentitlement.stateDepResolver('payment');
+					security: ['$q','mesentitlement','$timeout','$rootScope','$state','$location', function($q,mesentitlement,$timeout,$rootScope,$state, $location){
+						return $q(function(resolve, reject) {
+							$timeout(function() {
+								if ($rootScope.isBaseSet2) {
+									resolve(function () {
+										var entitledStatesReturn = mesentitlement.stateDepResolver('payment');
 
-                        if(entitledStatesReturn !== true){
-                              return $q.reject("unauthorized");
-                        }
-                        else
-                        {
-                          //debugger;
-                          $timeout(function() {
-                            var firstLogin=localStorage.getItem("firstLogin");
-                            if(firstLogin==null ||firstLogin=="" || firstLogin==undefined) {
-                              console.log('Payment First Login null');
-                              $rootScope.firstLoginDitected = true;
-                              //localStorage.removeItem('firstLogin');
-                              $state.go('app.settings', {}, {location: 'settings'});
-                              //return $q.reject("settings");
-                            }
-                            else
-                            {
-                              //localStorage.removeItem('firstLogin');
-                            }
-                          }, 50);
-                        };
-                    }]
+										mesentitlementProvider.setStateCheck("payment");
+
+										if(entitledStatesReturn !== true){
+											return $q.reject("unauthorized");
+										}
+									});
+								} else {
+									return $location.path('/guide');
+								}
+							});
+						});
+					}]
                 },
                 bodyClass: 'payment'
             });
 
         msNavigationServiceProvider.saveItem('payment', {
-            title    : 'payment',
+            title    : 'Receipt',
             state    : 'app.payment',
             weight   : 4
         });

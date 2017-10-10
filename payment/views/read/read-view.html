@@ -1,136 +1,277 @@
-<meta name="updatedBy" content="Kasun">
-<meta name="modifiedDate" content="4-11-2016">
-<meta name="version" content="6.0.0.8">
-<meta name="app" content="payment">
-<meta name="view" content="read-view.html">
-
-<md-progress-circular ng-hide="isReadLoaded" style="position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;opacity: 0.3;z-index: 9999"></md-progress-circular>
-<div id="payment-read" class="compact page-layout blank" layout="row">
-    <div class="invoice-read-container" flex>
-
-        <!-- INVOICE -->
-        <div class="card md-whiteframe-8dp" layout="column" layout-align="center center">
-
-          <div class="inv-outline" md-whiteframe="2dp" layout="column" ng-class="{'page-setup-cover':isReadLoaded==false}">
-
-            <div class="inv-read-header">
-                <div class="invoice-date">{{vm.selectedPayment.paymentDate | parseDate | date: 'dd/MM/yyyy'}}</div>
-
-                <div layout="row" layout-align="space-between stretch" style="display: flex;">
-                    <div class="client" flex>
-                        <div class="invoice-number" layout="row" layout-align="start center">
-                            <span class="title" flex="30">PAYMENT NO </span>
-                            <span class="number">: {{vm.selectedPayment.paymentNo}}</span>
+<form id="addProductForm" name="vm.editForm" ng-submit="saveProduct(content)" novalidate>
+    <md-card flex class="input-block-gen">
+        <md-card-title>
+            <div layout="row" layout-align="start center">
+                <md-icon md-font-icon="icon-cog"></md-icon> <h3>General details</h3>
+            </div>
+        </md-card-title>
+        <md-card-content>
+            <div>
+                <div layout="row" layout-align="space-between start">
+                    <div class="w-280 p-40 h-375 pos-rel" ng-class="{'md-whiteframe-2dp':editImageOn, 'dragOn':divClass,'light-gray':editImageOn}" layout="column" drag-and-drop>
+                        <div class="text-right close-logo" ng-if="editImageOn">
+                            <md-button class="md-icon-button" ng-click="editCompanyCancel()"><md-icon md-font-icon="icon-close"></md-icon> </md-button>
                         </div>
-
-                        <div class="invoice-number" layout="row" layout-align="start center">
-                             <span class="title" flex="30">CUSTOMER </span>
-                            <span class="number">: {{vm.selectedPayment.customer}}</span>
-                        </div>
-
-                        <div class="due-date" layout="row" layout-align="start center">
-                            <span class="title" flex="30">STATUS </span>
-                            <span style="color: #05a3ec" ng-if="vm.selectedPayment.status=='Active'">: {{vm.selectedPayment.status}}</span>
-                            <span style="color: #BD362F" ng-if="vm.selectedPayment.status=='Cancelled'">: {{vm.selectedPayment.status}}</span>
-                        </div>
-
-                        <!--<md-button class="md-icon-button" aria-label="More" ng-hide="vm.selectedPayment.status=='Cancelled'">-->
-                          <!--<ng-md-icon icon="icon-delete" class="tooltip-detail" size="20px"></ng-md-icon>-->
-                          <!--&lt;!&ndash;<md-tooltip md-direction="right">Cancel Payment</md-tooltip>&ndash;&gt;-->
-                        <!--</md-button>-->
-                        <!--<md-button class="md-icon-button" aria-label="More" >-->
-                          <!--<ng-md-icon icon="icon-print" class="tooltip-detail" size="20px"></ng-md-icon>-->
-                        <!--</md-button>-->
-
-                        <div class="info">
-                            <div class="title">{{vm.selectedPayment.UserName.toUpperCase()}}</div>
-                            <div class="address">{{vm.selectedPayment.UserAddress}}</div>
-                            <div class="phone">{{vm.selectedPayment.UserContact}}</div>
-                            <div class="email">{{vm.selectedPayment.UserEmail}}</div>
-                            <!--<div class="website">{{vm.selectedPayment.UserWebSite}}</div>-->
-                        </div>
-                    </div>
-                    <div class="issuer" ng-class="{ 'md-accent-bg': companyLogo == ''}" layout="row" layout-align="start center" flex>
-                    <table>
-                      <tr>
-                        <td>
-                          <div class="set-logo-wrap" ng-if="companyLogo != ''">
-                            <div class="set-img">
-                              <img ng-src="{{companyLogo}}" alt="" />
+                        <div flex layout="column" layout-align="center center" class="product-preview" ng-if="!editImageOn" ng-click="editCompanyLogoInit()">
+                            <span class="op-5">Company logo</span>
+                            <div layout="column" layout-align="center center" class="b b-light pos-rel">
+                                <div class="selected animate-fade-in-out">
+                                    <md-icon md-font-icon="icon-camera"></md-icon>
+                                </div>
+                                <!--<div layout="column" layout-align="center center" class="msg" ng-if="cropper.croppedImage==null">-->
+                                <!--<md-icon md-font-icon="icon-information"></md-icon> No image is selected yet-->
+                                <!--</div>-->
+                                <div ng-show="cropper.croppedImage!=null">
+                                    <img ng-src="{{cropper.croppedImage}}" />
+                                </div>
                             </div>
-                          </div>
-                          <div class="logo" layout="row" layout-align="center center" ng-if="companyLogo == ''" >
-                            <span>{{companyName| limitTo:1}}</span>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="info">
-                            <div class="">{{companyName}}</div>
-                            <div class="address">{{companyAddress}}</div>
-                            <div class="phone">{{companyPhone}}</div>
-                            <div class="email">{{companyEmail}}</div>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                  </div>
-                </div>
-            </div>
+                            <label ng-show="cropper.croppedImage!=null" class="img-size-msg">[Image size : 180px X 180px]</label>
+                        </div>
+                        <div ng-if="editImageOn" flex layout="column" layout-align="center center" class="company-logo-preview deadElements">
+                            <div layout="column" layout-align="center center" class="img-up-invitation animate-fade-in-out pv-40 pos-abs" fill-height ng-if="!addedImage">
+                                <div flex><md-icon md-font-icon="icon-image-filter"></md-icon></div>
+                                <h3 class="font-accent mb-10">Drag and Drop</h3>
+                                <div><i>or</i></div>
+                                <md-button class="md-raised md-accent mt-10" ng-click="triggerImgInput()">Browse</md-button>
+                            </div>
+                            <div ng-if="addedImage" class="animate-fade-in-out">
+                                <image-cropper ng-if="addedImage" id="imageCropElement"
+                                               image-url="{{addedImage}}"
+                                               width="180"
+                                               height="180"
+                                               show-controls="true"
+                                               fit-on-init="true"
+                                               center-on-init="true"
+                                               api="vm.cropperApi"
+                                               crop-callback="vm.updateResultImage"
+                                               cropped-base="vm.croppedBase64"
+                                               check-cross-origin="false"
+                                               action-labels="vm.myButtonLabels"
+                                ></image-cropper>
+                            </div>
+                            <div ng-if="addedImage" layout="row" layout-align="space-between center" class="mt-10 actions">
+                                <md-button layout="row" layout-align="center center" ng-click="retryImageUpload()" md-ink-ripple><i class="material-icons m-0">undo</i><md-tooltip>Retry</md-tooltip></md-button>
+                                <md-button layout="row" layout-align="center center" class="md-raised md-accent" ng-click="vm.doneImageCropping()"><i class="material-icons m-0">done</i></md-button>
+                            </div>
+                            <input type="file" id="productImageInput" image="cropper.sourceImage" style="display:none" />
+                            <!--<div class="img-size-msg">[Maximum size : 180px X 180px]</div>-->
+                        </div>
+                    </div>
+                    <div flex="5"></div>
+                    <div layout="column" layout-align="start start" flex>
+                        <div layout="row" fill-width>
+                            <md-input-container flex="40">
+                                <label>Product Name</label>
+                                <input ng-required="true" type="" name="productName" ng-pattern="" ng-maxlength="20" ng-model="content.product_name"  autofocus>
+                                <div ng-messages="vm.editForm.productName.$error">
+                                    <div ng-message="maxlength">Product name must be between 1-20 characters</div>
+                                </div>
+                            </md-input-container>
 
-            <div class="inv-read-content">
+                            <div flex="5"></div>
 
-                <table class="simple invoice-table-footer">
-                    <tbody>
-                        <tr class="subtotal">
-                            <td>CURRENCY</td>
-                            <td>{{vm.selectedPayment.currency}}</td>
-                        </tr>
-                        <tr class="additionalcharge">
-                            <td>CURRENCY RATE</td>
-                            <td>{{vm.selectedPayment.rate}}</td>
-                        </tr>
-                        <tr class="discount">
-                            <td>PAYMENT METHOD</td>
-                            <td>{{vm.selectedPayment.paymentMethod}}</td>
-                        </tr>
-                        <!--<tr class="tax">-->
-                            <!--<td>BANK CHARGES</td>-->
-                            <!--<td>{{vm.selectedPayment.bankCharges | isoCurrency:vm.selectedPayment.currency}}</td>-->
-                        <!--</tr>-->
-                        <tr class="total">
-                          <td>TOTAL</td>
-                          <td>{{vm.selectedPayment.amount | isoCurrency:vm.selectedPayment.currency}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-              <div class="bottom-note" ng-if="vm.selectedPayment.note">
-                <div>Note :</div>
-                <div>{{vm.selectedPayment.note}}</div>
-              </div>
-            </div>
+                            <md-input-container flex="40">
+                                <label>Code</label>
+                                <input ng-required="true" ng-minlength="3" type="" name="productCode" ng-maxlength="20" ng-blur="validateProduct(content.code)" ng-pattern="" ng-model="content.code">
+                                <div ng-messages="vm.editForm.productCode.$error">
+                                    <div ng-message="maxlength">Product code must be between 3-20 characters</div>
+                                    <div ng-message="minlength">Product code must be between 3-20 characters</div>
+                                </div>
+                            </md-input-container>
 
-            <div flex></div>
+                        </div>
 
-            <div class="inv-read-footer">
-                <div class="note">{{FooterGreeting}}</div>
-                <div layout="row" layout-align="start start">
-                    <!--<div class="logo md-accent-bg" layout="row" layout-align="center center">-->
-                        <!--<div>{{companyName| limitTo:1}}</div>-->
-                    <!--</div>-->
-                    <div class="small-note">
-                      {{FooterDisclaimer}}
+                        <div layout="row" fill-width>
+                            <div flex="40" layout="row">
+                                <md-input-container flex>
+                                    <label>Category</label>
+                                    <md-select ng-required="false" ng-model="content.category" ms-scroll>
+                                        <md-option ng-repeat="value in categories" value="{{value}}">
+                                            {{value}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container>
+                                    <md-button ng-click="addCat($event)" class="md-icon-button md-accent"><md-icon md-font-icon="icon-plus-circle"></md-icon><md-tooltip>Add new</md-tooltip> </md-button>
+                                </md-input-container>
+                            </div>
+
+                            <div flex="5"></div>
+
+                            <div flex="40" layout="row">
+                                <md-input-container flex>
+                                    <label>Brand</label>
+                                    <md-select ng-required="false" ng-model="content.brand">
+                                        <md-option ng-repeat="value in brands" value="{{value}}">
+                                            {{value}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container>
+                                    <md-button ng-click="addBrand($event)" class="md-icon-button md-accent"><md-icon md-font-icon="icon-plus-circle"></md-icon><md-tooltip>Add new</md-tooltip> </md-button>
+                                </md-input-container>
+                            </div>
+                        </div>
+
+                        <div layout="row" fill-width>
+                            <md-input-container flex>
+                                <label>Description</label>
+                                <input ng-required="false" md-maxlength="450" ng-maxlength="450" type="" name="ProductDesc" ng-pattern="" ng-model="content.descroption">
+                                <div ng-messages="vm.editForm.ProductDesc.$error">
+                                    <div ng-message="maxlength">Product description must be between 1-450 characters</div>
+                                </div>
+                            </md-input-container>
+                        </div>
                     </div>
                 </div>
             </div>
+        </md-card-content>
+    </md-card>
 
-          </div>
-        </div>
-        <!-- / INVOICE -->
+    <md-card flex class="input-block-gen">
+        <md-card-title>
+            <div layout="row" layout-align="start center">
+                <span class="title-icon-custom">$</span> <h3>Price related details</h3>
+            </div>
+        </md-card-title>
+        <md-card-content>
+            <div layout="row" style="height: 50px;">
+                <div layout="row" layout-align="start center" flex="30" class="state-capsule">
+                    <div layout="row">
+                        <span>Currency</span>
+                        <span>{{content.selectCurrency}}</span>
+                    </div>
+                </div>
+            </div>
+            <div layout="row" style="height: 95px;">
+                <md-input-container flex="30">
+                    <label>Price</label>
+                    <input ng-required="true" minlength="null" max="1000000000000000000" md-maxlength="null" min="0" step="0.01"  type="number" name="Price" ng-model="content.price_of_unit" valid-number decimal-point="decimalPoint">
+                    <div ng-messages="vm.editForm.Price.$error">
+                        <div ng-message="max">Price must be between 1-18 digits</div>
+                    </div>
+                </md-input-container>
 
-        <!-- Use the following element to add breaks to your pages -->
-        <!-- This will make sure that the section after this element will be printed on a new page -->
-        <div class="page-break"></div>
+                <div flex="5"></div>
 
-    </div>
-</div>
+                <md-input-container flex="30">
+                    <label>Cost of product</label>
+                    <input ng-required="false" minlength="null" max="1000000000000000000" md-maxlength="null" min="0" step="0.01" type="number" name="CostPrice" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" ng-model="content.cost_price">
+                    <div ng-messages="vm.editForm.CostPrice.$error">
+                        <div ng-message="max">Cost of product must be between 1-18 digits</div>
+                    </div>
+                </md-input-container>
 
+                <div flex="5"></div>
+
+                <div flex="30" layout="row">
+                    <div layout="column" flex>
+                        <md-input-container>
+                            <label>Tax</label>
+                            <md-select ng-required="content.apply_tax" ng-model="content.tax" ng-disabled="!content.apply_tax">
+                                <md-option ng-repeat="value in taxGroup" value="{{value.taxgroupcode}}">
+                                    {{value.taxgroupcode}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-checkbox ng-model="content.apply_tax" aria-label="Apply Tax" class="md-primary dep-checkbox" style="top:0;width: 100px;">Apply Tax</md-checkbox>
+                    </div>
+                </div>
+            </div>
+        </md-card-content>
+    </md-card>
+
+    <md-card flex class="input-block-gen">
+        <md-card-title>
+            <div layout="row" layout-align="start center">
+                <md-icon md-font-icon="icon-scale"></md-icon> <h3>Quantity related details</h3>
+            </div>
+        </md-card-title>
+        <md-card-content>
+            <div layout="row" style="height: 95px;">
+                <md-input-container flex="30">
+                    <label>Quantity of unit</label>
+                    <input ng-required="false" name="ProdQty" min="0" max="1000000000000000" type="number" name="Qty" ng-pattern="/^-?[0-9][^\.]*$/" ng-model="content.quantity_of_unit">
+                    <div ng-messages="vm.editForm.ProdQty.$error">
+                        <div ng-message="pattern">Quantity of Unit is invalid</div>
+                        <div ng-message="max">Quantity of unit must be between 1-16 digits</div>
+                    </div>
+                </md-input-container>
+
+                <div flex="5"></div>
+
+                <div flex="30" layout="row">
+                    <md-input-container flex>
+                        <label>Unit of measures</label>
+                        <md-select ng-required="false"  ng-model="content.uom" ms-scroll>
+                            <md-option ng-repeat="value in UOMs" value="{{value}}">
+                                {{value}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container>
+                        <md-button ng-click="addUOM($event)" class="md-icon-button md-accent"><md-icon md-font-icon="icon-plus-circle"></md-icon><md-tooltip>Add new</md-tooltip> </md-button>
+                    </md-input-container>
+                </div>
+
+                <div flex="5"></div>
+
+                <div flex="30" layout="row">
+                    <div layout="column" flex>
+                        <md-input-container style="margin-bottom: 0">
+                            <label>Minimum stock level</label>
+                            <input ng-disabled="!content.sku" ng-required="content.sku" minlength="null" min="0" max="1000000000000000" md-maxlength="null" type="number" name="MinStockLevel" ng-pattern="/(?:)/" ng-model="content.minimum_stock_level">
+                            <div ng-messages="vm.editForm.MinStockLevel.$error">
+                                <div ng-message="max">Minimum stock level must be between 1-16 digits</div>
+                            </div>
+                        </md-input-container>
+                        <md-checkbox ng-model="content.sku" aria-label="Track Inventory" class="md-primary dep-checkbox" style="top: -5px;width: 140px;">Track inventory</md-checkbox>
+                    </div>
+                </div>
+            </div>
+        </md-card-content>
+    </md-card>
+
+    <!--<md-card flex class="input-block-gen">-->
+        <!--<md-card-title>-->
+            <!--<div layout="row" layout-align="start center">-->
+                <!--<md-icon md-font-icon="icon-image-area"></md-icon> <h3>Product image</h3>-->
+            <!--</div>-->
+        <!--</md-card-title>-->
+        <!--<md-card-content>-->
+            <!--<div layout="row" style="height: auto;">-->
+                <!--<div flex="5"></div>-->
+                <!--<div flex="40">-->
+                    <!--<div layout="column" layout-align="center center" class="product-img-cont">-->
+                        <!--<div layout="column" layout-align="center center" class="img-up-invitation" ng-if="cropper.croppedImage=='' || cropper.croppedImage==null">-->
+                            <!--<md-icon md-font-icon="icon-image-filter"></md-icon>-->
+                            <!--<span>Browse an image for the product</span>-->
+                            <!--<span class="img-size-msg">[Maximum size : 350px X 350px]</span>-->
+                        <!--</div>-->
+                        <!--<canvas flex height="350" id="canvas" image-cropper image="cropper.sourceImage" cropped-image="cropper.croppedImage" crop-width="350" crop-height="350" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>-->
+
+                        <!--<div class="input-partial">-->
+                            <!--<md-button class="md-raised md-accent" ng-click="triggerImgInput($event)">Browse</md-button>-->
+                            <!--<input type="file" id="productImageInput" img-cropper-fileread image="cropper.sourceImage" style="display:none" />-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div flex="5"></div>-->
+                <!--<div flex layout="column" layout-align="center center" class="product-preview">-->
+                    <!--<span>Product preview</span>-->
+                    <!--<div layout="column" layout-align="center center" md-whiteframe flex="80">-->
+                        <!--<div layout="row" layout-align="center center" class="msg" ng-if="cropper.croppedImage=='' || cropper.croppedImage==null">-->
+                            <!--<md-icon md-font-icon="icon-information-outline"></md-icon> No image is selected yet-->
+                        <!--</div>-->
+                        <!--<div ng-show="cropper.croppedImage!=null">-->
+                            <!--<img ng-src="{{cropper.croppedImage}}" />-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<label ng-show="cropper.croppedImage!=null" class="img-size-msg">[Image size : 350px X 350px]</label>-->
+                    <!--<span class="img-parameters">(Left: {{bounds.left}} Right: {{bounds.right}} Top: {{bounds.top}} Bottom: {{bounds.bottom}})</span>-->
+                <!--</div>-->
+                <!--<div flex="5"></div>-->
+            <!--</div>-->
+        <!--</md-card-content>-->
+    <!--</md-card>-->
+</form>

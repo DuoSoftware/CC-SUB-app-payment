@@ -1,50 +1,46 @@
-<!-- INVOICE LIST ITEMS -->
-<meta name="updatedBy" content="GihanHerath">
-<meta name="modifiedDate" content="24-10-2016">
-<meta name="version" content="6.0.0.6">
-<meta name="app" content="payment">
-<meta name="view" content="list-view.html">
+<div class="main-list-preloader animate-fade-in-out" layout="row" layout-sm="column" layout-align="space-around" ng-if="isLoading">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+</div>
+<div class="msg-empty-list full animate-fade-in-out" layout="column" layout-align="center center" ng-if="vm.payments.length == 0">
+    <img src="app/core/app_icons/plan_app_icon_list.svg" alt="No adjustments">
+    <div class="mt-20">Nothing to show</div>
+</div>
 
-<div class="invoice-list-item" ng-repeat="payment in vm.payments | filter: vm.search | filter: global.search"
+<!-- PAYMENT LIST ITEMS -->
+<div class="list-item" layout="row" layout-align="center center" flex ng-repeat="payment in vm.payments | filter: vm.search | filter: global.search"
      md-ink-ripple
-     ng-click="vm.selectPayment(payment)"
-     ng-class="{'starred': payment.starred, 'selected': vm.selectedPayment === payment, 'checked': vm.isChecked(payment)}">
+     ng-click="switchInfoPane('show',payment)"
+     ng-class="{'selected': vm.selectedPayment === payment && showInpageReadpane}">
 
-  <div layout="row" layout-align="start center">
-    <div class="info" flex layout="row">
-      <div class="invoiceMainInfo" layout="column" layout-align="center start">
-        <span>
-          {{payment.paymentNo}}
-        </span>
-      </div>
+    <div class="info" layout="row" layout-align="start center" flex="30" style="max-width: 250px">
+        <div class="dual-info" layout="column" layout-align="center start">
+            <span>{{getFirstName(payment.customer)}}</span>
+            <div class="dual-info-sub">
+                {{payment.paymentNo}}
+            </div>
+        </div>
     </div>
 
-    <div flex class="date" layout="column" layout-align="center start">
-      <span>{{getFirstName(payment.customer)}}</span>
+    <div flex layout="column" layout-align="center start" ng-if="!showInpageReadpane">
+        {{payment.paymentDate | parseDate | date: 'dd'}} {{payment.paymentDate | parseDate | date: 'MMMM' | limitTo: 3}} {{payment.paymentDate | parseDate | date: 'yyyy'}}
     </div>
 
-    <div flex class="date" layout="column" layout-align="center start">
-      <span>{{payment.paymentDate | parseDate | date: 'dd'}} {{payment.paymentDate | parseDate | date: 'MMMM' | limitTo: 3}} {{payment.paymentDate | parseDate | date: 'yyyy'}}</span>
+    <div flex layout="column" layout-align="center start" ng-if="!showInpageReadpane">
+        <span>{{payment.paymentMethod}}</span>
     </div>
 
-    <div flex class="date" layout="column" layout-align="center end">
-      <span>{{payment.amount | isoCurrency:payment.currency}}</span>
-      <!-- <span class="totaldue"><i>{{}}</i></span> -->
+    <div flex layout="column" layout-align="center end" ng-if="!showInpageReadpane">
+        <span>{{payment.amount | isoCurrency:payment.currency}}</span>
     </div>
 
-    <div flex="10"></div>
+    <div flex="5"></div>
 
-    <div flex="10" class="date" layout="column" layout-align="center start">
-      <span>{{payment.paymentMethod}}</span>
+    <div class="status" layout="column" layout-align="center start" ng-class="{'flex-30':showInpageReadpane == true,'flex-10': showInpageReadpane == false}">
+        <span class="pill" layout="row" layout-align="center center" ng-class="{'negative':payment.status==='Cancelled','positive':payment.status==='Active'}">{{payment.status}}</span>
     </div>
-
-    <div flex="10" class="status" layout="column" layout-align="center end">
-      <span class="pill paid" ng-if="payment.status=='Active'">{{payment.status}}</span>
-      <span class="pill unpaid" ng-if="payment.status=='Cancelled'">{{payment.status}}</span>
-    </div>
-  </div>
 </div>
+
 <div class="invoice-list-item" ng-hide="hideSearchMore || vm.searchMoreInit" layout="row" layout-align="center center">
-  <md-button ng-click="loadByKeywordPayment(vm.search,vm.search.length)" class="md-primary" style="font-size: 12px;font-weight: 400"><md-icon md-font-icon="icon-magnify"></md-icon> More</md-button>
+    <md-button ng-click="loadByKeywordPayment(vm.search,vm.search.length)" class="md-primary" style="font-size: 12px;font-weight: 400"><md-icon md-font-icon="icon-magnify"></md-icon> More</md-button>
 </div>
-<!-- PRODUCT LIST ITEMS
+<!-- PAYMENT LIST ITEMS
