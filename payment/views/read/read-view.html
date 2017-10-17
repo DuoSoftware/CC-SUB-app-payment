@@ -50,7 +50,7 @@
             <div layout="column">
                 <div flex>
                     <div class="list-header" layout="row" flex>
-                        <span flex>Invoice No</span>
+                        <span flex="10">Invoice No</span>
                         <span flex class="text-right">Invoice Amount</span>
                         <span flex class="text-right">Adjustments</span>
                         <span flex class="text-right">Paid Amount</span>
@@ -65,16 +65,16 @@
                             <span><md-icon md-font-icon="icon-information-outline"></md-icon> No customer has been selected yet</span>
                         </div>
 
-                        <div layout="row" class="list-item" ng-repeat="item in invoicelist" ng-if="invoicelist.length > 0 && customer_supplier.customer != null">
-                            <span flex="10" style="text-align: left">{{item.invoiceNo}}</span>
-                            <span flex>{{item.invoiceAmount| isoCurrency:content.preferredcurrency}}</span>
-                            <span flex>
+                        <div layout="row" class="list-item pv-10 ph-15 bb b-light" ng-repeat="item in invoicelist" ng-if="invoicelist.length > 0 && customer_supplier.customer != null">
+                            <span flex="10">{{item.invoiceNo}}</span>
+                            <span flex class="text-right">{{item.invoiceAmount| isoCurrency:content.preferredcurrency}}</span>
+                            <span flex class="text-right">
                                 <label ng-if="item.adjustmenttype=='0'">{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
                                   <label ng-if="item.adjustmenttype=='1'">-{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
                                   <label ng-if="item.adjustmenttype=='2'">+{{item.invoiceAdjustment| isoCurrency:content.preferredcurrency}}</label>
                             </span>
-                            <span flex>{{item.paidAmount| isoCurrency:content.preferredcurrency}}</span>
-                            <span flex>{{item.balancepayment| isoCurrency:content.preferredcurrency}}</span>
+                            <span flex class="text-right">{{item.paidAmount| isoCurrency:content.preferredcurrency}}</span>
+                            <span flex class="text-right">{{item.balancepayment| isoCurrency:content.preferredcurrency}}</span>
                         </div>
 
                     </md-content>
