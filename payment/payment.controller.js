@@ -520,7 +520,16 @@
 				$scope.more();
 			});
 		}).error(function (errorResponse) {
-			$scope.emailTemplateName = "emailTemplate1.html";
+			$http({
+				method:'GET',
+				url:'https://ccresourcegrpdisks974.blob.core.windows.net/email-templates/emailTemplate1.html'
+			}).then(function (res) {
+				$scope.tempSelectedTemplate = angular.copy(res.data);
+				$scope.currEmailTemplate = res.data;
+
+				// we call the function twice to populate the list
+				$scope.more();
+			});
 			// notifications.toast("Error loading selected email template","Error");
 
 			// we call the function twice to populate the list
