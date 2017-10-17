@@ -520,7 +520,8 @@
 				$scope.more();
 			});
 		}).error(function (errorResponse) {
-			notifications.toast("Error loading selected email template","Error");
+			$scope.emailTemplateName = "emailTemplate1.html";
+			// notifications.toast("Error loading selected email template","Error");
 
 			// we call the function twice to populate the list
 			$scope.more();
