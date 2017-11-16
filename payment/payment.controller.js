@@ -1086,7 +1086,7 @@
         "email":editedprofile.UserEmail,
         "receiptNo":paymentNumber
       }
-			$charge.invoicingApi().cancelPayment(cancelPaymentObj).success(function(data){
+			$charge.invoicing().cancelPayment(cancelPaymentObj).success(function(data){
 				//console.log(data);"response":"succeeded"
         if(data.response=="succeeded")
         {
