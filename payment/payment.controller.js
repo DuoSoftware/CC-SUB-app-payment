@@ -1081,25 +1081,27 @@
 			//var paymentNumber=editedprofile.paymentNo.substr($scope.paymentPrefix.length);
 			var paymentNumber=editedprofile.paymentNoWithoutPrefix;
 			paymentNumber=parseInt(paymentNumber);
-			console.log(paymentNumber);
-			$charge.payment().cancel(paymentNumber).success(function(data){
-				console.log(data);
-
-				$mdToast.show({
-					template: '<md-toast class="md-toast-success" >Payment has been cancelled!</md-toast>',
-					hideDelay: 2000,
-					position: 'bottom right'
-				});
-				$scope.refreshpage();
-				closeReadPane();
+			//console.log(paymentNumber);
+      var cancelPaymentObj = {
+        "email":editedprofile.UserEmail,
+        "receiptNo":paymentNumber
+      }
+			$charge.invoicingApi().cancelPayment(cancelPaymentObj).success(function(data){
+				//console.log(data);"response":"succeeded"
+        if(data.response=="succeeded")
+        {
+          notifications.toast("Payment has been cancelled!", "success");
+          $scope.refreshpage();
+          closeReadPane();
+        }
+        else
+        {
+          notifications.toast("Payment cancel failed!", "error");
+        }
 
 			}).error(function(data){
-				console.log(data);
-				$mdToast.show({
-					template: '<md-toast class="md-toast-success" >Payment cancel failed!</md-toast>',
-					hideDelay: 2000,
-					position: 'bottom right'
-				});
+				//console.log(data);
+        notifications.toast("Payment cancel failed!", "error");
 			})
 
 		}
