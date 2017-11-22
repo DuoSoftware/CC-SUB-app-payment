@@ -1255,7 +1255,7 @@
 						var obj=Response[i];
 						$scope.profilelist.push({
 							display : obj.first_name,
-							value : {profilename : obj.first_name, profileId : obj.profileId, othername : obj.last_name, profile_type : obj.profile_type}
+							value : {profilename : obj.first_name, profileId : obj.profileId, othername : obj.last_name, profile_type : obj.profile_type, email : obj.email_addr}
 						});
 
 					}
@@ -1371,46 +1371,77 @@
 						}
 					}
 
-					var paymentobject = $scope.content;
-					console.log(paymentobject);
-					$charge.payment().store(paymentobject).success(function(data){
-						console.log(data);
-						if(data.error=="00000")
-						{
-							notifications.toast("Successfully created the Payment Invoice with : "+data.id,"success");
-							//$mdToast.show({
-							//	template: '<md-toast class="md-toast-success" >Successfully created the Payment Invoice with : '+data.id+'</md-toast>',
-							//	hideDelay: 2000,
-							//	position: 'bottom right'
-							//});
+					//var paymentobject = $scope.content;
+					//console.log(paymentobject);
+					//$charge.payment().store(paymentobject).success(function(data){
+					//	//console.log(data);
+					//	if(data.error=="00000")
+					//	{
+					//		notifications.toast("Successfully created the Payment Invoice with : "+data.id,"success");
+					//		//$mdToast.show({
+					//		//	template: '<md-toast class="md-toast-success" >Successfully created the Payment Invoice with : '+data.id+'</md-toast>',
+					//		//	hideDelay: 2000,
+					//		//	position: 'bottom right'
+					//		//});
+                    //
+					//		//$mdToast.show({
+					//		//	template: '<md-toast class="md-toast-success" >Successfully added to Inventory!</md-toast>',
+					//		//	hideDelay: 2000,
+					//		//	position: 'bottom right'
+					//		//});
+					//		//var millisecondsToWait = 500;
+					//		//setTimeout(function() {
+					//		//    $window.location.reload();
+					//		//}, millisecondsToWait);
+					//		$scope.clearform();
+					//		$scope.refreshpage();
+					//		toggleinnerView();
+					//		//$window.location.href='#/paymentlist';
+					//	}
+					//	else if(data.error!="00000")
+					//	{
+					//		notifications.toast(data.error,"error");
+                    //
+					//		console.log(data);
+					//		$scope.submitted=false;
+					//	}
+                    //
+					//}).error(function(data){
+					//	//
+					//	console.log(data);
+					//	$scope.submitted=false;
+					//})
 
-							//$mdToast.show({
-							//	template: '<md-toast class="md-toast-success" >Successfully added to Inventory!</md-toast>',
-							//	hideDelay: 2000,
-							//	position: 'bottom right'
-							//});
-							//var millisecondsToWait = 500;
-							//setTimeout(function() {
-							//    $window.location.reload();
-							//}, millisecondsToWait);
-							$scope.clearform();
-							$scope.refreshpage();
-							toggleinnerView();
-							//$window.location.href='#/paymentlist';
-						}
-						else if(data.error!="00000")
-						{
-							notifications.toast(data.error,"error");
+          var paymentobject = {
+            "email": selecteduser.value.email,
+            "amount": $scope.content.amount,
+            //"paymentMethod": "Cash",
+            "guInvoiceId": ""
+          }
 
-							console.log(data);
-							$scope.submitted=false;
-						}
+          $charge.invoicing().insertReceipt(paymentobject).success(function(data){
+            //console.log(data);
+            if(data.response=="succeeded")
+            {
+              notifications.toast("Successfully created the Payment Invoice","success");
+              $scope.clearform();
+              $scope.refreshpage();
+              toggleinnerView();
+              //$window.location.href='#/paymentlist';
+            }
+            else if(data.response=="failed")
+            {
+              notifications.toast(data.data.message,"error");
 
-					}).error(function(data){
-						//
-						console.log(data);
-						$scope.submitted=false;
-					})
+              //console.log(data);
+              $scope.submitted=false;
+            }
+
+          }).error(function(data){
+            //
+            //console.log(data);
+            $scope.submitted=false;
+          })
 				}
 
 			} else//This is done because the HTML simple validation might work and enter the submit, however the form can still be invalid
