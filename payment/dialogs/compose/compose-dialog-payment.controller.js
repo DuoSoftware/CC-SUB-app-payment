@@ -342,12 +342,20 @@
       $scope.to=[];
       for(var i=0;i<$scope.recipients.length;i++)
       {
-        $scope.to.push($scope.recipients[i].value.email);
+        var toObj = {
+          "name": $scope.recipients[i].display,
+          "email": $scope.recipients[i].value.email
+        }
+        $scope.to.push(toObj);
       }
 
       for(var i=0;i<$scope.selectedUser.length;i++)
       {
-        $scope.cc.push($scope.selectedUser[i].value.email);
+        var ccObj = {
+          "name": $scope.selectedUser[i].display,
+          "email": $scope.selectedUser[i].value.email
+        }
+        $scope.cc.push(ccObj);
       }
       var req={
         "app" :"Payment",
@@ -359,13 +367,13 @@
         "cc":$scope.cc
       }
       $charge.document().sendMail(req).success(function(data) {
-        var parsedData=JSON.parse(data);
-        notifications.toast(parsedData.data.message, "success");
+        //var parsedData=JSON.parse(data);
+        notifications.toast(data.message, "success");
         closeDialog();
 		  $scope.hideSendButton = false;
 	  }).error(function (data) {
-        var parsedData=JSON.parse(data);
-        notifications.toast(parsedData.data.message, "error");
+        //var parsedData=JSON.parse(data);
+        notifications.toast(data.message, "error");
 		  $scope.hideSendButton = false;
 	  });
     }
