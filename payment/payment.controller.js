@@ -1415,7 +1415,7 @@
           var paymentobject = {
             "email": selecteduser.value.email,
             "amount": $scope.content.amount,
-            //"paymentMethod": "Cash",
+            "paymentMethod": $scope.content.paymentMethod,
             "guInvoiceId": ""
           }
 
