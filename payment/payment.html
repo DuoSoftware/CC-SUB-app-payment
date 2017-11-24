@@ -91,7 +91,7 @@
 
             <div flex class="inpage-readpane" layout="column" md-whiteframe="4dp" ng-if="showInpageReadpane">
                 <div layout="row" layout-align="space-between center" class="inpage-readpane-toolbar">
-                    <h3 class="group-sub-head" layout="row" layout-align="start center">Plan Info</h3>
+                    <h3 class="group-sub-head" layout="row" layout-align="start center">Receipt info</h3>
                     <div layout="row">
                         <md-menu>
                             <md-button aria-label="More" class="md-icon-button" ng-click="$mdOpenMenu($event)">
@@ -120,7 +120,7 @@
                                 </md-menu-item>
                             </md-menu-content>
                         </md-menu>
-                        <md-button class="md-icon-button" ng-click="switchInfoPane('close',vm.selectedPlan)">
+                        <md-button class="md-icon-button" ng-click="switchInfoPane('close',vm.selectedPayment)">
                             <md-icon md-font-icon="icon-close"></md-icon>
                             <md-tooltip>Close</md-tooltip>
                         </md-button>
@@ -130,7 +130,7 @@
                     <md-progress-circular></md-progress-circular>
                 </div>
                 <md-content flex ms-scroll layout="column" layout-align="start center" class="inpage-readpane-body">
-                    <div id="paymentPreview" md-whiteframe="1dp" style="width: 700px"></div>
+                    <div id="paymentPreview" md-whiteframe="1dp" style="width: 700px;position:relative"></div>
                 </md-content>
 
                 <div layout="row" layout-align="end center" md-whiteframe="8dp" class="bottom-fixed-bar absolute" ng-if="inpageReadPaneEdit">
