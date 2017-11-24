@@ -97,6 +97,7 @@
 			$scope.currEmailTemplate = $scope.tempSelectedTemplate;
 			//Removing meta data
 			$scope.currEmailTemplate = $scope.currEmailTemplate.replace('<!doctype html>', '');
+			$scope.currEmailTemplate = $scope.currEmailTemplate.replace('INVOICE', 'RECEIPT');
 			$scope.currEmailTemplate = $scope.currEmailTemplate.replace('<html lang="en">', '');
 			$scope.currEmailTemplate = $scope.currEmailTemplate.replace('<head>', '');
 			$scope.currEmailTemplate = $scope.currEmailTemplate.replace('<meta name="viewport"', '');
@@ -184,6 +185,9 @@
 					var preview = $('#paymentPreview');
 					preview.children().remove();
 					preview.append($scope.currEmailTemplate);
+					if(vm.selectedPayment.status.toLowerCase() == 'cancelled'){
+						preview.append('<div style="width: 100%;height: 100%;position: absolute;top: 0;text-align: center;z-index: 10"><div style="position: absolute;font-size: 60px;height: 120px;padding: 15px 0;width: 400px;border: dashed 5px;top: 0;bottom: 0;left: 0;right: 0;margin: auto;color: rgba(255, 137, 32, 0.7);-webkit-transform: rotate(-45deg);transform: rotate(-45deg)">CANCELLED</div></div>');
+					}
 					$('.list').css('padding','10px');
 					$('.left-content > div:first-child').css('width','50%');
 					$scope.isReadLoaded = true;
@@ -1107,10 +1111,12 @@
 		}
 
 		$scope.printDiv = function(divName) {
+			// var printContainer = document.createElement('div');
+			// printContainer.append(document.getElementById(divName));
 			var printContents = document.getElementById(divName).innerHTML;
 			var popupWin = window.open('', '_blank', 'width=1800,height=700');
 			popupWin.document.open();
-			popupWin.document.write('<html><head><link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css"></head><body onload="window.print()">' + printContents + '<script src="views/read/jquery.min.js"></script><script>$(document).ready(function (){window.print()});</script></body></html>');
+			popupWin.document.write('<html><head><script src="https://code.jquery.com/jquery-3.2.1.min.js"integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="crossorigin="anonymous"></script><link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css"><style>body{font-family: "Roboto"!important;}</style></head><body onload="window.print()" style="position:relative;width: 700px">' + printContents + '<script src="views/read/jquery.min.js"></script><script>$(document).ready(function (){window.print()});</script></body></html>');
 			popupWin.document.close();
 		}
 
