@@ -1,9 +1,11 @@
 <div class="main-list-preloader animate-fade-in-out" layout="row" layout-sm="column" layout-align="space-around" ng-if="isLoading">
     <md-progress-circular md-mode="indeterminate"></md-progress-circular>
 </div>
-<div class="msg-empty-list full animate-fade-in-out" layout="column" layout-align="center center" ng-if="vm.payments.length == 0">
-    <img src="app/core/app_icons/plan_app_icon_list.svg" alt="No adjustments">
-    <div class="mt-20">Nothing to show</div>
+<div class="main-empty-list" ng-if="vm.payments.length == 0 && !isLoading">
+    <div>
+        <img src="assets/images/empty-list.gif" alt="Nothing to show">
+        <h2>Nothing to Show</h2>
+    </div>
 </div>
 
 <!-- PAYMENT LIST ITEMS -->
