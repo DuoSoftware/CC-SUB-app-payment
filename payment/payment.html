@@ -9,7 +9,7 @@
         <!-- CONTENT HEADER- V NAV-->
         <div layout="column" layout-align="start start">
             <div class="v-header" layout="column" flex fill-width>
-                <div class="title" layout="column" layout-align="center start">
+                <div class="title" layout="column" layout-align="center start" ng-if="!themeDuoworld">
                     <div class="logo" layout="row" layout-align="start center">
                         <span class="logo-icon">
                           <img src="app/core/app_icons/payment_app_icon.png" alt=""/>
@@ -18,6 +18,14 @@
                     </div>
                 </div>
                 <div layout="row">
+                    <div class="title" layout="column" layout-align="center start" ng-if="themeDuoworld">
+                        <div class="logo" layout="row" layout-align="start center">
+                        <span class="logo-icon">
+                          <img src="app/core/app_icons/payment_app_icon_black.png" alt=""/>
+                        </span>
+                            <span class="logo-text">Receipt</span>
+                        </div>
+                    </div>
                     <div class="search-wrapper md-whiteframe-4dp" layout="row" layout-align="start center" flex ng-class="{'op-5':vm.activePaymentPaneIndex == 1}">
                         <div class="search" flex layout="row" layout-align="start center">
                             <md-icon md-font-icon="icon-magnify" class="icon s24"></md-icon>
