@@ -1116,7 +1116,7 @@
 			var printContents = document.getElementById(divName).innerHTML;
 			var popupWin = window.open('', '_blank', 'width=1800,height=700');
 			popupWin.document.open();
-			popupWin.document.write('<html><head><script src="https://code.jquery.com/jquery-3.2.1.min.js"integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="crossorigin="anonymous"></script><link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css"><style>body{font-family: "Roboto"!important;}</style></head><body onload="window.print()" style="position:relative;width: 700px">' + printContents + '<script src="views/read/jquery.min.js"></script><script>$(document).ready(function (){window.print()});</script></body></html>');
+			popupWin.document.write('<html><head><link href="app/main/360/dialogs/compose/print-view.css" rel="stylesheet" type="text/css"><script src="https://code.jquery.com/jquery-3.2.1.min.js"integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="crossorigin="anonymous"></script><link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css"><style>body{font-family: "Roboto"!important;}</style></head><body onload="window.print()" style="position:relative;width: 700px">' + printContents + '<script src="views/read/jquery.min.js"></script><script>$(document).ready(function (){window.print()});</script></body></html>');
 			popupWin.document.close();
 		}
 
