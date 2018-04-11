@@ -134,7 +134,7 @@
 
 			//Sub details
 			$scope.currEmailTemplate = $scope.currEmailTemplate.replace('SUBTOTAL', 'CURRENCY');
-			$scope.currEmailTemplate = $scope.currEmailTemplate.replace('%subTotal%', vm.selectedPayment.currency);
+			$scope.currEmailTemplate = $scope.currEmailTemplate.replace('%subTotal%', vm.selectedPayment.currency.toUpperCase());
 			$scope.currEmailTemplate = $scope.currEmailTemplate.replace('MISCELLANEOUS CHARGES', 'CURRENCY RATE');
 			$scope.currEmailTemplate = $scope.currEmailTemplate.replace('%additionalcharge%', vm.selectedPayment.rate);
 			$scope.currEmailTemplate = $scope.currEmailTemplate.replace('DISCOUNT', '');
