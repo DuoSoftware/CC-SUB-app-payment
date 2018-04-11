@@ -526,7 +526,7 @@
 		}).error(function (errorResponse) {
 			$http({
 				method:'GET',
-				url:'https://ccresourcegrpdisks974.blob.core.windows.net/email-templates/emailTemplate1.html'
+				url:'https://ccresourcegrpdisks974.blob.core.windows.net/email-templates/Templates/emailTemplate1.html'
 			}).then(function (res) {
 				$scope.tempSelectedTemplate = angular.copy(res.data);
 				$scope.currEmailTemplate = res.data;
