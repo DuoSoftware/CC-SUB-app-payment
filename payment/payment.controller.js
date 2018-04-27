@@ -164,7 +164,7 @@
 			var paymentNumber=payment.paymentNoWithoutPrefix;
 			paymentNumber=parseInt(paymentNumber);
 			$charge.payment().searchPayment(paymentNumber).success(function(data){
-				console.log(data);
+				//console.log(data);
 
 				if(data[0].profile_type=='Individual')
 				{
@@ -194,7 +194,7 @@
 				});
 
 			}).error(function(data){
-				console.log(data);
+				//console.log(data);
 				$scope.isReadLoaded = true;
 			});
 
@@ -378,12 +378,12 @@
 
 		$charge.settingsapp().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_GeneralAttributes","BaseCurrency").success(function(data) {
 			$scope.BaseCurrency=data[0].RecordFieldData;
-			console.log($scope.BaseCurrency);
+			//console.log($scope.BaseCurrency);
 			$scope.content.preferredcurrency=$scope.BaseCurrency;
 			$scope.selectedCurrency = $scope.BaseCurrency;
 
 		}).error(function(data) {
-			console.log(data);
+			//console.log(data);
 			$scope.BaseCurrency="USD";
 			$scope.selectedCurrency = $scope.BaseCurrency;
 		})
@@ -392,7 +392,7 @@
 		$charge.settingsapp().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_GeneralAttributes","FrequentCurrencies").success(function(data) {
 			$scope.prefferedCurrencies=data[0].RecordFieldData.trimLeft().split(" ");
 		}).error(function(data) {
-			console.log(data);
+			//console.log(data);
 		});
 
 		$charge.settingsapp().getDuobaseValuesByTableName("CTS_CompanyAttributes").success(function(data) {
@@ -403,7 +403,7 @@
 			$scope.companyEmail=data[3].RecordFieldData;
 			$scope.companyLogo=data[4].RecordFieldData;
 		}).error(function(data) {
-			console.log(data);
+			//console.log(data);
 		});
 
 		$charge.settingsapp().getDuobaseValuesByTableName("CTS_FooterAttributes").success(function(data) {
@@ -430,7 +430,7 @@
 			$scope.isLoading = true;
 			$charge.payment().all(skip,take,'desc').success(function(data)
 			{
-				console.log(data);
+				//console.log(data);
 
 				if($scope.loading)
 				{
@@ -439,7 +439,7 @@
 					//$charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_PaymentAttributes","PaymentPrefix").success(function(data2) {
 					//$scope.paymentPrefix=data2[0].RecordFieldData;
 					$scope.paymentPrefix=localStorage.getItem("paymentPrefix");
-					console.log($scope.paymentPrefix);
+					//console.log($scope.paymentPrefix);
 
 					var prefixLengthPayment=localStorage.getItem("paymentPrefixLength");
 					$scope.lenPrefixPayment=prefixLengthPayment!=0? parseInt(prefixLengthPayment):0;
@@ -500,7 +500,7 @@
 
 			}).error(function(data)
 			{
-				console.log(data);
+				//console.log(data);
 				$scope.isSpinnerShown=false;
 				$scope.isdataavailable=false;
 				$scope.isLoading = false;
@@ -543,7 +543,7 @@
 		var skipPaymentSearch, takePaymentSearch;
 		var tempList;
 		$scope.loadByKeywordPayment= function (keyword,length) {
-			if($scope.items.length==100) {
+			if($scope.items.length>=100) {
 				//
 				if(length==undefined)
 				{
@@ -557,7 +557,7 @@
 				if(keyword.toLowerCase().startsWith($scope.paymentPrefix.toLowerCase()))
 				{
 					keyword=keyword.substr($scope.paymentPrefix.length);
-					console.log(keyword);
+					//console.log(keyword);
 					if(keyword!="")
 					{
 						keywordIdLength=$scope.lenPrefixPayment-keyword.length;
@@ -573,7 +573,7 @@
 					//idLength=2;
 				}
 				if (keyword.length == searchLength) {
-					console.log(keyword);
+					//console.log(keyword);
 					//
 					skipPaymentSearch = 0;
 					takePaymentSearch = 100;
@@ -828,11 +828,11 @@
 		$charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_CompanyAttributes","CompanyLogo").success(function(data)
 		{
 			//
-			console.log(data);
+			//console.log(data);
 			$scope.logourl=data[0].RecordFieldData;
 
 		}).error(function(data) {
-			console.log(data);
+			//console.log(data);
 		})
 
 		$scope.searchmorebuttonclick = function (){
@@ -1010,7 +1010,7 @@
 			//console.log(cusId);
 			$charge.invoice().getByAccountID(cusId).success(function(data) //all(0,10,'asc').success(function(data)
 			{
-				console.log(data);
+				//console.log(data);
 
 				var totbalance=0;
 				for (var i = 0; i < data.length; i++) {
@@ -1029,7 +1029,7 @@
 
 			}).error(function(data)
 			{
-				console.log(data);
+				//console.log(data);
 				$scope.invoicePrintlist=[];
 			})
 		}
@@ -1039,11 +1039,11 @@
 			$charge.commondata().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_CompanyAttributes","CompanyLogo").success(function(data)
 			{
 				//
-				console.log(data);
+				//console.log(data);
 				$scope.logourl=data[0].RecordFieldData;
 
 			}).error(function(data) {
-				console.log(data);
+				//console.log(data);
 			})
 		}
 
@@ -1059,9 +1059,9 @@
 
 		}
 
-		$scope.closeApplication = function () {
-			window.parent.dwShellController.closeCustomApp();
-		};
+		//$scope.closeApplication = function () {
+		//	window.parent.dwShellController.closeCustomApp();
+		//};
 
 		$scope.showCancelPaymentConfirm = function(ev,editedprofile) {
 			// Appending dialog to document.body to cover sidenav in docs app
@@ -1211,44 +1211,6 @@
 			vm.loadingProfiles=true;
 			$scope.searchFilterLength=takeprofiles;
 
-			//$charge.profile().all(skipprofiles,takeprofiles,'asc').success(function(data){
-			//  console.log(data);
-			//  skipprofiles+=takeprofiles;
-			//  for (var i = 0; i < data.length; i++) {
-			//    var obj=data[i];
-			//
-			//    if(obj.status==0)
-			//    {
-			//      $scope.searchFilterLength=$scope.searchFilterLength-1;
-			//    }
-			//    else if(obj.profile_type=='Business')
-			//    {
-			//      $scope.profilelist.push({
-			//        display : obj.business_name,
-			//        value : {profilename : obj.business_name, profileId : obj.profileId, othername : obj.business_contact_name, profile_type : obj.profile_type}
-			//      });
-			//    }
-			//    else if(obj.profile_type=='Individual')
-			//    {
-			//      $scope.profilelist.push({
-			//        display : obj.first_name,
-			//        value : {profilename : obj.first_name, profileId : obj.profileId, othername : obj.last_name, profile_type : obj.profile_type}
-			//      });
-			//    }
-			//
-			//  }
-			//
-			//  $scope.filteredUsers=$scope.profilelist;
-			//  //loadAll();
-			//
-			//  //for (i = 0, len = data.length; i<len; ++i){
-			//  //    $scope.allBanks.push ({display: data[i].BankName, value:{TenantID:data[i].TenantID, value:data[i].BankName.toLowerCase()}});
-			//  //}
-			//
-			//}).error(function(data){
-			//  //alert ("Error getting all banks");
-			//});
-
 			$azureSearchHandle.getClient().SearchRequest("profile",skipprofiles,takeprofiles,'desc',"").onComplete(function(Response)
 			{
 				if(vm.loadingProfiles)
@@ -1334,7 +1296,7 @@
 			if (vm.editForm.$valid == true) {
 				//
 				$scope.submitted=true;
-				console.log("form validated");
+				//console.log("form validated");
 				var productitems=[];
 
 				var currentdate=new Date;
@@ -1376,47 +1338,6 @@
 							//$scope.content.bankCharges=Math.round($scope.content.bankCharges*100)/100;
 						}
 					}
-
-					//var paymentobject = $scope.content;
-					//console.log(paymentobject);
-					//$charge.payment().store(paymentobject).success(function(data){
-					//	//console.log(data);
-					//	if(data.error=="00000")
-					//	{
-					//		notifications.toast("Successfully created the Payment Invoice with : "+data.id,"success");
-					//		//$mdToast.show({
-					//		//	template: '<md-toast class="md-toast-success" >Successfully created the Payment Invoice with : '+data.id+'</md-toast>',
-					//		//	hideDelay: 2000,
-					//		//	position: 'bottom right'
-					//		//});
-                    //
-					//		//$mdToast.show({
-					//		//	template: '<md-toast class="md-toast-success" >Successfully added to Inventory!</md-toast>',
-					//		//	hideDelay: 2000,
-					//		//	position: 'bottom right'
-					//		//});
-					//		//var millisecondsToWait = 500;
-					//		//setTimeout(function() {
-					//		//    $window.location.reload();
-					//		//}, millisecondsToWait);
-					//		$scope.clearform();
-					//		$scope.refreshpage();
-					//		toggleinnerView();
-					//		//$window.location.href='#/paymentlist';
-					//	}
-					//	else if(data.error!="00000")
-					//	{
-					//		notifications.toast(data.error,"error");
-                    //
-					//		console.log(data);
-					//		$scope.submitted=false;
-					//	}
-                    //
-					//}).error(function(data){
-					//	//
-					//	console.log(data);
-					//	$scope.submitted=false;
-					//})
 
           var paymentobject = {
             "email": selecteduser.value.email,
@@ -1462,25 +1383,12 @@
 				$scope.submitted=false;
 			}
 
-			//$scope.submitted = true; // Disable the submit button until the form is submitted successfully to the database (ng-disabled)
-
-			//submit info to database
-
-			/*
-			 ---if submit request is successful---
-			 self.searchText = "";
-			 $scope.submitted = false; // Make submit button enabled again (ng-disabled)
-			 $scope.template = ""; // Empty the form
-			 $scope.editForm.$setUntouched();
-			 $scope.editForm.$setPristine();
-			 */
-
 		}
 
-		$scope.returntolist = function ()
-		{
-			$window.location.href='#/paymentlist';
-		}
+		//$scope.returntolist = function ()
+		//{
+		//	$window.location.href='#/paymentlist';
+		//}
 
 		$scope.loadInvoice = function (customer)
 		{
@@ -1492,7 +1400,7 @@
 				//console.log(cusId);
 				$charge.invoice().getByAccountID(cusId).success(function(data) //all(0,10,'asc').success(function(data)
 				{
-					console.log(data);
+					//console.log(data);
 
 					var totbalance=0;
 					for (var i = 0; i < data.length; i++) {
@@ -1520,10 +1428,10 @@
 					}
 					data[0].totalbalance=totbalance;
 
-					console.log(invoicenolist);
+					//console.log(invoicenolist);
 					$charge.adjustment().getByInvoiceId(invoicenolist).success(function(subdata)
 					{
-						console.log(subdata);
+						//console.log(subdata);
 						for (var i = 0; i < data.length; i++) {
 							var invoicedata=data[i];
 							invoicedata.adjustmenttype='0';
@@ -1560,7 +1468,7 @@
 
 					}).error(function(subdata)
 					{
-						console.log(subdata);
+						//console.log(subdata);
 						$scope.invoicelist=data;
 						vm.isLoaded = true;
 					})
@@ -1569,32 +1477,32 @@
 
 				}).error(function(data)
 				{
-					console.log(data);
+					//console.log(data);
 					$scope.invoicelist=[];
 					vm.isLoaded = true;
 				})
 			}
 		}
 
-		$scope.receiptcount = 1;
-		$scope.issuecount = 1;
-		$scope.receiplist=[
-			{
-				modelname : 'receiptproduct1',
-				quantityname : 'receiptquantity1'
-			}
-		];
-		$scope.issuelist=[
-			{
-				modelname : 'issueproduct1',
-				quantityname : 'issuequantity1'
-			}
-		];
+		//$scope.receiptcount = 1;
+		//$scope.issuecount = 1;
+		//$scope.receiplist=[
+		//	{
+		//		modelname : 'receiptproduct1',
+		//		quantityname : 'receiptquantity1'
+		//	}
+		//];
+		//$scope.issuelist=[
+		//	{
+		//		modelname : 'issueproduct1',
+		//		quantityname : 'issuequantity1'
+		//	}
+		//];
 
 		//direct back to shell
-		$scope.closeApplication = function () {
-			window.parent.dwShellController.closeCustomApp();
-		};
+		//$scope.closeApplication = function () {
+		//	window.parent.dwShellController.closeCustomApp();
+		//};
 
 		$scope.convertCurrency = function(preferredCurrency)
 		{
@@ -1661,7 +1569,7 @@
 						currency : preferredCurrency,
 						rate : result
 					});
-					console.log($scope.currencyratelist);
+					//console.log($scope.currencyratelist);
 
 					$scope.selectedCurrency = preferredCurrency;
 					$scope.currencyRate = parseFloat(result);
@@ -1700,7 +1608,7 @@
 
 				}).error(function(data)
 				{
-					console.log(data);
+					//console.log(data);
 				})
 
 			}
