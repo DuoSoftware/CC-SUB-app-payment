@@ -1358,13 +1358,13 @@
             }
             else if(data.response=="failed")
             {
-              //notifications.toast(data.data.message,"error");
-              var errorMsg="Receipt invoice creating failed";
-              for (key in data.error) {
-                errorMsg=data.error[key][0];
-                break;
-              }
-              notifications.toast(errorMsg,"error");
+              notifications.toast(data.message,"error");
+              //var errorMsg="Receipt invoice creating failed";
+              //for (key in data.error) {
+              //  errorMsg=data.error[key][0];
+              //  break;
+              //}
+              //notifications.toast(errorMsg,"error");
               //console.log(data);
               $scope.submitted=false;
             }
@@ -1372,12 +1372,13 @@
           }).error(function(data){
             //
             //console.log(data);
-            var errorMsg="Receipt invoice creating failed";
-            for (key in data.error) {
-              errorMsg=data.error[key][0];
-              break;
-            }
-            notifications.toast(errorMsg,"error");
+			notifications.toast(data.message,"error");
+            //var errorMsg="Receipt invoice creating failed";
+            //for (key in data.error) {
+            //  errorMsg=data.error[key][0];
+            //  break;
+            //}
+            //notifications.toast(errorMsg,"error");
 
             $scope.submitted=false;
           })
