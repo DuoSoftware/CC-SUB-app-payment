@@ -340,6 +340,8 @@
     	$scope.hideSendButton = true;
       $scope.cc=[];
       $scope.to=[];
+      $scope.from=[];
+      $scope.bcc=[];
       for(var i=0;i<$scope.recipients.length;i++)
       {
         var toObj = {
@@ -359,12 +361,14 @@
       }
       var req={
         "app" :"Payment",
-        "html":base64Content,
-        "id":$scope.selectedPayment.paymentNoWithoutPrefix,
+        //"html":base64Content,
+        "id":$scope.selectedPayment.guPaymentID,
         "body":$scope.bodycontent,
         "subject" :$scope.subject,
         "to":$scope.to,
-        "cc":$scope.cc
+        "cc":$scope.cc,
+        "from":$scope.from,
+        "bcc":$scope.bcc
       }
       $charge.document().sendMail(req).success(function(data) {
         //var parsedData=JSON.parse(data);
