@@ -15,7 +15,7 @@
 		.controller('PaymentController', PaymentController);
 
 	/** @ngInject */
-	function PaymentController($scope, $document, $timeout, notifications, $mdDialog, $mdToast, $mdMedia, $mdSidenav,$charge,$filter,$azureSearchHandle, $http)
+	function PaymentController($scope, $document, $timeout, notifications, $mdDialog, $mdToast, $mdMedia, $mdSidenav,$charge,$filter,$azureSearchHandle, $http, transactionTemplateGenerator)
 	{
 		var vm = this;
 
@@ -181,17 +181,43 @@
 					vm.selectedPayment.UserEmail=data[0].email_addr;
 				}
 
-				extractEmailTemplate(vm.selectedPayment, function () {
-					var preview = $('#paymentPreview');
-					preview.children().remove();
-					preview.append($scope.currEmailTemplate);
-					if(vm.selectedPayment.status.toLowerCase() == 'cancelled'){
-						preview.append('<div style="width: 100%;height: 100%;position: absolute;top: 0;text-align: center;z-index: 10"><div style="position: absolute;font-size: 60px;height: 120px;padding: 15px 0;width: 400px;border: dashed 5px;top: 0;bottom: 0;left: 0;right: 0;margin: auto;color: rgba(255, 137, 32, 0.7);-webkit-transform: rotate(-45deg);transform: rotate(-45deg)">CANCELLED</div></div>');
-					}
-					$('.list').css('padding','10px');
-					$('.left-content > div:first-child').css('width','50%');
-					$scope.isReadLoaded = true;
-				});
+                var docinfo = {
+                    type : 'receipt',
+                    company : {
+                        companyName : $scope.companyName,
+                        companyPhone : $scope.companyPhone,
+                        companyEmail : $scope.companyEmail,
+                        companyAddress : $scope.companyAddress,
+                        companyLogo : $scope.companyLogo
+                    },
+                    client : {
+                        clientName : vm.selectedPayment.UserName,
+                        clientPhone : vm.selectedPayment.UserContact,
+                        clientAddress : vm.selectedPayment.UserAddress,
+                        clientEmail : vm.selectedPayment.UserEmail
+                    },
+                    transaction : {
+                        paymentNo : vm.selectedPayment.paymentNo,
+                        paymentDate : vm.selectedPayment.paymentDate,
+                        rate : vm.selectedPayment.rate,
+                        currency : vm.selectedPayment.currency,
+                        paymentMethod : vm.selectedPayment.paymentMethod,
+                        amount : vm.selectedPayment.amount,
+                        invoiceDetails : []
+                    }
+                };
+
+                // extractEmailTemplate(vm.selectedPayment, function () {
+                var t = transactionTemplateGenerator(docinfo);
+                var preview = $('#paymentPreview');
+                preview.children().remove();
+                preview.append(t);
+                if(vm.selectedPayment.status.toLowerCase() == 'cancelled'){
+                    preview.append('<div style="width: 100%;height: 100%;position: absolute;top: 0;text-align: center;z-index: 10"><div style="position: absolute;font-size: 60px;height: 120px;padding: 15px 0;width: 400px;border: dashed 5px;top: 0;bottom: 0;left: 0;right: 0;margin: auto;color: rgba(255, 137, 32, 0.7);-webkit-transform: rotate(-45deg);transform: rotate(-45deg)">CANCELLED</div></div>');
+                }
+                $('.list').css('padding','10px');
+                $('.left-content > div:first-child').css('width','50%');
+                $scope.isReadLoaded = true;
 
 			}).error(function(data){
 				//console.log(data);
